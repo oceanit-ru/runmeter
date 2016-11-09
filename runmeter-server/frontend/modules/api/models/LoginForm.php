@@ -1,7 +1,10 @@
 <?php
 
+namespace frontend\modules\api\models;
+
 use yii\base\Model;
 use common\models\db\User;
+use Yii;
 
 /**
  * Description of LoginForm
@@ -22,13 +25,16 @@ class LoginForm extends Model
 		return [
 			// phone are both required
 			[['fbUserId', 'fbAccessToken'], 'required'],
-			['fbAccesId', 'string'],
+			['fbAccessToken', 'string'],
 			['fbUserId', 'integer']
 		];
 	}
 
 	public function login()
 	{
+		if (!$this->validate()) {
+			return false;
+		}
 		$user = User::findIdentityByFBUserId($this->fbUserId);
 		if (!isset($user)) {
 			return $this->registration();

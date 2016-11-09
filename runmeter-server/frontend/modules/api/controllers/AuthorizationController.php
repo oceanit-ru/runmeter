@@ -2,6 +2,13 @@
 
 namespace frontend\modules\api\controllers;
 
+use yii\filters\VerbFilter;
+use Yii;
+use yii\filters\ContentNegotiator;
+use yii\web\Response;
+use ErrorException;
+use frontend\modules\api\models\LoginForm;
+
 class AuthorizationController extends \yii\web\Controller
 {
 	public function behaviors()
@@ -11,17 +18,16 @@ class AuthorizationController extends \yii\web\Controller
 		$behaviors['verbs'] = [
 		    'class' => VerbFilter::className(),
 		    'actions' => [
-				'send-sms' => ['post'],
-				'sign-in' => ['post']
+				'login' => ['post']
 		    ]
 		];
-
+		
 		$behaviors['contentNegotiator'] = [
-		    'class' => ContentNegotiator::className(),
-		    'formats' => [
-				'application/json' => Response::FORMAT_JSON,
-		    ],
-		];
+    	    'class' => ContentNegotiator::className(),
+    	    'formats' => [
+    		  'application/json' => Response::FORMAT_JSON,
+    	    ],
+    	];
 
 
 		return $behaviors;
@@ -31,7 +37,7 @@ class AuthorizationController extends \yii\web\Controller
     {
 		$modelForm = new LoginForm();
 		$modelForm->load(Yii::$app->request->post(), '');
-
+		//var_dump($modelForm); die();
 		if ($modelForm->login()) {
 		    return []; 
 		} else {
