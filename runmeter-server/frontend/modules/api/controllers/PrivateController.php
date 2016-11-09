@@ -51,7 +51,7 @@ class PrivateController extends Controller
     	    throw new NotFoundHttpException("User not found");
     	}
 
-	   Yii::$app->user->login($user);
+		Yii::$app->user->login($user);
 
 	   return true;
     }
@@ -62,7 +62,7 @@ class PrivateController extends Controller
     protected function getUser()
     {
     	$fbUserId = $this->getFBUserId();
-    	$user = User::findIdentityByFBUserId($accessToken);
+    	$user = User::findIdentityByFBUserId($fbUserId);
     	if (empty($user)) {
     	    $this->getResponseFormatForInvalidUserId();
     	}
