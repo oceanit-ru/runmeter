@@ -1,0 +1,1 @@
+{  "name": "Cafe API",  "version": "0.1.0",  "description": "Документация серверного API для проекта Cafe",  "url": "http://82.146.53.185:8092/api",  "sampleUrl": false,  "apidoc": "0.2.0",  "generator": {    "name": "apidoc",    "time": "2016-10-13T11:12:40.376Z",    "url": "http://apidocjs.com",    "version": "0.16.1"  }}
