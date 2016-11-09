@@ -15,5 +15,9 @@ namespace common\models\db;
  */
 class User extends BaseUser
 {
+	
+	public static function findIdentityByFBUserId($fbUserId) {
+		return static::find()->where(['fbUserId' => $fbUserId])->one();
+	}
 	//put your code here
 }
