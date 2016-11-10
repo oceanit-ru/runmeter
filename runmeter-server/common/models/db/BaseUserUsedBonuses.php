@@ -10,8 +10,8 @@ use Yii;
  * @property integer $userUsedBonusesId
  * @property integer $userId
  * @property integer $bonuses
- * @property string $startDate
- * @property string $endDate
+ * @property string $startTime
+ * @property string $endTime
  *
  * @property User $user
  */
@@ -32,7 +32,7 @@ class BaseUserUsedBonuses extends \yii\db\ActiveRecord
     {
         return [
             [['userId', 'bonuses'], 'integer'],
-            [['startDate', 'endDate'], 'safe'],
+            [['startTime', 'endTime'], 'safe'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
     }
@@ -46,8 +46,8 @@ class BaseUserUsedBonuses extends \yii\db\ActiveRecord
             'userUsedBonusesId' => 'User Used Bonuses ID',
             'userId' => 'User ID',
             'bonuses' => 'Bonuses',
-            'startDate' => 'Start Date',
-            'endDate' => 'End Date',
+            'startTime' => 'Start Date',
+            'endTime' => 'End Date',
         ];
     }
 

@@ -4,6 +4,7 @@ namespace frontend\modules\api\models;
 
 use yii\base\Model;
 use common\models\db\User;
+use common\models\db\UserUsedBonuses;
 use Yii;
 
 /**
@@ -16,49 +17,69 @@ class DepositBonusesForm extends Model
 
 	public $bonuses;
 	public $usedBonuses;
-	public $startDate;
-	public $endDate;
+	public $startTime;
+	public $endTime;
 
+	
 	/**
 	 * @inheritdoc
 	 */
 	public function rules()
 	{
 		return [
-			[['bonuses', 'usedBonuses', 'startDate', 'endDate'], 'required'],
+            [['usedBonuses', 'bonuses'], 'integer'],
+            [['startTime', 'endTime'], 'safe'],
 		];
 	}
 
-	public function login()
+	public function deposit()
 	{
+		//var_dump($this->attributes); die();
 		if (!$this->validate()) {
 			return false;
 		}
-		$user = User::findIdentityByFBUserId($this->fbUserId);
+
+		$db = Yii::$app->db;
+		$transaction = $db->beginTransaction();
+		$user = User::getUser();
 		if (!isset($user)) {
-			return $this->registration();
+			$this->addError('user', 'User not validate');
+			$transaction->rollBack();
+			return false;
 		}
+
+		$user->bonuses += $this->bonuses;
+
+		if (!($user->save())) {
+			$this->addError('user', 'Bonuses not save');
+			$transaction->rollBack();
+			return false;
+		}
+
+		if (!$this->saveUserUsedBonuses($user)) {
+			$this->addError('user', 'Used bonuses not save');
+			$transaction->rollBack();
+			return false;
+		}
+
+		$transaction->commit();
+
 		return true;
 	}
 
-	public function registration()
+	private function saveUserUsedBonuses($user)
 	{
-		$db = Yii::$app->db;
-		$transaction = $db->beginTransaction();
-		$user = new User();
-		$user->fbUserId = $this->fbUserId;
-		$user->bonuses = 0;
-		try {
-			if ($user->save()) {
-				$transaction->commit();
-			} else {
-				$this->addError('transaction', 'User not save!');
-				$transaction->rollBack();
-				return false;
-			}
-		} catch (Exception $exc) {
-			$this->addError('transaction', $exc->getMessage());
-			$transaction->rollBack();
+		if (empty($user->userUsedBonuses)) {
+			$userUsedBonuses = new UserUsedBonuses();
+			$userUsedBonuses->userId = $user->userId;
+		} else {
+			$userUsedBonuses = $user->userUsedBonuses[0];
+		}
+		$userUsedBonuses->bonuses = $this->usedBonuses;
+		$userUsedBonuses->startTime = $this->startTime;
+		$userUsedBonuses->endTime = $this->endTime;
+
+		if (!($userUsedBonuses->save())) {
 			return false;
 		}
 		return true;

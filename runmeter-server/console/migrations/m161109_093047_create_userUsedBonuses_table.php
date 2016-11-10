@@ -17,8 +17,8 @@ class m161109_093047_create_userUsedBonuses_table extends Migration
 			'userUsedBonusesId' => $this->primaryKey(),
 			'userId' => $this->integer(),
 			'bonuses' => $this->integer(),
-			'startDate' => $this->dateTime(),
-			'endDate' => $this->dateTime(),
+			'startTime' => $this->dateTime(),
+			'endTime'=> $this->dateTime(),
 		]);
 
 		/*
@@ -46,7 +46,7 @@ class m161109_093047_create_userUsedBonuses_table extends Migration
 				'idx_userUsedBonuses_userId', 'userUsedBonuses'
 		);
 
-		$this->dropTable('userUsedBonusesId');
+		$this->dropTable('userUsedBonuses');
 	}
 
 }

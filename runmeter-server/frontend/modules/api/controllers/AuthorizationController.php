@@ -7,6 +7,7 @@ use Yii;
 use yii\filters\ContentNegotiator;
 use yii\web\Response;
 use ErrorException;
+use common\components\helpers\ModelHelper;
 use frontend\modules\api\models\LoginForm;
 
 class AuthorizationController extends \yii\web\Controller

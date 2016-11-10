@@ -9,6 +9,7 @@
 namespace common\models\db;
 
 use \yii\web\IdentityInterface;
+use Yii;
 
 /**
  * Description of User
