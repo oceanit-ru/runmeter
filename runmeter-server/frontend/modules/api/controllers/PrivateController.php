@@ -75,6 +75,7 @@ class PrivateController extends Controller
     private function getFBUserId()
     {
     	$fbUserId = Yii::$app->request->get("fbUserId");
+		//var_dump(Yii::$app->request->get("fbUserId")); die();
     	if (empty($fbUserId)) {
     	    $fbUserId = Yii::$app->request->post("fbUserId");
     	}

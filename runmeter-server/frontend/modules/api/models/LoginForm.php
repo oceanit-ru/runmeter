@@ -53,7 +53,6 @@ class LoginForm extends Model
 		$transaction = $db->beginTransaction();
 		$user = new User();
 		$user->fbUserId = $this->fbUserId;
-		$user->bonuses = 0;
 		try {
 			if ($user->save()) {
 				$transaction->commit();

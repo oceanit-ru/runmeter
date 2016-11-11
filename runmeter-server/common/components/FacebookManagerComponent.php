@@ -7,6 +7,7 @@ use Yii;
 use yii\base\Component;
 use yii\helpers\Json;
 
+
 class FacebookManagerComponent extends Component{
 
     public static function validateAccessToken($userId, $userToken)

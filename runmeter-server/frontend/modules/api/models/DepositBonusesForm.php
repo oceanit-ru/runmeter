@@ -61,7 +61,18 @@ class DepositBonusesForm extends Model
 			return false;
 		}
 
-		if (!$this->saveUserUsedBonuses($user)) {
+		if (empty($user->userUsedBonuses)) {
+			$userUsedBonuses = new UserUsedBonuses();
+			$userUsedBonuses->userId = $user->userId;
+		} else {
+			$userUsedBonuses = $user->userUsedBonuses[0];
+		}
+		$userUsedBonuses->bonuses = $this->usedBonuses;
+		$userUsedBonuses->steps = $this->usedSteps;
+		$userUsedBonuses->startTime = $this->startTime;
+		$userUsedBonuses->endTime = $this->endTime;
+
+		if (!($userUsedBonuses->save())) {
 			$this->addError('user', 'Used bonuses not save');
 			$transaction->rollBack();
 			return false;

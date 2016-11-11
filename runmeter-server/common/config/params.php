@@ -6,4 +6,5 @@ return [
 	'development.settingsId' => 1,
 	'release.settingsId' => 2,
 	'development' => true,
+	'faceBookAppId' => 1719440585049654
 ];

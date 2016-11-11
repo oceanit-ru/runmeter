@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "user".
  *
  * @property integer $userId
- * @property integer $fbUserId
+ * @property string $fbUserId
  *
  * @property DepositHistory[] $depositHistories
  * @property UserUsedBonuses[] $userUsedBonuses
@@ -29,7 +29,7 @@ class BaseUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fbUserId'], 'integer'],
+            [['fbUserId'], 'string'],
             [['fbUserId'], 'unique'],
         ];
     }

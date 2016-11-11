@@ -19,15 +19,16 @@ use Yii;
 class User extends BaseUser implements IdentityInterface
 {
 	public function bonuses() {
-		DepositHistory::sumBonusesForUser($this->userId);
+		return DepositHistory::sumBonusesForUser($this->userId);
 	}
 	
 	public function steps() {
-		DepositHistory::sumStepsForUser($this->userId);
+		return DepositHistory::sumStepsForUser($this->userId);
 	}
 
 	public static function findIdentityByFBUserId($fbUserId)
 	{
+		//var_dump($fbUserId); die();
 		return static::find()->where(['fbUserId' => $fbUserId])->one();
 	}
 

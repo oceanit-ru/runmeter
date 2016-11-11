@@ -15,7 +15,7 @@ class m161109_090428_create_user_table extends Migration
 	{
 		$this->createTable('user', [
 			'userId' => $this->primaryKey(),
-			'fbUserId' => $this->integer()->unique(),
+			'fbUserId' => $this->string()->unique(),
 		]);
 
 		$this->createIndex('fbUserId_idx', 'user', 'fbUserId');
