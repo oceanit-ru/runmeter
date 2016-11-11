@@ -5,6 +5,7 @@ namespace frontend\modules\api\models;
 use yii\base\Model;
 use common\models\db\User;
 use Yii;
+use common\components\FacebookManagerComponent;
 
 /**
  * Description of LoginForm
@@ -34,6 +35,10 @@ class LoginForm extends Model
 	{
 		if (!$this->validate()) {
 			return false;
+		}
+		
+		if (!FacebookManagerComponent::validateAccessToken($this->fbUserId, $this->fbAccessToken)) {
+			$this->addError('facebook', "Access Denied");
 		}
 		$user = User::findIdentityByFBUserId($this->fbUserId);
 		if (!isset($user)) {

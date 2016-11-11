@@ -5,25 +5,24 @@ namespace common\models\db;
 use Yii;
 
 /**
- * This is the model class for table "userUsedBonuses".
+ * This is the model class for table "depositHistory".
  *
- * @property integer $userUsedBonusesId
+ * @property integer $depositHistoryId
  * @property integer $userId
+ * @property string $createdAt
  * @property integer $bonuses
  * @property integer $steps
- * @property string $startTime
- * @property string $endTime
  *
  * @property User $user
  */
-class BaseUserUsedBonuses extends \yii\db\ActiveRecord
+class BaseDepositHistory extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'userUsedBonuses';
+        return 'depositHistory';
     }
 
     /**
@@ -33,7 +32,7 @@ class BaseUserUsedBonuses extends \yii\db\ActiveRecord
     {
         return [
             [['userId', 'bonuses', 'steps'], 'integer'],
-            [['startTime', 'endTime'], 'safe'],
+            [['createdAt'], 'safe'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
     }
@@ -44,12 +43,11 @@ class BaseUserUsedBonuses extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'userUsedBonusesId' => 'User Used Bonuses ID',
+            'depositHistoryId' => 'Deposit History ID',
             'userId' => 'User ID',
+            'createdAt' => 'Created At',
             'bonuses' => 'Bonuses',
-            'steps' => 'Steps',
-            'startTime' => 'Start Time',
-            'endTime' => 'End Time',
+            'steps' => 'Setps',
         ];
     }
 

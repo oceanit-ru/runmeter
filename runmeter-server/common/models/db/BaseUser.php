@@ -8,9 +8,9 @@ use Yii;
  * This is the model class for table "user".
  *
  * @property integer $userId
- * @property integer $bonuses
  * @property integer $fbUserId
  *
+ * @property DepositHistory[] $depositHistories
  * @property UserUsedBonuses[] $userUsedBonuses
  */
 class BaseUser extends \yii\db\ActiveRecord
@@ -29,7 +29,7 @@ class BaseUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['bonuses', 'fbUserId'], 'integer'],
+            [['fbUserId'], 'integer'],
             [['fbUserId'], 'unique'],
         ];
     }
@@ -41,9 +41,16 @@ class BaseUser extends \yii\db\ActiveRecord
     {
         return [
             'userId' => 'User ID',
-            'bonuses' => 'Bonuses',
             'fbUserId' => 'Fb User ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDepositHistories()
+    {
+        return $this->hasMany(DepositHistory::className(), ['userId' => 'userId']);
     }
 
     /**

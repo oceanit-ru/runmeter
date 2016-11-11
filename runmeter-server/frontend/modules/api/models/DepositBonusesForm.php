@@ -5,6 +5,7 @@ namespace frontend\modules\api\models;
 use yii\base\Model;
 use common\models\db\User;
 use common\models\db\UserUsedBonuses;
+use common\models\db\DepositHistory;
 use Yii;
 
 /**
@@ -16,19 +17,20 @@ class DepositBonusesForm extends Model
 {
 
 	public $bonuses;
+	public $steps;
 	public $usedBonuses;
+	public $usedSteps;
 	public $startTime;
 	public $endTime;
 
-	
 	/**
 	 * @inheritdoc
 	 */
 	public function rules()
 	{
 		return [
-            [['usedBonuses', 'bonuses'], 'integer'],
-            [['startTime', 'endTime'], 'safe'],
+			[['bonuses', 'steps', 'usedBonuses', 'usedSteps'], 'integer'],
+			[['startTime', 'endTime'], 'safe'],
 		];
 	}
 
@@ -48,9 +50,12 @@ class DepositBonusesForm extends Model
 			return false;
 		}
 
-		$user->bonuses += $this->bonuses;
+		$depositBonuses = new DepositHistory();
+		$depositBonuses->userId = $user->userId;
+		$depositBonuses->bonuses = $this->bonuses;
+		$depositBonuses->steps = $this->steps;
 
-		if (!($user->save())) {
+		if (!($depositBonuses->save())) {
 			$this->addError('user', 'Bonuses not save');
 			$transaction->rollBack();
 			return false;
@@ -76,6 +81,7 @@ class DepositBonusesForm extends Model
 			$userUsedBonuses = $user->userUsedBonuses[0];
 		}
 		$userUsedBonuses->bonuses = $this->usedBonuses;
+		$userUsedBonuses->steps = $this->usedSteps;
 		$userUsedBonuses->startTime = $this->startTime;
 		$userUsedBonuses->endTime = $this->endTime;
 

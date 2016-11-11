@@ -15,5 +15,19 @@ namespace common\models\db;
  */
 class UserUsedBonuses extends BaseUserUsedBonuses
 {
-	//put your code here
+	/**
+	 * 
+	 * @param int $settingsId
+	 * @return array or NULL
+	 */
+	public function serializationToArray()
+	{
+		$serializationArray = array (
+			'bonuses' => $this->bonuses,
+			'steps' => $this->steps,
+			'startTime' => $this->startTime,
+			'endTime' => $this->endTime
+		);
+		return $serializationArray;
+	}
 }

@@ -15,7 +15,6 @@ class m161109_090428_create_user_table extends Migration
 	{
 		$this->createTable('user', [
 			'userId' => $this->primaryKey(),
-			'bonuses' => $this->integer(),
 			'fbUserId' => $this->integer()->unique(),
 		]);
 

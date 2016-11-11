@@ -22,6 +22,24 @@ class m161108_104327_create_settings_table extends Migration
 			'maximumBonusesInReferencePeriod' => $this->integer(),
 			'useDataEnteredByUser' => $this->boolean(),
 		]);
+		$this->insert('settings', [
+			'settingsId' => 1,
+			'initialReferencePeriod' => 24,
+			'maximumReferencePeriod' => 36,
+			'bonusDivider' => 100,
+			'bonusThreshold' => 300,
+			'maximumBonusesInReferencePeriod' => 1500,
+			'useDataEnteredByUser' => 1,
+        ]);
+		$this->insert('settings', [
+			'settingsId' => 0,
+			'initialReferencePeriod' => 24,
+			'maximumReferencePeriod' => 36,
+			'bonusDivider' => 1000,
+			'bonusThreshold' => 3000,
+			'maximumBonusesInReferencePeriod' => 25,
+			'useDataEnteredByUser' => 1,
+        ]);
 	}
 
 	/**

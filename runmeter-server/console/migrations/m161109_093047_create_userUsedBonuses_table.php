@@ -14,11 +14,12 @@ class m161109_093047_create_userUsedBonuses_table extends Migration
 	public function up()
 	{
 		$this->createTable('userUsedBonuses', [
-			'userUsedBonusesId' => $this->primaryKey(),
-			'userId' => $this->integer(),
-			'bonuses' => $this->integer(),
-			'startTime' => $this->dateTime(),
-			'endTime'=> $this->dateTime(),
+		'userUsedBonusesId' => $this->primaryKey(),
+		'userId' => $this->integer(),
+		'bonuses' => $this->integer(),
+		'steps' => $this->integer(),
+		'startTime' => $this->dateTime(),
+		'endTime' => $this->dateTime(),
 		]);
 
 		/*

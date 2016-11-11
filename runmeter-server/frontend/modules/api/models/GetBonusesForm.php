@@ -20,12 +20,17 @@ class GetBonusesForm extends Model
 	{
 		$this->user = User::getUser();
 		$serializedArray = array();
-		$serializedArray['bonuses'] = $this->user->bonuses;
+		$serializedArray['bonuses'] = $this->user->bonuses();
+		$serializedArray['steps'] = $this->user->steps();
 		if (!empty($this->user->userUsedBonuses)) {
 			$userUsedBonuses = $this->user->userUsedBonuses[0];
-			$serializedArray['usedBonuses'] = $userUsedBonuses->bonuses;
-			$serializedArray['startTime'] = $userUsedBonuses->startTime;
-			$serializedArray['endTime'] = $userUsedBonuses->endTime;
+			$serializedArray['userUsedBonuses'] = array (
+				'bonuses' => $userUsedBonuses->bonuses,
+				'steps' => $userUsedBonuses->bonuses,
+				'startTime' => $userUsedBonuses->startTime,
+				'endTime' => $userUsedBonuses->endTime
+			);
+			
 		}
 		return $serializedArray;	
 	}
