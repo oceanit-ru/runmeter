@@ -21,21 +21,29 @@ class Settings extends BaseSettings
 	 * @param int $settingsId
 	 * @return array or NULL
 	 */
-	public static function serializationToArrayWithId($settingsId)
+	public static function debugSettings()
 	{
-		$settings = static::findOne($settingsId);
-		if (isset($settings)) {
-			$serializationArray = array (
-				'initialReferencePeriod' => $settings->initialReferencePeriod,
-				'maximumReferencePeriod' => $settings->maximumReferencePeriod,
-				'bonusDivider' => $settings->bonusDivider,
-				'bonusThreshold' => $settings->bonusThreshold,
-				'maximumBonusesInReferencePeriod' => $settings->maximumBonusesInReferencePeriod,
-				'useDataEnteredByUser' => $settings->useDataEnteredByUser
-			);
-			return $serializationArray;
-		}
-		return NULL;
+		return static::find()->where(['isDebugSettings' => true])->one();
 	}
+	
+	public static function releaseSettings()
+	{
+		return static::find()->where(['isDebugSettings' => false])->one();
+	}
+	
+	public function serializationToArray()
+	{
+		$serializationArray = array (
+			'initialReferencePeriod' => $this->initialReferencePeriod,
+			'maximumReferencePeriod' => $this->maximumReferencePeriod,
+			'bonusDivider' => $this->bonusDivider,
+			'bonusThreshold' => $this->bonusThreshold,
+			'maximumBonusesInReferencePeriod' => $this->maximumBonusesInReferencePeriod,
+			'useDataEnteredByUser' => $this->useDataEnteredByUser
+		);
+		return $serializationArray;
+	}
+	
+	
 
 }

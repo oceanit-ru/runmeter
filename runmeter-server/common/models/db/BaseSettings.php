@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "settings".
  *
  * @property integer $settingsId
+ * @property integer $isDebugSettings
  * @property string $initialReferencePeriod
  * @property string $maximumReferencePeriod
  * @property integer $bonusDivider
@@ -31,8 +32,8 @@ class BaseSettings extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['isDebugSettings', 'bonusDivider', 'bonusThreshold', 'maximumBonusesInReferencePeriod', 'useDataEnteredByUser'], 'integer'],
             [['initialReferencePeriod', 'maximumReferencePeriod'], 'number'],
-            [['bonusDivider', 'bonusThreshold', 'maximumBonusesInReferencePeriod', 'useDataEnteredByUser'], 'integer'],
         ];
     }
 
@@ -43,6 +44,7 @@ class BaseSettings extends \yii\db\ActiveRecord
     {
         return [
             'settingsId' => 'Settings ID',
+            'isDebugSettings' => 'Is Debug Settings',
             'initialReferencePeriod' => 'Initial Reference Period',
             'maximumReferencePeriod' => 'Maximum Reference Period',
             'bonusDivider' => 'Bonus Divider',

@@ -16,13 +16,14 @@ class GetSettingsForm extends Model
 
 	public function getSettings()
 	{
-		if (Yii::$app->params['development']) {
-			$settingsId = Yii::$app->params['development.settingsId'];
+		/* @var $settings Settings */
+		if (YII_DEBUG) {
+			$settings = Settings::debugSettings();
 		} else {
-			$settingsId = Yii::$app->params['release.settingsId'];
+			$settings = Settings::releaseSettings();
 		}
-
-		return Settings::serializationToArrayWithId($settingsId);
+		
+		return ($settings != NULL) ? $settings->serializationToArray() : NULL;
 	}
 
 }

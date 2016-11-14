@@ -15,6 +15,7 @@ class m161108_104327_create_settings_table extends Migration
 	{
 		$this->createTable('settings', [
 			'settingsId' => $this->primaryKey(),
+			'isDebugSettings' => $this->boolean(),
 			'initialReferencePeriod' => $this->decimal(6, 2),
 			'maximumReferencePeriod' => $this->decimal(6, 2),
 			'bonusDivider' => $this->integer(),
@@ -23,23 +24,23 @@ class m161108_104327_create_settings_table extends Migration
 			'useDataEnteredByUser' => $this->boolean(),
 		]);
 		$this->insert('settings', [
-			'settingsId' => 1,
+			'isDebugSettings' => true,
 			'initialReferencePeriod' => 24,
 			'maximumReferencePeriod' => 36,
 			'bonusDivider' => 100,
 			'bonusThreshold' => 300,
 			'maximumBonusesInReferencePeriod' => 1500,
 			'useDataEnteredByUser' => 1,
-        ]);
+		]);
 		$this->insert('settings', [
-			'settingsId' => 0,
+			'isDebugSettings' => false,
 			'initialReferencePeriod' => 24,
 			'maximumReferencePeriod' => 36,
 			'bonusDivider' => 1000,
 			'bonusThreshold' => 3000,
 			'maximumBonusesInReferencePeriod' => 25,
 			'useDataEnteredByUser' => 1,
-        ]);
+		]);
 	}
 
 	/**
