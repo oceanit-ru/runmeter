@@ -34,11 +34,22 @@ class AuthorizationController extends \yii\web\Controller
 		return $behaviors;
     }
 	
+	/**
+	 * @api {post} /authorization/login Авторизация через Facebook
+	 * @apiDescription Авторизация через Facebook.
+	 * @apiError ErrorException.
+	 * @apiGroup Authorization
+	 *
+	 * @apiParam {String}		fbUserId		Facebook UserId.
+	 * @apiParam {String}		fbAccessToken	Facebook TokenString.
+	 *
+	 * @apiVersion 0.1.0
+	 */
+	
     public function actionLogin()
     {
 		$modelForm = new LoginForm();
 		$modelForm->load(Yii::$app->request->post(), '');
-		//var_dump($modelForm); die();
 		if ($modelForm->login()) {
 		    return []; 
 		} else {

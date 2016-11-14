@@ -34,7 +34,23 @@ class SettingsController extends \yii\web\Controller
 
 		return $behaviors;
 	}
-
+	
+	/**
+	 * @api {get} /bonuses/get Получение настроек
+	 * @apiDescription Получение настроек.
+	 * @apiError ErrorException.
+	 * @apiGroup Settings
+	 * 
+     * @apiSuccess {Number}			initialReferencePeriod				Максимальный стартовый учетный период.
+     * @apiSuccess {Number}			maximumReferencePeriod				Максимальный учетный период.
+     * @apiSuccess {Integer}		bonusDivider						Делитель для формулы преобразования шагов в бонусы.
+     * @apiSuccess {Integer}		bonusThreshold						Порог для доступных шагов.
+     * @apiSuccess {Integer}		maximumBonusesInReferencePeriod		Максимальное доступное кол-во бонусов за период.
+     * @apiSuccess {Bool}			useDataEnteredByUser				Использовать введенные пользователем данные.
+	 *
+	 * @apiVersion 0.1.0
+	 */
+	
 	public function actionGet()
 	{
 		$modelForm = new GetSettingsForm();

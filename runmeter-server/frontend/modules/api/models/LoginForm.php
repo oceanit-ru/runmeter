@@ -27,7 +27,7 @@ class LoginForm extends Model
 			// phone are both required
 			[['fbUserId', 'fbAccessToken'], 'required'],
 			['fbAccessToken', 'string'],
-			['fbUserId', 'integer']
+			['fbUserId', 'string']
 		];
 	}
 
