@@ -36,11 +36,6 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-		'modules' => [
-			'api' => [
-				'class' => 'frontend\modules\api\Module',
-			],
-		],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -48,5 +43,10 @@ return [
             ],
         ],
     ],
+	'modules' => [
+		'api' => [
+			'class' => 'frontend\modules\api\Module',
+		],
+	],
     'params' => $params,
 ];
