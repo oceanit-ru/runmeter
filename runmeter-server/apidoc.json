@@ -2,5 +2,5 @@
   "name": "Runmeter API",
   "version": "0.1.0",
   "description": "Документация серверного API для проекта Runmeter",
-  "url" : "http://82.146.53.185:8092/api"
+  "url" : "http://82.146.53.185:8096/api"
 }

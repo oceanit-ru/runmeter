@@ -36,7 +36,7 @@ class SettingsController extends \yii\web\Controller
 	}
 	
 	/**
-	 * @api {get} /bonuses/get Получение настроек
+	 * @api {get} /settings/get Получение настроек
 	 * @apiDescription Получение настроек.
 	 * @apiError ErrorException.
 	 * @apiGroup Settings
