@@ -24,11 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->sceneId], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->sceneId], [
+        <?= Html::a(Yii::t('app', 'Редактировать'), ['update', 'id' => $model->sceneId], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Удалить'), ['delete', 'id' => $model->sceneId], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Yii::t('app', 'Вы действительно хотите удалить сцену?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -38,7 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'sceneId',
-            'locationId',
+            [
+				'attribute' =>'locationId',
+				'value' => $model->location->name
+			],
             'name',
             'number',
             'displayedButtonCount',
@@ -47,11 +50,11 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 	
-	<h1><?= Html::encode("Scene Buttons") ?></h1>
+	<h1><?= Html::encode("Кнопки") ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Scene Button'), ['scene-buttons/create', 'sceneId' => $model->sceneId], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Создать кнопку'), ['scene-buttons/create', 'sceneId' => $model->sceneId], ['class' => 'btn btn-success']) ?>
     </p>
 	<?php 
 		$searchModel = new SceneButtonSearch();
@@ -64,9 +67,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'sceneButtonId',
-            'sceneId',
             'text',
-            'action',
+            [
+				'attribute' => 'action',
+				'value' => function($model) {
+					return $model->getActionAsString();
+				}
+			],
             'answer:ntext',
             // 'segueLocationId',
             // 'segueSceneId',
