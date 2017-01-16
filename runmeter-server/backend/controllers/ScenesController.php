@@ -154,7 +154,7 @@ class ScenesController extends Controller
 					$sceneId = $params['0']; // get the value of input-type-1
 					$locationIdModel = $params['1']; // get the value of input-type-1
 				}
-				$scenes = ArrayHelper::map(Scene::find()->where(['locationId' => $locationId])->all(), 'locationId', 'name');
+				$scenes = ArrayHelper::map(Scene::find()->where(['locationId' => $locationId])->all(), 'sceneId', 'name');
 				foreach ($scenes as $key => $value) {
 					if (empty($selected) && isset($params)) {
 						$selected = '' . $key;

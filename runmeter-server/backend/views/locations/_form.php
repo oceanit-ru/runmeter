@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\widgets\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Location */
@@ -16,7 +17,20 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'number')->textInput() ?>
 
-    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+	<?php
+		echo $form->field($model, 'image')->widget(FileInput::className(), [
+			'options' => ['accept' => 'image/*'],
+			'pluginOptions' => [
+				'initialPreview' => $model->getThumbUrl(),
+				'initialPreviewAsData' => true,
+				'showPreview' => true,
+				'showCaption' => true,
+				'showRemove' => true,
+				'showUpload' => false
+			]
+		]);
+	?>
+	<!--<?= $form->field($model, 'image')->fileInput()->label('') ?>-->
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

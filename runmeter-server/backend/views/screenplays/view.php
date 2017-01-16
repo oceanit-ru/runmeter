@@ -13,7 +13,7 @@ use common\components\StringHelper;
 /* @var $model common\models\db\Screenplay */
 
 $this->title = StringHelper::truncate($model->name, 20);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Screenplays'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Сценарии'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="screenplay-view">
@@ -21,11 +21,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->screenplayId], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->screenplayId], [
+        <?= Html::a(Yii::t('app', 'Редактировать'), ['update', 'id' => $model->screenplayId], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Удалить'), ['delete', 'id' => $model->screenplayId], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Yii::t('app', 'Вы действительно хотите удалить сценарий?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -42,10 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 	
 	
-	<h1><?= Html::encode("Locations") ?></h1>
+	<h1><?= Html::encode("Локации") ?></h1>
 	
 	<p>
-        <?= Html::a(Yii::t('app', 'Create Location'), ['locations/create', 'screenplayId' => $model->screenplayId], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Создать локацию'), ['locations/create', 'screenplayId' => $model->screenplayId], ['class' => 'btn btn-success']) ?>
     </p>
 	<?php 
 		$locationSearchModel = new LocationSearch();

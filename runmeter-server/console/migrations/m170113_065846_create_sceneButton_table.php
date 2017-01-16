@@ -16,7 +16,7 @@ class m170113_065846_create_sceneButton_table extends Migration
 		$this->createTable('sceneButton', [
 			'sceneButtonId' => $this->primaryKey(),
 			'sceneId' => $this->integer(),
-			'text' => $this->string(),
+			'text' => $this->text(),
 			'action' => $this->integer(),
 			'answer' => $this->text(),
 			'segueLocationId' => $this->integer(),

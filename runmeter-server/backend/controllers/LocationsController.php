@@ -84,6 +84,7 @@ class LocationsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+				\Yii::warning($_FILES);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->locationId]);

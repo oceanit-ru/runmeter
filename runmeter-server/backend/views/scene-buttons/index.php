@@ -26,7 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'sceneButtonId',
             'sceneId',
-            'text',
+            [
+				'attribute' => 'text',
+				'width'=>'300px',
+				],
             'action',
             'answer:ntext',
             // 'segueLocationId',

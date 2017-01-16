@@ -7,14 +7,15 @@ use yii\helpers\Url;
 use common\models\db\Scene;
 use yii\widgets\Pjax;
 use yii\grid\GridView;
+use common\components\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Location */
 
-$this->title = $model->name;
+$this->title = StringHelper::truncate($model->name, 20);
 if (isset($model->screenplay)) {
-	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Screenplays'), 'url' => ['screenplays/index']];
-	$this->params['breadcrumbs'][] = ['label' => $model->screenplay->name, 'url' => ['screenplays/view', 'id' => $model->screenplayId]];
+	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Сценарии'), 'url' => ['screenplays/index']];
+	$this->params['breadcrumbs'][] = ['label' => StringHelper::truncate($model->screenplay->name, 20), 'url' => ['screenplays/view', 'id' => $model->screenplayId]];
 }
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -23,11 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->locationId], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->locationId], [
+        <?= Html::a(Yii::t('app', 'Редактировать'), ['update', 'id' => $model->locationId], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Удалить'), ['delete', 'id' => $model->locationId], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Yii::t('app', 'Вы действительно хотите удалить локацию?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -37,20 +38,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'locationId',
-            'screenplayId',
+			[
+				'attribute' => 'screenplay',
+				'value' => $model->screenplay->name
+			],
             'name',
             'number',
-            'image',
+			[
+                'attribute'=>'image',
+				'value'=>$model->getThumbUrl(),
+				'format' => ['image']
+            ],
             'createdAt',
             'updateAt',
         ],
     ]) ?>
 	
-	<h1><?= Html::encode("Scenes") ?></h1>
+	<h1><?= Html::encode("Сцены") ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Scene'), ['scenes/create', 'locationId' => $model->locationId], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Создать сцену'), ['scenes/create', 'locationId' => $model->locationId], ['class' => 'btn btn-success']) ?>
     </p>
 	<?php 
 		$sceneSearchModel = new SceneSearch();
@@ -63,7 +71,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'sceneId',
-            'locationId',
             'name',
             'number',
             'displayedButtonCount',

@@ -15,5 +15,16 @@ namespace common\models\db;
  */
 class Screenplay extends BaseScreenplay
 {
-	//put your code here
+	/**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'screenplayId' => 'ID',
+            'name' => 'Название',
+            'createdAt' => 'Создано',
+            'updateAt' => 'Обновлено',
+        ];
+    }
 }

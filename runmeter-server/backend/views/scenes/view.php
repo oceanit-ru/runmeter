@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'sceneButtonId',
-            'text',
+            'text:ntext',
             [
 				'attribute' => 'action',
 				'value' => function($model) {

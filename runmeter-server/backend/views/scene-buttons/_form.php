@@ -18,11 +18,11 @@ use yii\helpers\Url;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'text')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
 
 	<?php
 		echo $form->field($model, 'action')->widget(Select2::classname(), [
-			'data' => Scene::ACTION_TYPE,
+			'data' => \common\models\db\SceneButton::ACTION_TYPE,
 			'options' => [
 				'placeholder' => Yii::t('app', 'Выберите тип')
 			],
@@ -36,7 +36,7 @@ use yii\helpers\Url;
 
 	<?php
 		echo $form->field($model, 'segueLocationId')->widget(Select2::classname(), [
-			'data' => ArrayHelper::map(Location::find()->all(), 'locationId', 'name'),
+			'data' => ArrayHelper::map(Location::find()->where(['screenplayId' => $model->scene->location->screenplayId])->all(), 'locationId', 'name'),
 			'options' => [
 				'id'=>'location-id',
 				'placeholder' => Yii::t('app', 'Выберите локацию')
