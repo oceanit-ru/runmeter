@@ -26,7 +26,7 @@ class m170113_065924_create_conditionVisitLocation_table extends Migration
          * columnName = sceneButtonId
          */
         $this->createIndex(
-            'conditionVisitLocation_sceneButtonId_idx',
+            'conditionVL_sceneButtonId_idx',
             'conditionVisitLocation',
             'sceneButtonId'
         );
@@ -90,7 +90,7 @@ class m170113_065924_create_conditionVisitLocation_table extends Migration
             'conditionVisitLocation'
         );
 		
-		$this->dropTable('conditionvisitlocation');
+		$this->dropTable('conditionVisitLocation');
 	}
 
 }

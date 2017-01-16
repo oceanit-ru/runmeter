@@ -15,9 +15,12 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
+		'//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
+	
+	public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
 }

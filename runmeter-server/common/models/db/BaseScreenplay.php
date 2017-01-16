@@ -5,22 +5,23 @@ namespace common\models\db;
 use Yii;
 
 /**
- * This is the model class for table "scenario".
+ * This is the model class for table "screenplay".
  *
- * @property integer $scenarioId
+ * @property integer $screenplayId
+ * @property string $name
  * @property string $createdAt
  * @property string $updateAt
  *
  * @property Location[] $locations
  */
-class BaseScenario extends \yii\db\ActiveRecord
+class BaseScreenplay extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'scenario';
+        return 'screenplay';
     }
 
     /**
@@ -30,6 +31,7 @@ class BaseScenario extends \yii\db\ActiveRecord
     {
         return [
             [['createdAt', 'updateAt'], 'safe'],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -39,7 +41,8 @@ class BaseScenario extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'scenarioId' => 'Scenario ID',
+            'screenplayId' => 'Screenplay ID',
+            'name' => 'Name',
             'createdAt' => 'Created At',
             'updateAt' => 'Update At',
         ];
@@ -50,6 +53,6 @@ class BaseScenario extends \yii\db\ActiveRecord
      */
     public function getLocations()
     {
-        return $this->hasMany(Location::className(), ['scenarioId' => 'scenarioId']);
+        return $this->hasMany(Location::className(), ['screenplayId' => 'screenplayId']);
     }
 }

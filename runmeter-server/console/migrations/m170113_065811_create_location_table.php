@@ -14,7 +14,7 @@ class m170113_065811_create_location_table extends Migration
     {
         $this->createTable('location', [
             'locationId' => $this->primaryKey(),
-			'scenarioId' => $this->integer(),
+			'screenplayId' => $this->integer(),
 			'name' => $this->string(),
 			'number' => $this->integer(),
 			'image' => $this->string(),
@@ -26,17 +26,17 @@ class m170113_065811_create_location_table extends Migration
          * columnName = scenarioId
          */
         $this->createIndex(
-            'location_scenarioId_idx',
+            'location_screenplayId_idx',
             'location',
-            'scenarioId'
+            'screenplayId'
         );
 			
         $this->addForeignKey(
-            'location_scenarioId_scenario_scenarioId_fk',
+            'location_screenplayId_screenplay_screenplayId_fk',
             'location',
-            'scenarioId',
-            'scenario',
-            'scenarioId',
+            'screenplayId',
+            'screenplay',
+            'screenplayId',
             'CASCADE'
         );
 			
@@ -49,12 +49,12 @@ class m170113_065811_create_location_table extends Migration
     public function safeDown()
     {
         $this->dropForeignKey(
-            'location_scenarioId_scenario_scenarioId_fk',
+            'location_screenplayId_scenario_screenplayId_fk',
             'location'
         );
 			
         $this->dropIndex(
-            'location_scenarioId_idx',
+            'location_screenplayId_idx',
             'location'
         );
 		

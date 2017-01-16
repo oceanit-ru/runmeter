@@ -13,7 +13,7 @@ namespace common\models\db;
  *
  * @author gorohovvalerij
  */
-class Scenario extends BaseScenario
+class Screenplay extends BaseScreenplay
 {
 	//put your code here
 }

@@ -107,13 +107,13 @@ class m170113_065846_create_sceneButton_table extends Migration
          * columnName = segueLocationId
          */
         $this->dropForeignKey(
-            'sceneButtonId_segueLocationId_location_locationId_fk',
-            'sceneButtonId'
+            'sceneButton_segueLocationId_location_locationId_fk',
+            'sceneButton'
         );
 		
         $this->dropIndex(
-            'sceneButtonId_segueLocationId_idx',
-            'sceneButtonId'
+            'sceneButton_segueLocationId_idx',
+            'sceneButton'
         );
 		
 		/*

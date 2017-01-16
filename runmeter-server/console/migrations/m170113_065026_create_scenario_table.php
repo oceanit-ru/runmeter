@@ -13,8 +13,9 @@ class m170113_065026_create_scenario_table extends Migration
 	 */
 	public function safeUp()
 	{
-		$this->createTable('scenario', [
-			'scenarioId' => $this->primaryKey(),
+		$this->createTable('screenplay', [
+			'screenplayId' => $this->primaryKey(),
+			'name' => $this->string(),
 			'createdAt' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')->notNull(),
 			'updateAt' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')->notNull()
 		]);
@@ -25,7 +26,7 @@ class m170113_065026_create_scenario_table extends Migration
 	 */
 	public function safeDown()
 	{
-		$this->dropTable('scenario');
+		$this->dropTable('screenplay');
 	}
 
 }

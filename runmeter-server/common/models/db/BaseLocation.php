@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "location".
  *
  * @property integer $locationId
- * @property integer $scenarioId
+ * @property integer $screenplayId
  * @property string $name
  * @property integer $number
  * @property string $image
@@ -16,7 +16,7 @@ use Yii;
  * @property string $updateAt
  *
  * @property ConditionVisitLocation[] $conditionVisitLocations
- * @property Scenario $scenario
+ * @property Screenplay $screenplay
  * @property Scene[] $scenes
  * @property SceneButton[] $sceneButtons
  */
@@ -36,10 +36,10 @@ class BaseLocation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['scenarioId', 'number'], 'integer'],
+            [['screenplayId', 'number'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
             [['name', 'image'], 'string', 'max' => 255],
-            [['scenarioId'], 'exist', 'skipOnError' => true, 'targetClass' => Scenario::className(), 'targetAttribute' => ['scenarioId' => 'scenarioId']],
+            [['screenplayId'], 'exist', 'skipOnError' => true, 'targetClass' => Screenplay::className(), 'targetAttribute' => ['screenplayId' => 'screenplayId']],
         ];
     }
 
@@ -50,7 +50,7 @@ class BaseLocation extends \yii\db\ActiveRecord
     {
         return [
             'locationId' => 'Location ID',
-            'scenarioId' => 'Scenario ID',
+            'screenplayId' => 'Screenplay ID',
             'name' => 'Name',
             'number' => 'Number',
             'image' => 'Image',
@@ -70,9 +70,9 @@ class BaseLocation extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getScenario()
+    public function getScreenplay()
     {
-        return $this->hasOne(Scenario::className(), ['scenarioId' => 'scenarioId']);
+        return $this->hasOne(Screenplay::className(), ['screenplayId' => 'screenplayId']);
     }
 
     /**
