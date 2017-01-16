@@ -2,28 +2,16 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use kartik\grid\GridView;
-use yii\data\ActiveDataProvider;
-use common\models\db\ConditionVisitLocation;
-use common\models\db\ConditionLoadScene;
-use common\models\db\ConditionPressedButton;
-use yii\helpers\ArrayHelper;
-use common\models\db\Location;
-use common\models\db\Scene;
-use common\models\db\SceneButton;
-use yii\bootstrap\ActiveForm;
-use kartik\widgets\Select2;
-use yii\web\JsExpression;
-use yii\helpers\Url;
+use common\components\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\SceneButton */
-$this->title = $model->sceneButtonId;
+$this->title = $model->getShortText();
 if (isset($model->scene)) {
 	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Screenplays'), 'url' => ['screenplays/index']];
-	$this->params['breadcrumbs'][] = ['label' => $model->scene->location->screenplay->name, 'url' => ['screenplays/view', 'id' => $model->scene->location->screenplayId]];
-	$this->params['breadcrumbs'][] = ['label' => $model->scene->location->name, 'url' => ['locations/view', 'id' => $model->scene->locationId]];
-	$this->params['breadcrumbs'][] = ['label' => $model->scene->name, 'url' => ['scenes/view', 'id' => $model->sceneId]];
+	$this->params['breadcrumbs'][] = ['label' => StringHelper::truncate($model->scene->location->screenplay->name, 20), 'url' => ['screenplays/view', 'id' => $model->scene->location->screenplayId]];
+	$this->params['breadcrumbs'][] = ['label' => StringHelper::truncate($model->scene->location->name, 20), 'url' => ['locations/view', 'id' => $model->scene->locationId]];
+	$this->params['breadcrumbs'][] = ['label' => StringHelper::truncate($model->scene->name, 20), 'url' => ['scenes/view', 'id' => $model->sceneId]];
 }
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -32,11 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->sceneButtonId], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->sceneButtonId], [
+        <?= Html::a(Yii::t('app', 'Редактировать'), ['update', 'id' => $model->sceneButtonId], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Удалить'), ['delete', 'id' => $model->sceneButtonId], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Yii::t('app', 'Вы точно хотите удалить этот элемент?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -46,12 +34,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'sceneButtonId',
-            'sceneId',
+            [
+				'attribute' => 'sceneId',
+				'value' => $model->scene->name
+			],
             'text',
-            'action',
+			[
+				'attribute' => 'action',
+				'value' => $model->getActionAsString()
+			],
             'answer:ntext',
-            'segueLocationId',
-            'segueSceneId',
+			[
+				'attribute' => 'segueLocationId',
+				'value' => $model->segueLocation->name
+			],
+			[
+				'attribute' => 'segueSceneId',
+				'value' => $model->segueScene->name
+			],
             'cost',
             'createdAt',
             'updateAt',

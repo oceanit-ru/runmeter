@@ -7,11 +7,12 @@ use common\models\db\Location;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
+use common\components\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Screenplay */
 
-$this->title = $model->name;
+$this->title = StringHelper::truncate($model->name, 20);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Screenplays'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

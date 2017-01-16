@@ -10,10 +10,7 @@ use common\models\db\Scene;
 use common\models\db\SceneButton;
 use yii\bootstrap\ActiveForm;
 use kartik\widgets\Select2;
-use yii\web\JsExpression;
-use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\SceneButton */
@@ -257,7 +254,7 @@ use yii\widgets\DetailView;
 
 		echo Html::activeHiddenInput($modelConditionsPressedButton, 'sceneButtonId');
 		echo $form->field($modelConditionsPressedButton, 'verifiableSceneButtonId')->widget(Select2::classname(), [
-			'data' => ArrayHelper::map(SceneButton::find()->where(['sceneId' => $model->sceneId])->all(), 'sceneButtonId', 'text'),
+			'data' => ArrayHelper::map(SceneButton::find()->where(['sceneId' => $model->sceneId])->all(), 'sceneButtonId', 'shortText'),
 			'options' => [
 				'placeholder' => Yii::t('app', 'Выберите кнопку ...')
 			]

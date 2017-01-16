@@ -15,5 +15,19 @@ namespace common\models\db;
  */
 class Scene extends BaseScene
 {
-	//put your code here
+	/**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'sceneId' => 'ID',
+            'locationId' => 'Локация',
+            'name' => 'Название',
+            'number' => 'Порядковый номер',
+            'displayedButtonCount' => 'Количество видимых кнопок',
+            'createdAt' => 'Создан',
+            'updateAt' => 'Обновлен',
+        ];
+    }
 }

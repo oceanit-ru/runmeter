@@ -1,20 +1,21 @@
 <?php
 
 use yii\helpers\Html;
+use common\components\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\SceneButton */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Scene Button',
-]) . $model->sceneButtonId;
+$this->title = Yii::t('app', 'Редактирование {modelClass}: ', [
+    'modelClass' => 'Кнопки',
+]) . $model->getShortText();
 if (isset($model->scene)) {
-	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Screenplays'), 'url' => ['screenplays/index']];
-	$this->params['breadcrumbs'][] = ['label' => $model->scene->location->screenplay->name, 'url' => ['screenplays/view', 'id' => $model->scene->location->screenplayId]];
-	$this->params['breadcrumbs'][] = ['label' => $model->scene->location->name, 'url' => ['locations/view', 'id' => $model->scene->locationId]];
-	$this->params['breadcrumbs'][] = ['label' => $model->scene->name, 'url' => ['scenes/view', 'id' => $model->sceneId]];
+	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Сценарии'), 'url' => ['screenplays/index']];
+	$this->params['breadcrumbs'][] = ['label' => StringHelper::truncate($model->scene->location->screenplay->name, 20), 'url' => ['screenplays/view', 'id' => $model->scene->location->screenplayId]];
+	$this->params['breadcrumbs'][] = ['label' => StringHelper::truncate($model->scene->location->name, 20), 'url' => ['locations/view', 'id' => $model->scene->locationId]];
+	$this->params['breadcrumbs'][] = ['label' => StringHelper::truncate($model->scene->name, 20), 'url' => ['scenes/view', 'id' => $model->sceneId]];
 }
-$this->params['breadcrumbs'][] = ['label' => $model->sceneButtonId, 'url' => ['view', 'id' => $model->sceneButtonId]];
+$this->params['breadcrumbs'][] = ['label' => $model->getShortText(), 'url' => ['view', 'id' => $model->sceneButtonId]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="scene-button-update">

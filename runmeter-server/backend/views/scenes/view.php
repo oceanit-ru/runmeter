@@ -6,15 +6,16 @@ use backend\models\SceneButtonSearch;
 use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use common\components\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Scene */
 
-$this->title = $model->name;
+$this->title = StringHelper::truncate($model->name, 20);
 if (isset($model->location)) {
 	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Screenplays'), 'url' => ['screenplays/index']];
-	$this->params['breadcrumbs'][] = ['label' => $model->location->screenplay->name, 'url' => ['screenplays/view', 'id' => $model->location->screenplayId]];
-	$this->params['breadcrumbs'][] = ['label' => $model->location->name, 'url' => ['locations/view', 'id' => $model->locationId]];
+	$this->params['breadcrumbs'][] = ['label' => StringHelper::truncate($model->location->screenplay->name, 20), 'url' => ['screenplays/view', 'id' => $model->location->screenplayId]];
+	$this->params['breadcrumbs'][] = ['label' => StringHelper::truncate($model->location->name, 20), 'url' => ['locations/view', 'id' => $model->locationId]];
 }
 $this->params['breadcrumbs'][] = $this->title;
 ?>
