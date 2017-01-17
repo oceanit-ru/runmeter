@@ -92,7 +92,7 @@ class SceneButtonsController extends Controller
 		$model->sceneId = $sceneId;
 
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['view', 'id' => $model->sceneButtonId]);
+			return $this->redirect(['scenes/view', 'id' => $model->sceneId]);
 		} else {
 			return $this->render('create', [
 						'model' => $model,

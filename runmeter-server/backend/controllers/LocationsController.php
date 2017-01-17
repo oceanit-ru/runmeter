@@ -67,7 +67,7 @@ class LocationsController extends Controller
 		$model->screenplayId = $screenplayId;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->locationId]);
+            return $this->redirect(['screenplays/view', 'id' => $model->screenplayId]);
         } else {
             return $this->render('create', [
                 'model' => $model,

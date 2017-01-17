@@ -25,6 +25,18 @@ class SceneButton extends BaseSceneButton
 		ACTION_TYPE_QUESTION => 'Вопрос',
 		ACTION_TYPE_SEGUE => 'Переход'
 	];
+	
+	public function insert($runValidation = true, $attributes = null) {
+		$result = parent::insert($runValidation, $attributes);
+		if ($result) {
+			$defaultCondition = new ConditionPressedButton();
+			$defaultCondition->sceneButtonId = $this->sceneButtonId;
+			$defaultCondition->verifiableSceneButtonId = $this->sceneButtonId;
+			$defaultCondition->condition = 0;
+			$defaultCondition->save();
+		}
+		return $result;
+	}
 
 	/**
 	 * @inheritdoc

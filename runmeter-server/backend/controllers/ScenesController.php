@@ -81,7 +81,7 @@ class ScenesController extends Controller
 		$model->locationId = $locationId;
 
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['view', 'id' => $model->sceneId]);
+			return $this->redirect(['locations/view', 'id' => $model->locationId]);
 		} else {
 			return $this->render('create', [
 						'model' => $model,
