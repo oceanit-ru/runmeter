@@ -41,8 +41,9 @@ class ConditionLoadScene extends BaseConditionLoadScene
 			'conditionLoadSceneId' => $this->conditionLoadSceneId,
 			'sceneButtonId' => $this->sceneButtonId,
 			'sceneId' => $this->sceneId,
-			'sceneButtonId' => $this->sceneButtonId,
-				
+			'condition' => $this->condition,
+			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
+			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
 		];
 	}
 
@@ -54,8 +55,8 @@ class ConditionLoadScene extends BaseConditionLoadScene
 	public static function serializationOfArray($array)
 	{
 		$serializedArray = [];
-		foreach ($array as $city) {
-			$serializedArray[] = $city->serializationToArray();
+		foreach ($array as $model) {
+			$serializedArray[] = $model->serializationToArray();
 		}
 		return $serializedArray;
 	}

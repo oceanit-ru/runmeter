@@ -30,4 +30,36 @@ class Scene extends BaseScene
             'updateAt' => 'Обновлен',
         ];
     }
+	
+	/**
+	 * 
+	 * @return mixed[]
+	 */
+	public function serializationToArray()
+	{
+		return [
+			'sceneId' => $this->sceneId,
+			'locationId' => $this->locationId,
+			'name' => $this->name,
+			'number' => $this->number,
+			'displayedButtonCount' => $this->displayedButtonCount,
+			'sceneButtons' => SceneButton::serializationOfArray($this->sceneButtons),
+			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
+			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
+		];
+	}
+
+	/**
+	 * 
+	 * @param Scene[] $array
+	 * @return mixed[]
+	 */
+	public static function serializationOfArray($array)
+	{
+		$serializedArray = [];
+		foreach ($array as $model) {
+			$serializedArray[] = $model->serializationToArray();
+		}
+		return $serializedArray;
+	}
 }

@@ -56,6 +56,43 @@ class SceneButton extends BaseSceneButton
 			'updateAt' => 'Обновлен',
 		];
 	}
+	
+	/**
+	 * 
+	 * @return mixed[]
+	 */
+	public function serializationToArray()
+	{
+		return [
+			'sceneButtonId' => $this->sceneButtonId,
+			'sceneId' => $this->sceneId,
+			'text' => $this->text,
+			'action' => $this->action,
+			'answer' => $this->answer,
+			'segueLocationId' => $this->segueLocationId,
+			'segueSceneId' => $this->segueSceneId,
+			'cost' => $this->cost,
+			'conditionPressedButtons' => ConditionPressedButton::serializationOfArray($this->conditionPressedButtons),
+			'conditionLoadScenes' => ConditionLoadScene::serializationOfArray($this->conditionLoadScenes),
+			'conditionVisitLocations' => ConditionVisitLocation::serializationOfArray($this->conditionVisitLocations),
+			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
+			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
+		];
+	}
+
+	/**
+	 * 
+	 * @param SceneButton[] $array
+	 * @return mixed[]
+	 */
+	public static function serializationOfArray($array)
+	{
+		$serializedArray = [];
+		foreach ($array as $model) {
+			$serializedArray[] = $model->serializationToArray();
+		}
+		return $serializedArray;
+	}
 
 	public function getShortText()
 	{

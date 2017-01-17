@@ -65,6 +65,38 @@ class Location extends BaseLocation
         ];
     }
 	
+	/**
+	 * 
+	 * @return mixed[]
+	 */
+	public function serializationToArray()
+	{
+		return [
+			'locationId' => $this->locationId,
+			'screenplayId' => $this->screenplayId,
+			'name' => $this->name,
+			'number' => $this->number,
+			'image' => $this->getImageUrl(),
+			'scenes' => Scene::serializationOfArray($this->scenes),
+			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
+			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
+		];
+	}
+
+	/**
+	 * 
+	 * @param Location[] $array
+	 * @return mixed[]
+	 */
+	public static function serializationOfArray($array)
+	{
+		$serializedArray = [];
+		foreach ($array as $model) {
+			$serializedArray[] = $model->serializationToArray();
+		}
+		return $serializedArray;
+	}
+	
 	public function getImageUrl()
 	{
 		if (isset($this->image)) {

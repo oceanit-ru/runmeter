@@ -28,7 +28,40 @@ class Screenplay extends BaseScreenplay
         ];
     }
 	
-	static public function getBaseScreenplay() 
+	/**
+	 * 
+	 * @return mixed[]
+	 */
+	public function serializationToArray()
+	{
+		return [
+			'screenplayId' => $this->screenplayId,
+			'name' => $this->name,
+			'locations' => Scene::serializationOfArray($this->locations),
+			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
+			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
+		];
+	}
+
+	/**
+	 * 
+	 * @param Screenplay[] $array
+	 * @return mixed[]
+	 */
+	public static function serializationOfArray($array)
+	{
+		$serializedArray = [];
+		foreach ($array as $model) {
+			$serializedArray[] = $model->serializationToArray();
+		}
+		return $serializedArray;
+	}
+	
+	/**
+	 * 
+	 * @return Screenplay
+	 */
+	public static function getBaseScreenplay() 
 	{
 		//TODO impl
 		return static::find()->one();

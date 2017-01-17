@@ -15,5 +15,48 @@ namespace common\models\db;
  */
 class ConditionVisitLocation extends BaseConditionVisitLocation
 {
-	//put your code here
+	/**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'conditionVisitLocationId' => 'ID',
+            'sceneButtonId' => 'Scene Button ID',
+            'locationId' => 'Локация',
+            'condition' => 'Условие',
+            'createdAt' => 'Создан',
+            'updateAt' => 'Обновлен',
+        ];
+    }
+	
+	/**
+	 * 
+	 * @return mixed[]
+	 */
+	public function serializationToArray()
+	{
+		return [
+			'conditionVisitLocationId' => $this->conditionVisitLocationId,
+			'sceneButtonId' => $this->sceneButtonId,
+			'locationId' => $this->locationId,
+			'condition' => $this->condition,
+			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
+			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
+		];
+	}
+
+	/**
+	 * 
+	 * @param ConditionVisitLocation[] $array
+	 * @return mixed[]
+	 */
+	public static function serializationOfArray($array)
+	{
+		$serializedArray = [];
+		foreach ($array as $model) {
+			$serializedArray[] = $model->serializationToArray();
+		}
+		return $serializedArray;
+	}
 }
