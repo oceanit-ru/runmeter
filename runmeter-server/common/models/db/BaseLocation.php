@@ -19,6 +19,7 @@ use Yii;
  * @property Screenplay $screenplay
  * @property Scene[] $scenes
  * @property SceneButton[] $sceneButtons
+ * @property UserVisitLocation[] $userVisitLocations
  */
 class BaseLocation extends \yii\db\ActiveRecord
 {
@@ -89,5 +90,13 @@ class BaseLocation extends \yii\db\ActiveRecord
     public function getSceneButtons()
     {
         return $this->hasMany(SceneButton::className(), ['segueLocationId' => 'locationId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserVisitLocations()
+    {
+        return $this->hasMany(UserVisitLocation::className(), ['locationId' => 'locationId']);
     }
 }

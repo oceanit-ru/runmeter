@@ -13,6 +13,9 @@ use Yii;
  * @property string $updateAt
  *
  * @property Location[] $locations
+ * @property UserLoadScene[] $userLoadScenes
+ * @property UserPressedButton[] $userPressedButtons
+ * @property UserVisitLocation[] $userVisitLocations
  */
 class BaseScreenplay extends \yii\db\ActiveRecord
 {
@@ -54,5 +57,29 @@ class BaseScreenplay extends \yii\db\ActiveRecord
     public function getLocations()
     {
         return $this->hasMany(Location::className(), ['screenplayId' => 'screenplayId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserLoadScenes()
+    {
+        return $this->hasMany(UserLoadScene::className(), ['screenplayId' => 'screenplayId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserPressedButtons()
+    {
+        return $this->hasMany(UserPressedButton::className(), ['screenplayId' => 'screenplayId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserVisitLocations()
+    {
+        return $this->hasMany(UserVisitLocation::className(), ['screenplayId' => 'screenplayId']);
     }
 }

@@ -27,4 +27,12 @@ class Screenplay extends BaseScreenplay
             'updateAt' => 'Обновлено',
         ];
     }
+	
+	static public function getBaseScreenplay() 
+	{
+		//TODO impl
+		return static::find()->one();
+	}
+	
+	
 }

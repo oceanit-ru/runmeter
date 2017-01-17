@@ -49,7 +49,7 @@ class m170113_065811_create_location_table extends Migration
     public function safeDown()
     {
         $this->dropForeignKey(
-            'location_screenplayId_scenario_screenplayId_fk',
+            'location_screenplayId_screenplay_screenplayId_fk',
             'location'
         );
 			

@@ -15,5 +15,48 @@ namespace common\models\db;
  */
 class ConditionLoadScene extends BaseConditionLoadScene
 {
-	//put your code here
+	
+	 /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'conditionLoadSceneId' => 'ID',
+            'sceneButtonId' => 'Scene Button ID',
+            'sceneId' => 'Сцена',
+            'condition' => 'Условие',
+            'createdAt' => 'Создан',
+            'updateAt' => 'Обновлен',
+        ];
+    }
+	
+	/**
+	 * 
+	 * @return mixed[]
+	 */
+	public function serializationToArray()
+	{
+		return [
+			'conditionLoadSceneId' => $this->conditionLoadSceneId,
+			'sceneButtonId' => $this->sceneButtonId,
+			'sceneId' => $this->sceneId,
+			'sceneButtonId' => $this->sceneButtonId,
+				
+		];
+	}
+
+	/**
+	 * 
+	 * @param ConditionLoadScene[] $array
+	 * @return mixed[]
+	 */
+	public static function serializationOfArray($array)
+	{
+		$serializedArray = [];
+		foreach ($array as $city) {
+			$serializedArray[] = $city->serializationToArray();
+		}
+		return $serializedArray;
+	}
 }

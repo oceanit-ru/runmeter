@@ -25,6 +25,7 @@ use Yii;
  * @property Scene $scene
  * @property Location $segueLocation
  * @property Scene $segueScene
+ * @property UserPressedButton[] $userPressedButtons
  */
 class BaseSceneButton extends \yii\db\ActiveRecord
 {
@@ -43,7 +44,7 @@ class BaseSceneButton extends \yii\db\ActiveRecord
     {
         return [
             [['sceneId', 'action', 'segueLocationId', 'segueSceneId', 'cost'], 'integer'],
-            [['answer', 'text'], 'string'],
+            [['text', 'answer'], 'string'],
             [['createdAt', 'updateAt'], 'safe'],
             [['sceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['sceneId' => 'sceneId']],
             [['segueLocationId'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['segueLocationId' => 'locationId']],
@@ -124,5 +125,13 @@ class BaseSceneButton extends \yii\db\ActiveRecord
     public function getSegueScene()
     {
         return $this->hasOne(Scene::className(), ['sceneId' => 'segueSceneId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserPressedButtons()
+    {
+        return $this->hasMany(UserPressedButton::className(), ['sceneButtonId' => 'sceneButtonId']);
     }
 }
