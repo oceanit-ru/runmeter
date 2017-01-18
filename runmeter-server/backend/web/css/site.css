@@ -73,7 +73,19 @@ a.desc:after {
 }
 
 .grid-view td {
-    white-space: nowrap;
+    white-space: normal;
+    word-break: break-all;
+}
+
+.kv-grid-table td {
+    white-space: normal;
+    word-break: break-all;
+}
+
+
+.detail-view td {
+    white-space: normal;
+    word-break: break-all;
 }
 
 .grid-view .filters input,

@@ -11,6 +11,8 @@ use common\models\db\SceneButton;
 use yii\bootstrap\ActiveForm;
 use kartik\widgets\Select2;
 use yii\helpers\Html;
+use kartik\widgets\DepDrop;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\SceneButton */
@@ -31,6 +33,7 @@ use yii\helpers\Html;
 		]);
 
 		echo Html::activeHiddenInput($modelConditionsVisitLocation, 'sceneButtonId');
+		
 		echo $form->field($modelConditionsVisitLocation, 'locationId')->widget(Select2::classname(), [
 			'data' => ArrayHelper::map(Location::find()->where(['screenplayId' => $model->scene->location->screenplayId])->all(), 'locationId', 'name'),
 			'options' => [
@@ -142,12 +145,47 @@ use yii\helpers\Html;
 		]);
 
 		echo Html::activeHiddenInput($modelConditionsLoadScene, 'sceneButtonId');
-		echo $form->field($modelConditionsLoadScene, 'sceneId')->widget(Select2::classname(), [
-			'data' => ArrayHelper::map(Scene::find()->where(['locationId' => $model->scene->locationId])->all(), 'sceneId', 'name'),
+		
+		echo '<label class="control-label">' . Yii::t('app', 'Локация') . '</label>';
+		echo Select2::widget([
+			'name' => 'loaction-select',
+			'data' => ArrayHelper::map(Location::find()->where(['screenplayId' => $model->scene->location->screenplayId])->all(), 'locationId', 'name'),
 			'options' => [
-				'placeholder' => Yii::t('app', 'Выберите сцену ...')
+				'id'=>'location-id',
+				'placeholder' => Yii::t('app', 'Выберите локацию')
+			],
+			'pluginOptions' => [
+				'allowClear' => true,
+			],
+		]);
+
+		echo Html::hiddenInput('input-sceneId', $modelConditionsLoadScene->sceneId, ['id'=>'input-sceneId']);
+		echo Html::hiddenInput('input-locationId', isset($modelConditionsLoadScene->scene->locationId) ? $modelConditionsLoadScene->scene->locationId : NULL, ['id'=>'input-locationId']);
+
+		// Child # 1
+		echo $form->field($modelConditionsLoadScene, 'sceneId')->widget(DepDrop::classname(), [
+			'options' => [
+				'placeholder' => Yii::t('app', 'Выберите сцену')
+				],
+			'type' => DepDrop::TYPE_SELECT2,
+			'select2Options'=>[
+				'pluginOptions'=>['allowClear'=>true]
+			],
+			'pluginOptions'=>[
+				'initialize'=>true,
+				'depends'=>['location-id'],
+				'url'=>Url::to(['/scenes/scenes']),
+				'loadingText' => Yii::t('app', 'загружаем список сцен ...'),
+				'params'=>['input-sceneId', 'input-locationId']
 			]
-		])->label('Сцена');
+		])->label(Yii::t('app', 'Сцена'));
+			
+//		echo $form->field($modelConditionsLoadScene, 'sceneId')->widget(Select2::classname(), [
+//			'data' => ArrayHelper::map(Scene::find()->where(['locationId' => $model->scene->locationId])->all(), 'sceneId', 'name'),
+//			'options' => [
+//				'placeholder' => Yii::t('app', 'Выберите сцену ...')
+//			]
+//		])->label('Сцена');
 
 		echo $form->field($modelConditionsLoadScene, 'condition')->widget(Select2::classname(), [
 			'data' => ['Нет', 'Да'],
@@ -253,12 +291,70 @@ use yii\helpers\Html;
 		]);
 
 		echo Html::activeHiddenInput($modelConditionsPressedButton, 'sceneButtonId');
-		echo $form->field($modelConditionsPressedButton, 'verifiableSceneButtonId')->widget(Select2::classname(), [
-			'data' => ArrayHelper::map(SceneButton::find()->where(['sceneId' => $model->sceneId])->all(), 'sceneButtonId', 'shortText'),
+		
+		echo '<label class="control-label">' . Yii::t('app', 'Локация') . '</label>';
+		echo Select2::widget([
+			'name' => 'loaction-select-2',
+			'data' => ArrayHelper::map(Location::find()->where(['screenplayId' => $model->scene->location->screenplayId])->all(), 'locationId', 'name'),
 			'options' => [
-				'placeholder' => Yii::t('app', 'Выберите кнопку ...')
+				'id'=>'location-id-2',
+				'placeholder' => Yii::t('app', 'Выберите локацию')
+			],
+			'pluginOptions' => [
+				'allowClear' => true,
+			],
+		]);
+
+		echo Html::hiddenInput('input-verifiableSceneButtonId', $modelConditionsPressedButton->verifiableSceneButtonId, ['id'=>'input-verifiableSceneButtonId']);
+		echo Html::hiddenInput('input-sceneId-2', isset($modelConditionsPressedButton->verifiableSceneButton->sceneId) ? $modelConditionsPressedButton->verifiableSceneButton->sceneId : NULL, ['id'=>'input-sceneId-2']);
+		echo Html::hiddenInput('input-locationId-2', isset($modelConditionsPressedButton->verifiableSceneButton->scene->locationId) ? $modelConditionsPressedButton->verifiableSceneButton->scene->locationId : NULL, ['id'=>'input-locationId-2']);
+
+		// Child # 1
+		echo '<label class="control-label">' . Yii::t('app', 'Сцена') . '</label>';
+		echo DepDrop::widget([
+			'name' => 'scene-select',
+			'options' => [
+				'id'=>'scene-id',
+				'placeholder' => Yii::t('app', 'Выберите сцену')
+				],
+			'type' => DepDrop::TYPE_SELECT2,
+			'select2Options'=>[
+				'pluginOptions'=>['allowClear'=>true]
+			],
+			'pluginOptions'=>[
+				'initialize'=>true,
+				'depends'=>['location-id-2'],
+				'url'=>Url::to(['/scenes/scenes']),
+				'loadingText' => Yii::t('app', 'загружаем список сцен ...'),
+				'params'=>['input-sceneId-2', 'input-locationId-2']
 			]
-		])->label('Кнопка');
+		]);
+		
+		// Child # 2
+		echo $form->field($modelConditionsPressedButton, 'verifiableSceneButtonId')->widget(DepDrop::classname(), [
+			'options' => [
+				'placeholder' => Yii::t('app', 'Выберите кнопку')
+				],
+			'type' => DepDrop::TYPE_SELECT2,
+			'select2Options'=>[
+				'pluginOptions'=>['allowClear'=>true]
+			],
+			'pluginOptions'=>[
+				'initialize'=>true,
+				'depends'=>['scene-id'],
+				'url'=>Url::to(['/scene-buttons/scene-buttons']),
+				'loadingText' => Yii::t('app', 'загружаем список кнопок ...'),
+				'params'=>['input-verifiableSceneButtonId', 'input-sceneId-2']
+			]
+		])->label(Yii::t('app', 'Кнопка'));
+		
+		
+//		echo $form->field($modelConditionsPressedButton, 'verifiableSceneButtonId')->widget(Select2::classname(), [
+//			'data' => ArrayHelper::map(SceneButton::find()->where(['sceneId' => $model->sceneId])->all(), 'sceneButtonId', 'shortText'),
+//			'options' => [
+//				'placeholder' => Yii::t('app', 'Выберите кнопку ...')
+//			]
+//		])->label('Кнопка');
 
 		echo $form->field($modelConditionsPressedButton, 'condition')->widget(Select2::classname(), [
 			'data' => ['Нет', 'Да'],

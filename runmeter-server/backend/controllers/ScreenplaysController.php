@@ -12,22 +12,8 @@ use yii\filters\VerbFilter;
 /**
  * ScreenplaysController implements the CRUD actions for Screenplay model.
  */
-class ScreenplaysController extends Controller
+class ScreenplaysController extends PrivateController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Lists all Screenplay models.

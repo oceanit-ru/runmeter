@@ -10,6 +10,10 @@ return [
 			'datetimeFormat' => 'Y-M-d H:i:s',
 			'dateFormat' => 'Y-M-d',
 		],
+		
 	],
+	'timeZone' => 'Europe/Moscow',
+	'language' => 'ru-RU',
+	'sourceLanguage' => 'ru-RU'
 	
 ];

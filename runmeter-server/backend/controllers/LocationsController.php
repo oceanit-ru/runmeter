@@ -12,22 +12,8 @@ use yii\filters\VerbFilter;
 /**
  * LocationsController implements the CRUD actions for Location model.
  */
-class LocationsController extends Controller
+class LocationsController extends PrivateController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Lists all Location models.

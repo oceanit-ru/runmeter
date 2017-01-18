@@ -13,45 +13,52 @@ use common\models\db\ConditionLoadScene;
 use common\models\db\ConditionPressedButton;
 use kartik\grid\EditableColumnAction;
 use yii\helpers\Json;
+use yii\helpers\ArrayHelper;
 
 /**
  * SceneButtonsController implements the CRUD actions for SceneButton model.
  */
-class SceneButtonsController extends Controller
+class SceneButtonsController extends PrivateController
 {
-
+	public function beforeAction($action)
+    {
+        if (in_array($action->id, ['scene-buttons'])) {
+            $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
+    }
 	/**
 	 * @inheritdoc
 	 */
 	public function behaviors()
 	{
-		return [
-			'verbs' => [
+		$behaviors = parent::behaviors();
+		$behaviors['verbs'] = [
 				'class' => VerbFilter::className(),
 				'actions' => [
 					'delete' => ['POST'],
-					'edit-condition-visit-location' => [			// identifier for your editable action
+					'edit-condition-visit-location' => [   // identifier for your editable action
 						'class' => EditableColumnAction::className(), // action class name
 						'modelClass' => ConditionVisitLocation::className(), // the update model class
 						'method' => 'POST'
 					],
 					'add-conditions-visit-location' => ['POST'],
 					'delete-visit-vocation' => ['POST'],
-					'edit-condition-load-scene' => [			// identifier for your editable action
+					'edit-condition-load-scene' => [   // identifier for your editable action
 						'class' => EditableColumnAction::className(), // action class name
 						'modelClass' => ConditionLoadScene::className(), // the update model class
 						'method' => 'POST'
 					],
 					'add-conditions-load-scene' => ['POST'],
-					'edit-condition-pressed-button' => [			// identifier for your editable action
+					'edit-condition-pressed-button' => [   // identifier for your editable action
 						'class' => EditableColumnAction::className(), // action class name
 						'modelClass' => ConditionPressedButton::className(), // the update model class
 						'method' => 'POST'
 					],
 					'add-conditions-pressed-button' => ['POST']
 				],
-			],
-		];
+			];
+		return $behaviors;
 	}
 
 	/**
@@ -257,6 +264,45 @@ class SceneButtonsController extends Controller
 		} else {
 			throw new NotFoundHttpException('The requested page does not exist.');
 		}
+	}
+	
+	// SCENE_BUTTONS LIST
+	public function actionSceneButtons()
+	{
+		$out = [];
+		if (isset($_POST['depdrop_parents'])) {
+			$parents = $_POST['depdrop_parents'];
+			if ($parents != null) {
+				$selected = '';
+				$sceneId = $parents[0];
+				$sceneButtonId = -1;
+				if (!empty($_POST['depdrop_params'])) {
+					$params = $_POST['depdrop_params'];
+					$sceneButtonId = $params['0']; // get the value of input-type-1
+					$sceneIdModel = $params['1']; // get the value of input-type-1
+				}
+				$sceneButtons = ArrayHelper::map(SceneButton::find()->where(['sceneId' => $sceneId])->all(), 'sceneButtonId', 'shortText');
+				foreach ($sceneButtons as $key => $value) {
+					if (empty($selected) && isset($params)) {
+						$selected = '' . $key;
+					}
+					$out[] = ['id' => $key, 'name' => $value];
+					if (($key == $sceneButtonId) && ($sceneIdModel == $sceneId)) {
+						$selected = '' . $key;
+					}
+				}
+				\Yii::error(Json::encode(['output' => $out, 'selected' => $selected]));
+				// the getSubCatList function will query the database based on the
+				// cat_id and return an array like below:
+				// [
+				//    ['id'=>'<sub-cat-id-1>', 'name'=>'<sub-cat-name1>'],
+				//    ['id'=>'<sub-cat_id_2>', 'name'=>'<sub-cat-name2>']
+				// ]
+				echo Json::encode(['output' => $out, 'selected' => $selected]);
+				return;
+			}
+		}
+		echo Json::encode(['output' => '', 'selected' => '']);
 	}
 
 }

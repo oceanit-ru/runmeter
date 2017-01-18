@@ -14,7 +14,7 @@ use yii\helpers\Json;
 /**
  * ScenesController implements the CRUD actions for Scene model.
  */
-class ScenesController extends Controller
+class ScenesController extends PrivateController
 {
 	/**
 	 * @inheritdoc
@@ -26,22 +26,6 @@ class ScenesController extends Controller
         }
         return parent::beforeAction($action);
     }
-	
-	
-	/**
-	 * @inheritdoc
-	 */
-	public function behaviors()
-	{
-		return [
-			'verbs' => [
-				'class' => VerbFilter::className(),
-				'actions' => [
-					'delete' => ['POST'],
-				],
-			],
-		];
-	}
 
 	/**
 	 * Lists all Scene models.
@@ -139,7 +123,7 @@ class ScenesController extends Controller
 		}
 	}
 
-	// CITY LIST
+	// SCENES LIST
 	public function actionScenes()
 	{
 		$out = [];

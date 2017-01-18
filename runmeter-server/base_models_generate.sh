@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Base
+php yii gii/model --tableName=user --modelClass=BaseUser --ns="common\models\db" --overwrite=1 --interactive=0
+
 # Screenplay
 php yii gii/model --tableName=screenplay --modelClass=BaseScreenplay --baseClass="common\models\db\TranslatableModel" --ns="common\models\db" --overwrite=1 --interactive=0
 php yii gii/model --tableName=location --modelClass=BaseLocation --baseClass="common\models\db\TranslatableModel" --ns="common\models\db" --overwrite=1 --interactive=0
