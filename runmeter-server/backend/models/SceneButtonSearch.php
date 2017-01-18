@@ -6,72 +6,69 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\db\SceneButton;
+use common\models\db\SceneButtonTranslation;
 
 /**
  * SceneButtonSearch represents the model behind the search form about `common\models\db\SceneButton`.
  */
 class SceneButtonSearch extends SceneButton
 {
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['sceneButtonId', 'sceneId', 'action', 'segueLocationId', 'segueSceneId', 'cost'], 'integer'],
-            [['text', 'answer', 'createdAt', 'updateAt'], 'safe'],
-        ];
-    }
 
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
+			[['sceneButtonId', 'sceneId', 'action', 'segueLocationId', 'segueSceneId', 'cost'], 'integer'],
+			[['text', 'answer', 'createdAt', 'updateAt'], 'safe'],
+		];
+	}
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
-    public function search($params, $sceneId = null)
-    {
-        $query = SceneButton::find();
+	/**
+	 * @inheritdoc
+	 */
+	public function scenarios()
+	{
+		// bypass scenarios() implementation in the parent class
+		return Model::scenarios();
+	}
 
-        // add conditions that should always apply here
+	/**
+	 * Creates data provider instance with search query applied
+	 *
+	 * @param array $params
+	 *
+	 * @return ActiveDataProvider
+	 */
+	public function search($params, $sceneId = null)
+	{
+		$query = SceneButton::find()->leftJoin(SceneButtonTranslation::tableName(), SceneButtonTranslation::tableName() . '.sceneButtonId = ' . SceneButton::tableName() . '.sceneButtonId');
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+		// add conditions that should always apply here
 
-        $this->load($params);
+		$dataProvider = new ActiveDataProvider([
+			'query' => $query,
+		]);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
+		$this->load($params);
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'sceneButtonId' => $this->sceneButtonId,
-            'sceneId' => ($sceneId !== null) ? $sceneId : $this->sceneId,
-            'action' => $this->action,
-            'segueLocationId' => $this->segueLocationId,
-            'segueSceneId' => $this->segueSceneId,
-            'cost' => $this->cost,
-            'createdAt' => $this->createdAt,
-            'updateAt' => $this->updateAt,
-        ]);
+		// grid filtering conditions
+		$query->andFilterWhere([
+			SceneButton::tableName() . '.sceneButtonId' => $this->sceneButtonId,
+			SceneButton::tableName() . '.sceneId' => ($sceneId !== null) ? $sceneId : $this->sceneId,
+			SceneButton::tableName() . '.action' => $this->action,
+			SceneButton::tableName() . '.segueLocationId' => $this->segueLocationId,
+			SceneButton::tableName() . '.segueSceneId' => $this->segueSceneId,
+			SceneButton::tableName() . '.cost' => $this->cost,
+			SceneButton::tableName() . '.createdAt' => $this->createdAt,
+			SceneButton::tableName() . '.updateAt' => $this->updateAt,
+		]);
 
-        $query->andFilterWhere(['like', 'text', $this->text])
-            ->andFilterWhere(['like', 'answer', $this->answer]);
+		$query->andFilterWhere(['like', SceneButtonTranslation::tableName() . '.text', $this->text])
+				->andFilterWhere(['like', SceneButtonTranslation::tableName() . '.answer', $this->answer]);
 
-        return $dataProvider;
-    }
+		return $dataProvider;
+	}
+
 }

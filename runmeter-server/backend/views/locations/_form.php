@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\widgets\FileInput;
+use common\widgets\translatableTextInput\TranslatableTextInput;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Location */
@@ -13,7 +14,17 @@ use kartik\widgets\FileInput;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+	<?=
+		TranslatableTextInput::widget([
+			'model' => $model,
+			'attribute' => 'name',
+			'languageList' => [
+				['language' => 'ru-RU', 'label' => 'Русский'],
+				['language' => 'en-US', 'label' => 'English'],
+			],
+			'form' => $form
+		])
+	?>
 
     <?= $form->field($model, 'number')->textInput() ?>
 

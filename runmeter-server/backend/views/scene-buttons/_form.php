@@ -8,6 +8,7 @@ use kartik\widgets\Select2;
 use kartik\widgets\DepDrop;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use common\widgets\translatableTextArea\TranslatableTextArea;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\SceneButton */
@@ -18,7 +19,17 @@ use yii\helpers\Url;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
+	<?=
+		TranslatableTextArea::widget([
+			'model' => $model,
+			'attribute' => 'text',
+			'languageList' => [
+				['language' => 'ru-RU', 'label' => 'Русский'],
+				['language' => 'en-US', 'label' => 'English'],
+			],
+			'form' => $form
+		])
+	?>
 
 	<?php
 		echo $form->field($model, 'action')->widget(Select2::classname(), [
@@ -32,7 +43,17 @@ use yii\helpers\Url;
 		])->label(Yii::t('app', 'Тип'));
 	?>
 
-    <?= $form->field($model, 'answer')->textarea(['rows' => 6]) ?>
+	<?=
+		TranslatableTextArea::widget([
+			'model' => $model,
+			'attribute' => 'answer',
+			'languageList' => [
+				['language' => 'ru-RU', 'label' => 'Русский'],
+				['language' => 'en-US', 'label' => 'English'],
+			],
+			'form' => $form
+		])
+	?>
 
 	<?php
 		echo $form->field($model, 'segueLocationId')->widget(Select2::classname(), [

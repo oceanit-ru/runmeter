@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\db\Location;
+use common\models\db\LocationTranslation;
 
 /**
  * LocationSearch represents the model behind the search form about `common\models\db\Location`.
@@ -40,8 +41,8 @@ class LocationSearch extends Location
      * @return ActiveDataProvider
      */
     public function search($params, $screenplayId = null)
-    {
-        $query = Location::find();
+    {		
+		$query = Location::find()->leftJoin(LocationTranslation::tableName(), LocationTranslation::tableName() . '.locationId = ' . Location::tableName() . '.locationId');
 
         // add conditions that should always apply here
 
@@ -51,23 +52,17 @@ class LocationSearch extends Location
 
         $this->load($params);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
         // grid filtering conditions
         $query->andFilterWhere([
-            'locationId' => $this->locationId,
-			'screenplayId' => isset($screenplayId) ? $screenplayId : $this->screenplayId,
-            'number' => $this->number,
-            'createdAt' => $this->createdAt,
-            'updateAt' => $this->updateAt,
+            Location::tableName() . '.locationId' => $this->locationId,
+			Location::tableName() . '.screenplayId' => isset($screenplayId) ? $screenplayId : $this->screenplayId,
+            Location::tableName() . '.number' => $this->number,
+            Location::tableName() . '.createdAt' => $this->createdAt,
+            Location::tableName() . '.updateAt' => $this->updateAt,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'image', $this->image]);
+        $query->andFilterWhere(['like', LocationTranslation::tableName() . '.name', $this->name])
+            ->andFilterWhere(['like', Location::tableName() . '.image', $this->image]);
 
         return $dataProvider;
     }

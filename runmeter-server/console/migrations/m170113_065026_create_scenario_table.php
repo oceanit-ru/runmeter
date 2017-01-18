@@ -15,7 +15,6 @@ class m170113_065026_create_scenario_table extends Migration
 	{
 		$this->createTable('screenplay', [
 			'screenplayId' => $this->primaryKey(),
-			'name' => $this->string(),
 			'createdAt' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')->notNull(),
 			'updateAt' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')->notNull()
 		]);

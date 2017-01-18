@@ -9,9 +9,7 @@ use Yii;
  *
  * @property integer $sceneButtonId
  * @property integer $sceneId
- * @property string $text
  * @property integer $action
- * @property string $answer
  * @property integer $segueLocationId
  * @property integer $segueSceneId
  * @property integer $cost
@@ -25,9 +23,10 @@ use Yii;
  * @property Scene $scene
  * @property Location $segueLocation
  * @property Scene $segueScene
+ * @property SceneButtonTranslation[] $sceneButtonTranslations
  * @property UserPressedButton[] $userPressedButtons
  */
-class BaseSceneButton extends \yii\db\ActiveRecord
+class BaseSceneButton extends \common\models\db\TranslatableModel
 {
     /**
      * @inheritdoc
@@ -44,7 +43,6 @@ class BaseSceneButton extends \yii\db\ActiveRecord
     {
         return [
             [['sceneId', 'action', 'segueLocationId', 'segueSceneId', 'cost'], 'integer'],
-            [['text', 'answer'], 'string'],
             [['createdAt', 'updateAt'], 'safe'],
             [['sceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['sceneId' => 'sceneId']],
             [['segueLocationId'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['segueLocationId' => 'locationId']],
@@ -60,9 +58,7 @@ class BaseSceneButton extends \yii\db\ActiveRecord
         return [
             'sceneButtonId' => 'Scene Button ID',
             'sceneId' => 'Scene ID',
-            'text' => 'Text',
             'action' => 'Action',
-            'answer' => 'Answer',
             'segueLocationId' => 'Segue Location ID',
             'segueSceneId' => 'Segue Scene ID',
             'cost' => 'Cost',
@@ -125,6 +121,14 @@ class BaseSceneButton extends \yii\db\ActiveRecord
     public function getSegueScene()
     {
         return $this->hasOne(Scene::className(), ['sceneId' => 'segueSceneId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSceneButtonTranslations()
+    {
+        return $this->hasMany(SceneButtonTranslation::className(), ['sceneButtonId' => 'sceneButtonId']);
     }
 
     /**

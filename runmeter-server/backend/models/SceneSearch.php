@@ -6,75 +6,67 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\db\Scene;
+use common\models\db\SceneTranslation;
 
 /**
  * SceneSearch represents the model behind the search form about `common\models\db\Scene`.
  */
 class SceneSearch extends Scene
 {
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['sceneId', 'locationId', 'number', 'displayedButtonCount'], 'integer'],
-            [['name', 'createdAt', 'updateAt'], 'safe'],
-        ];
-    }
 
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
+			[['sceneId', 'locationId', 'number', 'displayedButtonCount'], 'integer'],
+			[['name', 'createdAt', 'updateAt'], 'safe'],
+		];
+	}
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
-    public function search($params,  $locationId = null)
-    {
-        $query = Scene::find();
+	/**
+	 * @inheritdoc
+	 */
+	public function scenarios()
+	{
+		// bypass scenarios() implementation in the parent class
+		return Model::scenarios();
+	}
 
-        // add conditions that should always apply here
+	/**
+	 * Creates data provider instance with search query applied
+	 *
+	 * @param array $params
+	 *
+	 * @return ActiveDataProvider
+	 */
+	public function search($params, $locationId = null)
+	{
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+		$query = Scene::find()->leftJoin(SceneTranslation::tableName(), SceneTranslation::tableName() . '.sceneId = ' . Scene::tableName() . '.sceneId');
 
-        $this->load($params);
+		// add conditions that should always apply here
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
+		$dataProvider = new ActiveDataProvider([
+			'query' => $query,
+		]);
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'sceneId' => $this->sceneId,
-            'locationId' => isset($locationId) ? $locationId : $this->locationId,
-            'number' => $this->number,
-            'displayedButtonCount' => $this->displayedButtonCount,
-            'createdAt' => $this->createdAt,
-            'updateAt' => $this->updateAt,
-        ]);
+		$this->load($params);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+		// grid filtering conditions
+		$query->andFilterWhere([
+			Scene::tableName() . '.sceneId' => $this->sceneId,
+			Scene::tableName() . '.locationId' => isset($locationId) ? $locationId : $this->locationId,
+			Scene::tableName() . '.number' => $this->number,
+			Scene::tableName() . '.displayedButtonCount' => $this->displayedButtonCount,
+			Scene::tableName() . '.createdAt' => $this->createdAt,
+			Scene::tableName() . '.updateAt' => $this->updateAt,
+		]);
 
-        return $dataProvider;
-    }
-	
-	
-    public function getCount() 
-    {
+		$query->andFilterWhere(['like', SceneTranslation::tableName() . '.name', $this->name]);
 
-    }
+		return $dataProvider;
+	}
+
 }

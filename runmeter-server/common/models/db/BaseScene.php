@@ -9,7 +9,6 @@ use Yii;
  *
  * @property integer $sceneId
  * @property integer $locationId
- * @property string $name
  * @property integer $number
  * @property integer $displayedButtonCount
  * @property string $createdAt
@@ -19,9 +18,10 @@ use Yii;
  * @property Location $location
  * @property SceneButton[] $sceneButtons
  * @property SceneButton[] $sceneButtons0
+ * @property SceneTranslation[] $sceneTranslations
  * @property UserLoadScene[] $userLoadScenes
  */
-class BaseScene extends \yii\db\ActiveRecord
+class BaseScene extends \common\models\db\TranslatableModel
 {
     /**
      * @inheritdoc
@@ -39,7 +39,6 @@ class BaseScene extends \yii\db\ActiveRecord
         return [
             [['locationId', 'number', 'displayedButtonCount'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
-            [['name'], 'string', 'max' => 255],
             [['locationId'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['locationId' => 'locationId']],
         ];
     }
@@ -52,7 +51,6 @@ class BaseScene extends \yii\db\ActiveRecord
         return [
             'sceneId' => 'Scene ID',
             'locationId' => 'Location ID',
-            'name' => 'Name',
             'number' => 'Number',
             'displayedButtonCount' => 'Displayed Button Count',
             'createdAt' => 'Created At',
@@ -90,6 +88,14 @@ class BaseScene extends \yii\db\ActiveRecord
     public function getSceneButtons0()
     {
         return $this->hasMany(SceneButton::className(), ['segueSceneId' => 'sceneId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSceneTranslations()
+    {
+        return $this->hasMany(SceneTranslation::className(), ['sceneId' => 'sceneId']);
     }
 
     /**

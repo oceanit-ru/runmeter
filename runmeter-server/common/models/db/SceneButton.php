@@ -8,6 +8,8 @@
 
 namespace common\models\db;
 
+use creocoder\translateable\TranslateableBehavior;
+
 define("ACTION_TYPE_TEXT", 0);
 define("ACTION_TYPE_QUESTION", 1);
 define("ACTION_TYPE_SEGUE", 2);
@@ -20,13 +22,46 @@ define("ACTION_TYPE_SEGUE", 2);
 class SceneButton extends BaseSceneButton
 {
 
-	const ACTION_TYPE = [ 
+	protected $translateModelName = 'SceneButtonTranslation';
+
+	const ACTION_TYPE = [
 		ACTION_TYPE_TEXT => 'Текст',
 		ACTION_TYPE_QUESTION => 'Вопрос',
 		ACTION_TYPE_SEGUE => 'Переход'
 	];
-	
-	public function insert($runValidation = true, $attributes = null) {
+
+	/**
+	 * @inheritdoc
+	 */
+	public function behaviors()
+	{
+		return [
+			'translateable' => [
+				'class' => TranslateableBehavior::className(),
+				'translationAttributes' => ['text', 'answer'],
+			// translationRelation => 'translations',
+			// translationLanguageAttribute => 'language',
+			]
+		];
+	}
+
+	public function transactions()
+	{
+		return [
+			self::SCENARIO_DEFAULT => self::OP_INSERT | self::OP_UPDATE,
+		];
+	}
+
+	public function getTranslations()
+	{
+		return $this->hasMany(SceneButtonTranslation::className(), ['sceneButtonId' => 'sceneButtonId']);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function insert($runValidation = true, $attributes = null)
+	{
 		$result = parent::insert($runValidation, $attributes);
 		if ($result) {
 			$defaultCondition = new ConditionPressedButton();
@@ -56,7 +91,7 @@ class SceneButton extends BaseSceneButton
 			'updateAt' => 'Обновлен',
 		];
 	}
-	
+
 	/**
 	 * 
 	 * @return mixed[]
@@ -94,11 +129,19 @@ class SceneButton extends BaseSceneButton
 		return $serializedArray;
 	}
 
+	/**
+	 * 
+	 * @return string
+	 */
 	public function getShortText()
 	{
 		return \common\components\StringHelper::truncate($this->text, 20);
 	}
 
+	/**
+	 * 
+	 * @return string
+	 */
 	public function getActionAsString()
 	{
 		$actionTypes = static::ACTION_TYPE;

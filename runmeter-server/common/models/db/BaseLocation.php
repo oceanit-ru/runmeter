@@ -9,7 +9,6 @@ use Yii;
  *
  * @property integer $locationId
  * @property integer $screenplayId
- * @property string $name
  * @property integer $number
  * @property string $image
  * @property string $createdAt
@@ -17,11 +16,12 @@ use Yii;
  *
  * @property ConditionVisitLocation[] $conditionVisitLocations
  * @property Screenplay $screenplay
+ * @property LocationTranslation[] $locationTranslations
  * @property Scene[] $scenes
  * @property SceneButton[] $sceneButtons
  * @property UserVisitLocation[] $userVisitLocations
  */
-class BaseLocation extends \yii\db\ActiveRecord
+class BaseLocation extends \common\models\db\TranslatableModel
 {
     /**
      * @inheritdoc
@@ -39,7 +39,7 @@ class BaseLocation extends \yii\db\ActiveRecord
         return [
             [['screenplayId', 'number'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
-            [['name', 'image'], 'string', 'max' => 255],
+            [['image'], 'string', 'max' => 255],
             [['screenplayId'], 'exist', 'skipOnError' => true, 'targetClass' => Screenplay::className(), 'targetAttribute' => ['screenplayId' => 'screenplayId']],
         ];
     }
@@ -52,7 +52,6 @@ class BaseLocation extends \yii\db\ActiveRecord
         return [
             'locationId' => 'Location ID',
             'screenplayId' => 'Screenplay ID',
-            'name' => 'Name',
             'number' => 'Number',
             'image' => 'Image',
             'createdAt' => 'Created At',
@@ -74,6 +73,14 @@ class BaseLocation extends \yii\db\ActiveRecord
     public function getScreenplay()
     {
         return $this->hasOne(Screenplay::className(), ['screenplayId' => 'screenplayId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLocationTranslations()
+    {
+        return $this->hasMany(LocationTranslation::className(), ['locationId' => 'locationId']);
     }
 
     /**

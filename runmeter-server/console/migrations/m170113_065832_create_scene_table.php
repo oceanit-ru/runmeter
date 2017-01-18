@@ -16,7 +16,6 @@ class m170113_065832_create_scene_table extends Migration
 		$this->createTable('scene', [
 			'sceneId' => $this->primaryKey(),
 			'locationId' => $this->integer(),
-			'name' => $this->string(),
 			'number' => $this->integer(),
 			'displayedButtonCount' => $this->integer(),
 			'createdAt' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')->notNull(),

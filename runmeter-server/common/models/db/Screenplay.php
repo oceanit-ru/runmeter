@@ -8,6 +8,8 @@
 
 namespace common\models\db;
 
+use creocoder\translateable\TranslateableBehavior;
+
 /**
  * Description of Scenario
  *
@@ -15,19 +17,49 @@ namespace common\models\db;
  */
 class Screenplay extends BaseScreenplay
 {
+
+	protected $translateModelName = 'ScreenplayTranslation';
+
 	/**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'screenplayId' => 'ID',
-            'name' => 'Название',
-            'createdAt' => 'Создано',
-            'updateAt' => 'Обновлено',
-        ];
-    }
-	
+	 * @inheritdoc
+	 */
+	public function behaviors()
+	{
+		return [
+			'translateable' => [
+				'class' => TranslateableBehavior::className(),
+				'translationAttributes' => ['name'],
+			// translationRelation => 'translations',
+			// translationLanguageAttribute => 'language',
+			]
+		];
+	}
+
+	public function transactions()
+	{
+		return [
+			self::SCENARIO_DEFAULT => self::OP_INSERT | self::OP_UPDATE,
+		];
+	}
+
+	public function getTranslations()
+	{
+		return $this->hasMany(ScreenplayTranslation::className(), ['screenplayId' => 'screenplayId']);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels()
+	{
+		return [
+			'screenplayId' => 'ID',
+			'name' => 'Название',
+			'createdAt' => 'Создано',
+			'updateAt' => 'Обновлено',
+		];
+	}
+
 	/**
 	 * 
 	 * @return mixed[]
@@ -56,16 +88,15 @@ class Screenplay extends BaseScreenplay
 		}
 		return $serializedArray;
 	}
-	
+
 	/**
 	 * 
 	 * @return Screenplay
 	 */
-	public static function getBaseScreenplay() 
+	public static function getBaseScreenplay()
 	{
 		//TODO impl
 		return static::find()->one();
 	}
-	
-	
+
 }

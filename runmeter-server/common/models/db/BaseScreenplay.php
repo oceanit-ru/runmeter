@@ -8,16 +8,16 @@ use Yii;
  * This is the model class for table "screenplay".
  *
  * @property integer $screenplayId
- * @property string $name
  * @property string $createdAt
  * @property string $updateAt
  *
  * @property Location[] $locations
+ * @property ScreenplayTranslation[] $screenplayTranslations
  * @property UserLoadScene[] $userLoadScenes
  * @property UserPressedButton[] $userPressedButtons
  * @property UserVisitLocation[] $userVisitLocations
  */
-class BaseScreenplay extends \yii\db\ActiveRecord
+class BaseScreenplay extends \common\models\db\TranslatableModel
 {
     /**
      * @inheritdoc
@@ -34,7 +34,6 @@ class BaseScreenplay extends \yii\db\ActiveRecord
     {
         return [
             [['createdAt', 'updateAt'], 'safe'],
-            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -45,7 +44,6 @@ class BaseScreenplay extends \yii\db\ActiveRecord
     {
         return [
             'screenplayId' => 'Screenplay ID',
-            'name' => 'Name',
             'createdAt' => 'Created At',
             'updateAt' => 'Update At',
         ];
@@ -57,6 +55,14 @@ class BaseScreenplay extends \yii\db\ActiveRecord
     public function getLocations()
     {
         return $this->hasMany(Location::className(), ['screenplayId' => 'screenplayId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getScreenplayTranslations()
+    {
+        return $this->hasMany(ScreenplayTranslation::className(), ['screenplayId' => 'screenplayId']);
     }
 
     /**

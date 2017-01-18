@@ -8,6 +8,7 @@
 
 namespace common\models\db;
 
+use creocoder\translateable\TranslateableBehavior;
 /**
  * Description of Scene
  *
@@ -15,6 +16,35 @@ namespace common\models\db;
  */
 class Scene extends BaseScene
 {
+	protected $translateModelName = 'SceneTranslation';
+	
+	/**
+     * @inheritdoc
+     */
+	public function behaviors()
+	{
+		return [
+			'translateable' => [
+				'class' => TranslateableBehavior::className(),
+				'translationAttributes' => ['name'],
+			// translationRelation => 'translations',
+			// translationLanguageAttribute => 'language',
+			]
+		];
+	}
+	
+	public function transactions()
+	{
+		return [
+			self::SCENARIO_DEFAULT => self::OP_INSERT | self::OP_UPDATE,
+		];
+	}
+
+	public function getTranslations()
+	{
+				return $this->hasMany(SceneTranslation::className(), ['sceneId' => 'sceneId']);
+	}
+	
 	/**
      * @inheritdoc
      */

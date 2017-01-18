@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "32aa87743ed2f832a0e5328233320a53",
-    "content-hash": "6b8b1547568c0b9c1dd65c4b4e11ee5e",
+    "hash": "2c7a56f91f0da6f88fc8c847600ea048",
+    "content-hash": "ddc04584754c238431602f9a71c914a4",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -307,6 +307,50 @@
                 "markdown-extra"
             ],
             "time": "2016-09-14 20:40:20"
+        },
+        {
+            "name": "creocoder/yii2-translateable",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/creocoder/yii2-translateable.git",
+                "reference": "a8ceca0a2b55c7087f46e3ffd57103172520f849"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/creocoder/yii2-translateable/zipball/a8ceca0a2b55c7087f46e3ffd57103172520f849",
+                "reference": "a8ceca0a2b55c7087f46e3ffd57103172520f849",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "phpunit/dbunit": "~1.0",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "creocoder\\translateable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Kochetov",
+                    "email": "creocoder@gmail.com"
+                }
+            ],
+            "description": "The translateable behavior for the Yii framework",
+            "keywords": [
+                "translateable",
+                "yii2"
+            ],
+            "time": "2015-02-26 03:19:24"
         },
         {
             "name": "ezyang/htmlpurifier",

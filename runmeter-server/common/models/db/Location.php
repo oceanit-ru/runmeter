@@ -8,6 +8,7 @@
 
 namespace common\models\db;
 
+use creocoder\translateable\TranslateableBehavior;
 use common\components\behaviors\ImageUploadBehavior;
 
 /**
@@ -17,9 +18,17 @@ use common\components\behaviors\ImageUploadBehavior;
  */
 class Location extends BaseLocation
 {
+	protected $translateModelName = 'LocationTranslation';
+	
 	public function behaviors()
 	{
 		return [
+			'translateable' => [
+				'class' => TranslateableBehavior::className(),
+				'translationAttributes' => ['name'],
+			// translationRelation => 'translations',
+			// translationLanguageAttribute => 'language',
+			],
 			'image-upload' => [
 				'class' => ImageUploadBehavior::class,
 				'attribute' => 'image',
@@ -35,6 +44,18 @@ class Location extends BaseLocation
 		];
 	}
 	
+	public function transactions()
+	{
+		return [
+			self::SCENARIO_DEFAULT => self::OP_INSERT | self::OP_UPDATE,
+		];
+	}
+
+	public function getTranslations()
+	{
+		return $this->hasMany(LocationTranslation::className(), ['locationId' => 'locationId']);
+	}
+	
 	/**
      * @inheritdoc
      */
@@ -43,7 +64,6 @@ class Location extends BaseLocation
         return [
             [['screenplayId', 'number'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
-            [['name'], 'string', 'max' => 255],
 			[['image'], 'file', 'extensions' => 'jpeg, jpg, gif, png'],
             [['screenplayId'], 'exist', 'skipOnError' => true, 'targetClass' => Screenplay::className(), 'targetAttribute' => ['screenplayId' => 'screenplayId']],
         ];

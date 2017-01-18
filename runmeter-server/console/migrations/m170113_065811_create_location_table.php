@@ -15,7 +15,6 @@ class m170113_065811_create_location_table extends Migration
         $this->createTable('location', [
             'locationId' => $this->primaryKey(),
 			'screenplayId' => $this->integer(),
-			'name' => $this->string(),
 			'number' => $this->integer(),
 			'image' => $this->string(),
 			'createdAt' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')->notNull(),

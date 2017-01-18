@@ -58,7 +58,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				['class' => 'yii\grid\SerialColumn'],
 
 				'locationId',
-				'screenplayId',
 				'name',
 				'number',
 				'image',

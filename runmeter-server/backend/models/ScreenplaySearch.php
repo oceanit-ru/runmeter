@@ -6,66 +6,64 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\db\Screenplay;
+use common\models\db\ScreenplayTranslation;
 
 /**
  * ScreenplaySearch represents the model behind the search form about `common\models\db\Screenplay`.
  */
 class ScreenplaySearch extends Screenplay
 {
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['screenplayId'], 'integer'],
-            [['name', 'createdAt', 'updateAt'], 'safe'],
-        ];
-    }
 
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
+			[['screenplayId'], 'integer'],
+			[['name', 'createdAt', 'updateAt'], 'safe'],
+		];
+	}
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
-    public function search($params)
-    {
-        $query = Screenplay::find();
+	/**
+	 * @inheritdoc
+	 */
+	public function scenarios()
+	{
+		// bypass scenarios() implementation in the parent class
+		return Model::scenarios();
+	}
 
-        // add conditions that should always apply here
+	/**
+	 * Creates data provider instance with search query applied
+	 *
+	 * @param array $params
+	 *
+	 * @return ActiveDataProvider
+	 */
+	public function search($params)
+	{
+		$query = Screenplay::find()->leftJoin(ScreenplayTranslation::tableName(), ScreenplayTranslation::tableName() . '.screenplayId = ' . Screenplay::tableName() . '.screenplayId');
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+		// add conditions that should always apply here
 
-        $this->load($params);
+		$dataProvider = new ActiveDataProvider([
+			'query' => $query,
+		]);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
+		$this->load($params);
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'screenplayId' => $this->screenplayId,
-            'createdAt' => $this->createdAt,
-            'updateAt' => $this->updateAt,
-        ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+		// grid filtering conditions
+		$query->andFilterWhere([
+			Screenplay::tableName() . '.screenplayId' => $this->screenplayId,
+			Screenplay::tableName() . '.createdAt' => $this->createdAt,
+			Screenplay::tableName() . '.updateAt' => $this->updateAt,
+		]);
 
-        return $dataProvider;
-    }
+		$query->andFilterWhere(['like', ScreenplayTranslation::tableName() . '.name', $this->name]);
+
+		return $dataProvider;
+	}
+
 }
