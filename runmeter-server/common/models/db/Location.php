@@ -94,12 +94,12 @@ class Location extends BaseLocation
 		return [
 			'locationId' => $this->locationId,
 			'screenplayId' => $this->screenplayId,
-			'name' => $this->name,
+			'name' => $this->translate(\Yii::$app->language)->name,
 			'number' => $this->number,
 			'image' => $this->getImageUrl(),
-			'scenes' => Scene::serializationOfArray($this->scenes),
 			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
 			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
+			'scenes' => Scene::serializationOfArray($this->scenes),
 		];
 	}
 

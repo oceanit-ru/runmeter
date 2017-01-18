@@ -101,17 +101,17 @@ class SceneButton extends BaseSceneButton
 		return [
 			'sceneButtonId' => $this->sceneButtonId,
 			'sceneId' => $this->sceneId,
-			'text' => $this->text,
+			'text' => $this->translate(\Yii::$app->language)->text,
 			'action' => $this->action,
-			'answer' => $this->answer,
+			'answer' => $this->translate(\Yii::$app->language)->answer,
 			'segueLocationId' => $this->segueLocationId,
 			'segueSceneId' => $this->segueSceneId,
 			'cost' => $this->cost,
+			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
+			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
 			'conditionPressedButtons' => ConditionPressedButton::serializationOfArray($this->conditionPressedButtons),
 			'conditionLoadScenes' => ConditionLoadScene::serializationOfArray($this->conditionLoadScenes),
 			'conditionVisitLocations' => ConditionVisitLocation::serializationOfArray($this->conditionVisitLocations),
-			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
-			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
 		];
 	}
 

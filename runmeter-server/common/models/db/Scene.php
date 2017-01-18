@@ -70,12 +70,12 @@ class Scene extends BaseScene
 		return [
 			'sceneId' => $this->sceneId,
 			'locationId' => $this->locationId,
-			'name' => $this->name,
+			'name' => $this->translate(\Yii::$app->language)->name,
 			'number' => $this->number,
 			'displayedButtonCount' => $this->displayedButtonCount,
-			'sceneButtons' => SceneButton::serializationOfArray($this->sceneButtons),
 			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
 			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
+			'sceneButtons' => SceneButton::serializationOfArray($this->sceneButtons),
 		];
 	}
 
