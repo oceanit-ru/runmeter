@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\bootstrap\Html as HtmlBoot;
 use yii\base\Model;
 use common\models\db\Language;
 use yii\bootstrap\Modal;
@@ -24,7 +25,7 @@ use yii\bootstrap\Modal;
 				. "<div class=\"input-group\">"
 					. "{input}\n"
 					. "<span class=\"input-group-addon btn btn-default modalButton\" type=\"button\" data-modal=\"$modalName\">"
-							. "<i class=\"fa fa-globe\" aria-hidden=\"true\"></i>"
+							. HtmlBoot::icon('globe')
 					. "</span>"
 				. "</div>\n"
 				. "{hint}\n"
