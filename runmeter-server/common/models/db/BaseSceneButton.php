@@ -9,9 +9,12 @@ use Yii;
  *
  * @property integer $sceneButtonId
  * @property integer $sceneId
+ * @property integer $number
  * @property integer $action
+ * @property integer $answerTextButtonId
  * @property integer $segueLocationId
  * @property integer $segueSceneId
+ * @property integer $showTextButtonId
  * @property integer $cost
  * @property string $createdAt
  * @property string $updateAt
@@ -20,9 +23,13 @@ use Yii;
  * @property ConditionPressedButton[] $conditionPressedButtons
  * @property ConditionPressedButton[] $conditionPressedButtons0
  * @property ConditionVisitLocation[] $conditionVisitLocations
+ * @property BaseSceneButton $answerTextButton
+ * @property BaseSceneButton[] $baseSceneButtons
  * @property Scene $scene
  * @property Location $segueLocation
  * @property Scene $segueScene
+ * @property BaseSceneButton $showTextButton
+ * @property BaseSceneButton[] $baseSceneButtons0
  * @property SceneButtonTranslation[] $sceneButtonTranslations
  * @property UserPressedButton[] $userPressedButtons
  */
@@ -42,11 +49,13 @@ class BaseSceneButton extends \common\models\db\TranslatableModel
     public function rules()
     {
         return [
-            [['sceneId', 'action', 'segueLocationId', 'segueSceneId', 'cost'], 'integer'],
+            [['sceneId', 'number', 'action', 'answerTextButtonId', 'segueLocationId', 'segueSceneId', 'showTextButtonId', 'cost'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
+            [['answerTextButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => BaseSceneButton::className(), 'targetAttribute' => ['answerTextButtonId' => 'sceneButtonId']],
             [['sceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['sceneId' => 'sceneId']],
             [['segueLocationId'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['segueLocationId' => 'locationId']],
             [['segueSceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['segueSceneId' => 'sceneId']],
+            [['showTextButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => BaseSceneButton::className(), 'targetAttribute' => ['showTextButtonId' => 'sceneButtonId']],
         ];
     }
 
@@ -58,9 +67,12 @@ class BaseSceneButton extends \common\models\db\TranslatableModel
         return [
             'sceneButtonId' => 'Scene Button ID',
             'sceneId' => 'Scene ID',
+            'number' => 'Number',
             'action' => 'Action',
+            'answerTextButtonId' => 'Answer Text Button ID',
             'segueLocationId' => 'Segue Location ID',
             'segueSceneId' => 'Segue Scene ID',
+            'showTextButtonId' => 'Show Text Button ID',
             'cost' => 'Cost',
             'createdAt' => 'Created At',
             'updateAt' => 'Update At',
@@ -102,6 +114,22 @@ class BaseSceneButton extends \common\models\db\TranslatableModel
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getAnswerTextButton()
+    {
+        return $this->hasOne(BaseSceneButton::className(), ['sceneButtonId' => 'answerTextButtonId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBaseSceneButtons()
+    {
+        return $this->hasMany(BaseSceneButton::className(), ['answerTextButtonId' => 'sceneButtonId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getScene()
     {
         return $this->hasOne(Scene::className(), ['sceneId' => 'sceneId']);
@@ -121,6 +149,22 @@ class BaseSceneButton extends \common\models\db\TranslatableModel
     public function getSegueScene()
     {
         return $this->hasOne(Scene::className(), ['sceneId' => 'segueSceneId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShowTextButton()
+    {
+        return $this->hasOne(BaseSceneButton::className(), ['sceneButtonId' => 'showTextButtonId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBaseSceneButtons0()
+    {
+        return $this->hasMany(BaseSceneButton::className(), ['showTextButtonId' => 'sceneButtonId']);
     }
 
     /**

@@ -23,7 +23,7 @@ class SceneButtonTranslation extends BaseSceneButtonTranslation
     {
         return [
             [['language'], 'required'],
-            [['text', 'answer'], 'string'],
+            [['text'], 'string'],
             [['language'], 'string', 'max' => 16],
             [['sceneButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => SceneButton::className(), 'targetAttribute' => ['sceneButtonId' => 'sceneButtonId']],
         ];

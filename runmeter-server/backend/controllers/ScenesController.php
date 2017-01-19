@@ -4,28 +4,51 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\db\Scene;
+use common\models\db\SceneButton;
 use backend\models\SceneSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+use kartik\grid\EditableColumnAction;
 
 /**
  * ScenesController implements the CRUD actions for Scene model.
  */
 class ScenesController extends PrivateController
 {
+
 	/**
 	 * @inheritdoc
 	 */
 	public function beforeAction($action)
-    {
-        if (in_array($action->id, ['scenes'])) {
-            $this->enableCsrfValidation = false;
-        }
-        return parent::beforeAction($action);
-    }
+	{
+		if (in_array($action->id, ['scenes'])) {
+			$this->enableCsrfValidation = false;
+		}
+		return parent::beforeAction($action);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function behaviors()
+	{
+		$behaviors = parent::behaviors();
+		$behaviors['verbs'] = [
+			'class' => VerbFilter::className(),
+			'actions' => [
+				'delete' => ['POST'],
+				'edit-scene-button' => [   // identifier for your editable action
+					'class' => EditableColumnAction::className(), // action class name
+					'modelClass' => SceneButton::className(), // the update model class
+					'method' => 'POST'
+				],
+			],
+		];
+		return $behaviors;
+	}
 
 	/**
 	 * Lists all Scene models.
@@ -120,6 +143,25 @@ class ScenesController extends PrivateController
 			return $model;
 		} else {
 			throw new NotFoundHttpException('The requested page does not exist.');
+		}
+	}
+
+	public function actionEditSceneButton()
+	{
+		if (Yii::$app->request->post('hasEditable')) {
+			$buttonId = Yii::$app->request->post('editableKey');
+			$model = SceneButton::findOne($buttonId);
+			$out = Json::encode(['output' => '', 'message' => '']);
+			$posted = current($_POST['SceneButton']);
+			$post = ['SceneButton' => $posted];
+			if ($model->load($post)) {
+				$model->save();
+				$output = '';
+				$out = Json::encode(['output' => $output, 'message' => '']);
+			}
+			// return ajax json encoded response and exit
+			echo $out;
+			return;
 		}
 	}
 

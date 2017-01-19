@@ -33,6 +33,7 @@ class BaseConditionLoadScene extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['sceneButtonId', 'sceneId', 'condition'], 'required'],
             [['sceneButtonId', 'sceneId', 'condition'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
             [['sceneButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => SceneButton::className(), 'targetAttribute' => ['sceneButtonId' => 'sceneButtonId']],

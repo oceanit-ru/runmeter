@@ -33,6 +33,7 @@ class BaseConditionPressedButton extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['sceneButtonId', 'verifiableSceneButtonId', 'condition'], 'required'],
             [['sceneButtonId', 'verifiableSceneButtonId', 'condition'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
             [['sceneButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => SceneButton::className(), 'targetAttribute' => ['sceneButtonId' => 'sceneButtonId']],

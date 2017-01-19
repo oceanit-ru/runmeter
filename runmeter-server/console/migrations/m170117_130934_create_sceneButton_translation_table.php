@@ -16,7 +16,6 @@ class m170117_130934_create_sceneButton_translation_table extends Migration
 			'sceneButtonId' => $this->integer()->notNull(),
 			'language' => $this->string(16)->notNull(),
 			'text' => $this->text(),
-			'answer' => $this->text(),
 		]);
 
 		$this->addPrimaryKey('', '{{%sceneButtonTranslation}}', ['sceneButtonId', 'language']);

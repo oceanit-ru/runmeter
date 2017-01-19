@@ -33,6 +33,7 @@ class BaseConditionVisitLocation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['sceneButtonId', 'locationId', 'condition'], 'required'],
             [['sceneButtonId', 'locationId', 'condition'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
             [['locationId'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['locationId' => 'locationId']],

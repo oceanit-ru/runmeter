@@ -38,7 +38,7 @@ class SceneButton extends BaseSceneButton
 		return [
 			'translateable' => [
 				'class' => TranslateableBehavior::className(),
-				'translationAttributes' => ['text', 'answer'],
+				'translationAttributes' => ['text'],
 			// translationRelation => 'translations',
 			// translationLanguageAttribute => 'language',
 			]
@@ -81,11 +81,13 @@ class SceneButton extends BaseSceneButton
 		return [
 			'sceneButtonId' => 'ID',
 			'sceneId' => 'Сцена',
+			'number' => 'Прядковый номер',
 			'text' => 'Текст',
 			'action' => 'Тип',
-			'answer' => 'Ответ',
+			'answerTextButtonId' => 'Ответ',
 			'segueLocationId' => 'Локация перехода',
 			'segueSceneId' => 'Сцена перехода',
+			'showTextButtonId' => 'Выбор текcта при переходе',
 			'cost' => 'Цена',
 			'createdAt' => 'Создан',
 			'updateAt' => 'Обновлен',
@@ -103,9 +105,10 @@ class SceneButton extends BaseSceneButton
 			'sceneId' => $this->sceneId,
 			'text' => $this->translate(\Yii::$app->language)->text,
 			'action' => $this->action,
-			'answer' => $this->translate(\Yii::$app->language)->answer,
+			'answer' => $this->answer,
 			'segueLocationId' => $this->segueLocationId,
 			'segueSceneId' => $this->segueSceneId,
+			'showTextButtonId' => $this->showTextButtonId,
 			'cost' => $this->cost,
 			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
 			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
@@ -147,5 +150,37 @@ class SceneButton extends BaseSceneButton
 		$actionTypes = static::ACTION_TYPE;
 		return $actionTypes[$this->action];
 	}
+	
+	/**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAnswerTextButton()
+    {
+        return $this->hasOne(SceneButton::className(), ['sceneButtonId' => 'answerTextButtonId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getQuestionButtons()
+    {
+        return $this->hasMany(SceneButton::className(), ['answerTextButtonId' => 'sceneButtonId']);
+    }
+	
+	/**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShowTextButton()
+    {
+        return $this->hasOne(BaseSceneButton::className(), ['sceneButtonId' => 'showTextButtonId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSegueButtons()
+    {
+        return $this->hasMany(BaseSceneButton::className(), ['showTextButtonId' => 'sceneButtonId']);
+    }
 
 }

@@ -276,12 +276,21 @@ class SceneButtonsController extends PrivateController
 				$selected = '';
 				$sceneId = $parents[0];
 				$sceneButtonId = -1;
+				$type = -1;
 				if (!empty($_POST['depdrop_params'])) {
 					$params = $_POST['depdrop_params'];
 					$sceneButtonId = $params['0']; // get the value of input-type-1
-					$sceneIdModel = $params['1']; // get the value of input-type-1
+					$sceneIdModel = $params['1']; // get the value of input-type-2
+					if (count($params) > 2) {
+						$type = $params['2'];
+					}
 				}
-				$sceneButtons = ArrayHelper::map(SceneButton::find()->where(['sceneId' => $sceneId])->all(), 'sceneButtonId', 'shortText');
+				$query = SceneButton::find()->where(['sceneId' => $sceneId]);
+				if ($type != -1) {
+					$query = $query->andWhere(['action' => $type]); 
+				}
+				$query = $query->orderBy('number'); 
+				$sceneButtons = ArrayHelper::map($query->all(), 'sceneButtonId', 'shortText');
 				foreach ($sceneButtons as $key => $value) {
 					if (empty($selected) && isset($params)) {
 						$selected = '' . $key;

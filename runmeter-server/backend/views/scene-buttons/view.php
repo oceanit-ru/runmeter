@@ -38,12 +38,16 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'sceneId',
 				'value' => isset($model->scene) ? $model->scene->name : null
 			],
-            'text',
+			'number',
+            'text:ntext',
 			[
 				'attribute' => 'action',
 				'value' => $model->getActionAsString()
 			],
-            'answer:ntext',
+			[
+				'attribute' => 'answerTextButtonId',
+				'value' => isset($model->answerTextButton) ? $model->answerTextButton->shortText : null
+			],
 			[
 				'attribute' => 'segueLocationId',
 				'value' => isset($model->segueLocation) ? $model->segueLocation->name : null
@@ -51,6 +55,10 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 				'attribute' => 'segueSceneId',
 				'value' => isset($model->segueScene) ? $model->segueScene->name : null
+			],
+			[
+				'attribute' => 'showTextButtonId',
+				'value' => isset($model->showTextButton) ? $model->showTextButton->shortText : null
 			],
             'cost',
             'createdAt',
