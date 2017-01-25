@@ -9,11 +9,11 @@
 namespace common\models\db;
 
 /**
- * Description of UserLoadScene
+ * Description of UserButtonsPayments
  *
  * @author gorohovvalerij
  */
-class UserLoadScene extends BaseUserLoadScene
+class UserButtonsPayments extends BaseUserButtonsPayments
 {
 	//put your code here
 }

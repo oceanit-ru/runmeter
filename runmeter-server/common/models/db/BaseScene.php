@@ -19,7 +19,9 @@ use Yii;
  * @property SceneButton[] $sceneButtons
  * @property SceneButton[] $sceneButtons0
  * @property SceneTranslation[] $sceneTranslations
- * @property UserLoadScene[] $userLoadScenes
+ * @property UserLoadedScenes[] $userLoadedScenes
+ * @property UserProgress[] $userProgresses
+ * @property UserProgress[] $userProgresses0
  */
 class BaseScene extends \common\models\db\TranslatableModel
 {
@@ -101,8 +103,24 @@ class BaseScene extends \common\models\db\TranslatableModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUserLoadScenes()
+    public function getUserLoadedScenes()
     {
-        return $this->hasMany(UserLoadScene::className(), ['sceneId' => 'sceneId']);
+        return $this->hasMany(UserLoadedScenes::className(), ['sceneId' => 'sceneId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserProgresses()
+    {
+        return $this->hasMany(UserProgress::className(), ['userProgressId' => 'userProgressId'])->viaTable('userLoadedScenes', ['sceneId' => 'sceneId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserProgresses0()
+    {
+        return $this->hasMany(UserProgress::className(), ['currentSceneId' => 'sceneId']);
     }
 }

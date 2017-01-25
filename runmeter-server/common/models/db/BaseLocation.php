@@ -19,7 +19,9 @@ use Yii;
  * @property LocationTranslation[] $locationTranslations
  * @property Scene[] $scenes
  * @property SceneButton[] $sceneButtons
- * @property UserVisitLocation[] $userVisitLocations
+ * @property UserProgress[] $userProgresses
+ * @property UserVisitedLocations[] $userVisitedLocations
+ * @property UserProgress[] $userProgresses0
  */
 class BaseLocation extends \common\models\db\TranslatableModel
 {
@@ -102,8 +104,24 @@ class BaseLocation extends \common\models\db\TranslatableModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUserVisitLocations()
+    public function getUserProgresses()
     {
-        return $this->hasMany(UserVisitLocation::className(), ['locationId' => 'locationId']);
+        return $this->hasMany(UserProgress::className(), ['currentLocationId' => 'locationId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserVisitedLocations()
+    {
+        return $this->hasMany(UserVisitedLocations::className(), ['locationId' => 'locationId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserProgresses0()
+    {
+        return $this->hasMany(UserProgress::className(), ['userProgressId' => 'userProgressId'])->viaTable('userVisitedLocations', ['locationId' => 'locationId']);
     }
 }

@@ -13,9 +13,7 @@ use Yii;
  *
  * @property Location[] $locations
  * @property ScreenplayTranslation[] $screenplayTranslations
- * @property UserLoadScene[] $userLoadScenes
- * @property UserPressedButton[] $userPressedButtons
- * @property UserVisitLocation[] $userVisitLocations
+ * @property UserProgress[] $userProgresses
  */
 class BaseScreenplay extends \common\models\db\TranslatableModel
 {
@@ -68,24 +66,8 @@ class BaseScreenplay extends \common\models\db\TranslatableModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUserLoadScenes()
+    public function getUserProgresses()
     {
-        return $this->hasMany(UserLoadScene::className(), ['screenplayId' => 'screenplayId']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUserPressedButtons()
-    {
-        return $this->hasMany(UserPressedButton::className(), ['screenplayId' => 'screenplayId']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUserVisitLocations()
-    {
-        return $this->hasMany(UserVisitLocation::className(), ['screenplayId' => 'screenplayId']);
+        return $this->hasMany(UserProgress::className(), ['screenplayId' => 'screenplayId']);
     }
 }

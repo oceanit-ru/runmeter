@@ -9,6 +9,7 @@
 namespace common\models\db;
 
 use creocoder\translateable\TranslateableBehavior;
+
 /**
  * Description of Scene
  *
@@ -16,11 +17,12 @@ use creocoder\translateable\TranslateableBehavior;
  */
 class Scene extends BaseScene
 {
+
 	protected $translateModelName = 'SceneTranslation';
-	
+
 	/**
-     * @inheritdoc
-     */
+	 * @inheritdoc
+	 */
 	public function behaviors()
 	{
 		return [
@@ -32,7 +34,7 @@ class Scene extends BaseScene
 			]
 		];
 	}
-	
+
 	public function transactions()
 	{
 		return [
@@ -42,25 +44,25 @@ class Scene extends BaseScene
 
 	public function getTranslations()
 	{
-				return $this->hasMany(SceneTranslation::className(), ['sceneId' => 'sceneId']);
+		return $this->hasMany(SceneTranslation::className(), ['sceneId' => 'sceneId']);
 	}
-	
+
 	/**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'sceneId' => 'ID',
-            'locationId' => 'Локация',
-            'name' => 'Название',
-            'number' => 'Порядковый номер',
-            'displayedButtonCount' => 'Количество видимых кнопок',
-            'createdAt' => 'Создан',
-            'updateAt' => 'Обновлен',
-        ];
-    }
-	
+	 * @inheritdoc
+	 */
+	public function attributeLabels()
+	{
+		return [
+			'sceneId' => 'ID',
+			'locationId' => 'Локация',
+			'name' => 'Название',
+			'number' => 'Порядковый номер',
+			'displayedButtonCount' => 'Количество видимых кнопок',
+			'createdAt' => 'Создан',
+			'updateAt' => 'Обновлен',
+		];
+	}
+
 	/**
 	 * 
 	 * @return mixed[]
@@ -75,7 +77,7 @@ class Scene extends BaseScene
 			'displayedButtonCount' => $this->displayedButtonCount,
 			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
 			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
-			'sceneButtons' => SceneButton::serializationOfArray($this->sceneButtons),
+			'sceneButtons' => SceneButton::serializationOfArray(SceneButton::find()->where(['sceneId' => $this->sceneId])->orderBy('number')->all())
 		];
 	}
 
@@ -92,4 +94,5 @@ class Scene extends BaseScene
 		}
 		return $serializedArray;
 	}
+
 }

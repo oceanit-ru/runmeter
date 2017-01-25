@@ -19,6 +19,8 @@ php yii gii/model --tableName=sceneTranslation --modelClass=BaseSceneTranslation
 php yii gii/model --tableName=sceneButtonTranslation --modelClass=BaseSceneButtonTranslation --ns="common\models\db" --overwrite=1 --interactive=0
 
 # User screenplay storeddata
-php yii gii/model --tableName=userVisitLocation --modelClass=BaseUserVisitLocation --ns="common\models\db" --overwrite=1 --interactive=0
-php yii gii/model --tableName=userLoadScene --modelClass=BaseUserLoadScene --ns="common\models\db" --overwrite=1 --interactive=0
-php yii gii/model --tableName=userPressedButton --modelClass=BaseUserPressedButton --ns="common\models\db" --overwrite=1 --interactive=0
+php yii gii/model --tableName=userProgress --modelClass=BaseUserProgress --ns="common\models\db" --overwrite=1 --interactive=0
+php yii gii/model --tableName=userLoadedScenes --modelClass=BaseUserLoadedScenes --ns="common\models\db" --overwrite=1 --interactive=0
+php yii gii/model --tableName=userVisitedLocations --modelClass=BaseUserVisitedLocations --ns="common\models\db" --overwrite=1 --interactive=0
+php yii gii/model --tableName=userPressedButtons --modelClass=BaseUserPressedButtons --ns="common\models\db" --overwrite=1 --interactive=0
+php yii gii/model --tableName=userButtonsPayments --modelClass=BaseUserButtonsPayments --ns="common\models\db" --overwrite=1 --interactive=0

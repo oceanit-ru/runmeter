@@ -9,11 +9,11 @@
 namespace common\models\db;
 
 /**
- * Description of UserVisitLocation
+ * Description of UserVisitedLocations
  *
  * @author gorohovvalerij
  */
-class UserVisitLocation extends BaseUserVisitLocation
+class UserVisitedLocations extends BaseUserVisitedLocations
 {
 	//put your code here
 }

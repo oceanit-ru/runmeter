@@ -20,6 +20,7 @@ use Yii;
 class LoadScreenplayForm  extends Model
 {
 	public $screenplayId;
+	public $updateAt;
 	
 	/* @var $screenplay Screenplay */
 	public $screenplay;
@@ -30,17 +31,23 @@ class LoadScreenplayForm  extends Model
     public function rules()
     {
         return [
-            [['screenplayId'], 'default']
+            [['screenplayId', 'updateAt'], 'integer']
         ];
     }
 
 	public function loadScreenplay()
 	{
 		$this->validate();
+						Yii::warning($this->updateAt);
+						Yii::warning($this->screenplayId);
 		if (isset($this->screenplayId)) {
 			$this->screenplay = Screenplay::findOne($this->screenplayId);
 		} else {
 			$this->screenplay = Screenplay::getBaseScreenplay();
+		}
+						Yii::warning($this->updateAt);
+		if (\Yii::$app->formatter->asTimestamp($this->screenplay->updateAt) <= $this->updateAt) {
+			$this->screenplay = NULL;
 		}
 		return true;
 	}

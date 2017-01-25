@@ -75,7 +75,7 @@ class ScreenplayController extends Controller
 	public function actionLoad()
 	{
 		$modelForm = new LoadScreenplayForm();
-		$modelForm->load(Yii::$app->request->post(), '');
+		$modelForm->load(Yii::$app->request->get(), '');
 		if ($modelForm->loadScreenplay()) {
 			if (isset($modelForm->screenplay)) {
 				return $modelForm->screenplay->serializationToArray();

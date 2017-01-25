@@ -52,7 +52,7 @@ use common\widgets\translatableTextArea\TranslatableTextArea;
 
 	<?php
 		echo $form->field($model, 'answerTextButtonId')->widget(Select2::classname(), [
-			'data' => ArrayHelper::map(SceneButton::find()->where(['sceneId' => $model->sceneId])->andWhere(['action' => ACTION_TYPE_TEXT])->all(), 'sceneButtonId', 'shortText'),
+			'data' => ArrayHelper::map(SceneButton::find()->where(['sceneId' => $model->sceneId])->andWhere(['action' => ACTION_TYPE_TEXT])->orderBy('number')->all(), 'sceneButtonId', 'shortText'),
 			'options' => [
 				'placeholder' => Yii::t('app', 'Выберите кнопку с ответом')
 			],

@@ -31,7 +31,11 @@ use Yii;
  * @property BaseSceneButton $showTextButton
  * @property BaseSceneButton[] $baseSceneButtons0
  * @property SceneButtonTranslation[] $sceneButtonTranslations
- * @property UserPressedButton[] $userPressedButtons
+ * @property UserButtonsPayments[] $userButtonsPayments
+ * @property UserProgress[] $userProgresses
+ * @property UserPressedButtons[] $userPressedButtons
+ * @property UserProgress[] $userProgresses0
+ * @property UserProgress[] $userProgresses1
  */
 class BaseSceneButton extends \common\models\db\TranslatableModel
 {
@@ -178,8 +182,40 @@ class BaseSceneButton extends \common\models\db\TranslatableModel
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getUserButtonsPayments()
+    {
+        return $this->hasMany(UserButtonsPayments::className(), ['buttonId' => 'sceneButtonId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserProgresses()
+    {
+        return $this->hasMany(UserProgress::className(), ['userProgressId' => 'userProgressId'])->viaTable('userButtonsPayments', ['buttonId' => 'sceneButtonId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getUserPressedButtons()
     {
-        return $this->hasMany(UserPressedButton::className(), ['sceneButtonId' => 'sceneButtonId']);
+        return $this->hasMany(UserPressedButtons::className(), ['buttonId' => 'sceneButtonId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserProgresses0()
+    {
+        return $this->hasMany(UserProgress::className(), ['userProgressId' => 'userProgressId'])->viaTable('userPressedButtons', ['buttonId' => 'sceneButtonId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserProgresses1()
+    {
+        return $this->hasMany(UserProgress::className(), ['currentButtonId' => 'sceneButtonId']);
     }
 }

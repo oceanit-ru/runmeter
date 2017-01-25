@@ -9,11 +9,11 @@
 namespace common\models\db;
 
 /**
- * Description of UserPressedButton
+ * Description of UserPressedButtons
  *
  * @author gorohovvalerij
  */
-class UserPressedButton extends BaseUserPressedButton
+class UserPressedButtons extends BaseUserPressedButtons
 {
 	//put your code here
 }

@@ -53,6 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php 
 		$searchModel = new SceneButtonSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $model->sceneId);
+		$dataProvider->sort = ['defaultOrder' => ['number'=>SORT_ASC]];
 	?>
 	<?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -120,7 +121,8 @@ $this->params['breadcrumbs'][] = $this->title;
 					} else {
 						return $model->segueScene;
 					}
-				}
+				},
+				'format' => 'raw'
 			],
 			[
 				'attribute' => 'showTextButtonId',

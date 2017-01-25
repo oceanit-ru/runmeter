@@ -103,9 +103,10 @@ class SceneButton extends BaseSceneButton
 		return [
 			'sceneButtonId' => $this->sceneButtonId,
 			'sceneId' => $this->sceneId,
+			'number' => $this->number,
 			'text' => $this->translate(\Yii::$app->language)->text,
 			'action' => $this->action,
-			'answer' => $this->answer,
+			'answerTextButtonId' => $this->answerTextButtonId,
 			'segueLocationId' => $this->segueLocationId,
 			'segueSceneId' => $this->segueSceneId,
 			'showTextButtonId' => $this->showTextButtonId,
@@ -138,7 +139,7 @@ class SceneButton extends BaseSceneButton
 	 */
 	public function getShortText()
 	{
-		return \common\components\StringHelper::truncate($this->text, 20);
+		return \common\components\StringHelper::truncate($this->sceneButtonId . '. ' . $this->text, 20);
 	}
 
 	/**
@@ -172,7 +173,7 @@ class SceneButton extends BaseSceneButton
      */
     public function getShowTextButton()
     {
-        return $this->hasOne(BaseSceneButton::className(), ['sceneButtonId' => 'showTextButtonId']);
+        return $this->hasOne(SceneButton::className(), ['sceneButtonId' => 'showTextButtonId']);
     }
 
     /**
@@ -180,7 +181,7 @@ class SceneButton extends BaseSceneButton
      */
     public function getSegueButtons()
     {
-        return $this->hasMany(BaseSceneButton::className(), ['showTextButtonId' => 'sceneButtonId']);
+        return $this->hasMany(SceneButton::className(), ['showTextButtonId' => 'sceneButtonId']);
     }
 
 }

@@ -15,10 +15,8 @@ use Yii;
  * @property integer $role
  *
  * @property DepositHistory[] $depositHistories
- * @property UserLoadScene[] $userLoadScenes
- * @property UserPressedButton[] $userPressedButtons
+ * @property UserProgress[] $userProgresses
  * @property UserUsedBonuses[] $userUsedBonuses
- * @property UserVisitLocation[] $userVisitLocations
  */
 class BaseUser extends \yii\db\ActiveRecord
 {
@@ -68,17 +66,9 @@ class BaseUser extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUserLoadScenes()
+    public function getUserProgresses()
     {
-        return $this->hasMany(UserLoadScene::className(), ['userId' => 'userId']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUserPressedButtons()
-    {
-        return $this->hasMany(UserPressedButton::className(), ['userId' => 'userId']);
+        return $this->hasMany(UserProgress::className(), ['userId' => 'userId']);
     }
 
     /**
@@ -87,13 +77,5 @@ class BaseUser extends \yii\db\ActiveRecord
     public function getUserUsedBonuses()
     {
         return $this->hasMany(UserUsedBonuses::className(), ['userId' => 'userId']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUserVisitLocations()
-    {
-        return $this->hasMany(UserVisitLocation::className(), ['userId' => 'userId']);
     }
 }
