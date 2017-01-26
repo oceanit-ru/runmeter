@@ -10,7 +10,7 @@ use ErrorException;
 use common\components\helpers\ModelHelper;
 use Yii;
 use frontend\modules\api\models\SaveProgressForm;
-use frontend\modules\api\models\GetBonusesForm;
+use frontend\modules\api\models\GetProgressForm;
 
 class ProgressController extends PrivateController
 {
@@ -37,7 +37,7 @@ class ProgressController extends PrivateController
 
 		return $behaviors;
 	}
-	
+
 	/**
 	 * @api {post} /bonuses/deposit Начисление бонусов
 	 * @apiDescription Начисление бонусов.
@@ -53,28 +53,27 @@ class ProgressController extends PrivateController
 	 * @apiParam {SQL_DateTime}	startTime		Начало периода последнего использования шагов.
 	 * @apiParam {SQL_DateTime}	endTime			Конец периода последнего использования шагов.
 	 * 
-     * @apiSuccess {Integer}		bonuses						Общее количество бонусов.
-     * @apiSuccess {Integer}		steps						Общее количество шагов.
-     * @apiSuccess {Object}			userUsedBonuses				Использованных пользователем бонусов за период.
-     * @apiSuccess {Integer}		userUsedBonuses.bonuses		Количество использованных пользователем бонусов за период.
-     * @apiSuccess {Integer}		userUsedBonuses.steps		Количество использованных пользователем шагов за период.
-     * @apiSuccess {SQL_DateTime}	userUsedBonuses.startTime	Начало периода последнего использования шагов.
-     * @apiSuccess {SQL_DateTime}	userUsedBonuses.endTime		Конец периода последнего использования шагов.
+	 * @apiSuccess {Integer}		bonuses						Общее количество бонусов.
+	 * @apiSuccess {Integer}		steps						Общее количество шагов.
+	 * @apiSuccess {Object}			userUsedBonuses				Использованных пользователем бонусов за период.
+	 * @apiSuccess {Integer}		userUsedBonuses.bonuses		Количество использованных пользователем бонусов за период.
+	 * @apiSuccess {Integer}		userUsedBonuses.steps		Количество использованных пользователем шагов за период.
+	 * @apiSuccess {SQL_DateTime}	userUsedBonuses.startTime	Начало периода последнего использования шагов.
+	 * @apiSuccess {SQL_DateTime}	userUsedBonuses.endTime		Конец периода последнего использования шагов.
 	 *
 	 * @apiVersion 0.1.0
 	 */
-	
 	public function actionSave()
 	{
 		$modelForm = new SaveProgressForm();
 		$modelForm->load(Yii::$app->request->post(), '');
 		if ($modelForm->saveProgress()) {
-			return [];//$this->actionGet();
+			return []; //$this->actionGet();
 		} else {
 			throw new ErrorException(ModelHelper::getFirstError($modelForm));
 		}
 	}
-	
+
 	/**
 	 * @api {get} /bonuses/get Получение бонусов
 	 * @apiDescription Получение бонусов.
@@ -83,21 +82,29 @@ class ProgressController extends PrivateController
 	 *
 	 * @apiParam {String}		fbUserId		Facebook UserId.
 	 * 
-     * @apiSuccess {Integer}		bonuses						Общее количество бонусов.
-     * @apiSuccess {Integer}		steps						Общее количество шагов.
-     * @apiSuccess {Object}			userUsedBonuses				Использованных пользователем бонусов за период.
-     * @apiSuccess {Integer}		userUsedBonuses.bonuses		Количество использованных пользователем бонусов за период.
-     * @apiSuccess {Integer}		userUsedBonuses.steps		Количество использованных пользователем шагов за период.
-     * @apiSuccess {SQL_DateTime}	userUsedBonuses.startTime	Начало периода последнего использования шагов.
-     * @apiSuccess {SQL_DateTime}	userUsedBonuses.endTime		Конец периода последнего использования шагов.
+	 * @apiSuccess {Integer}		bonuses						Общее количество бонусов.
+	 * @apiSuccess {Integer}		steps						Общее количество шагов.
+	 * @apiSuccess {Object}			userUsedBonuses				Использованных пользователем бонусов за период.
+	 * @apiSuccess {Integer}		userUsedBonuses.bonuses		Количество использованных пользователем бонусов за период.
+	 * @apiSuccess {Integer}		userUsedBonuses.steps		Количество использованных пользователем шагов за период.
+	 * @apiSuccess {SQL_DateTime}	userUsedBonuses.startTime	Начало периода последнего использования шагов.
+	 * @apiSuccess {SQL_DateTime}	userUsedBonuses.endTime		Конец периода последнего использования шагов.
 	 *
 	 * @apiVersion 0.1.0
 	 */
-	
-	/*public function actionLoad()
+	public function actionLoad()
 	{
-		$model = new GetBonusesForm();
-		return $model->getBonuses();
-	}*/
+		$modelForm = new GetProgressForm();
+		$modelForm->load(Yii::$app->request->get(), '');
+		if ($modelForm->loadProgress()) {
+			if ($modelForm->progress === NULL) {
+				return [];
+			} else {
+				return $modelForm->progress->serializationToArray();
+			}
+		} else {
+			throw new ErrorException(ModelHelper::getFirstError($modelForm));
+		}
+	}
 
 }

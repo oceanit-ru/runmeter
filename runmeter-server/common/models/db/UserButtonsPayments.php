@@ -15,5 +15,29 @@ namespace common\models\db;
  */
 class UserButtonsPayments extends BaseUserButtonsPayments
 {
-	//put your code here
+	/**
+	 * 
+	 * @return mixed[]
+	 */
+	public function serializationToArray()
+	{
+		return [
+			'buttonId' => $this->buttonId,
+			'cost' => $this->cost,
+		];
+	}
+
+	/**
+	 * 
+	 * @param SceneButton[] $array
+	 * @return mixed[]
+	 */
+	public static function serializationOfArray($array)
+	{
+		$serializedArray = [];
+		foreach ($array as $model) {
+			$serializedArray[] = $model->serializationToArray();
+		}
+		return $serializedArray;
+	}
 }
