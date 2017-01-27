@@ -66,8 +66,8 @@ class SaveProgressForm extends Model
 			return false;
 		}
 
-				Yii::warning(['userId' => $user->userId,
-					'screenplayId' => $this->screenplayId]);
+		Yii::warning(['userId' => $user->userId,
+			'screenplayId' => $this->screenplayId]);
 		$progress = UserProgress::find()->where(['userId' => $user->userId,
 					'screenplayId' => $this->screenplayId])->one();
 		if ($progress === NULL) {
@@ -78,6 +78,7 @@ class SaveProgressForm extends Model
 		$progress->currentLocationId = $this->currentLocationId;
 		$progress->currentSceneId = $this->currentSceneId;
 		$progress->currentButtonId = $this->currentButtonId;
+		$progress->updateAt = Yii::$app->formatter->asDatetime(time());
 		if (!($progress->save())) {
 			$this->addError('progress', 'Progress not save');
 			$transaction->rollBack();
@@ -97,7 +98,7 @@ class SaveProgressForm extends Model
 				}
 			}
 		}
-		
+
 		if (!empty($this->visitedLocations)) {
 			$newVisitedLocations = array_diff($this->visitedLocations, $progress->visitedLocations());
 			foreach ($newVisitedLocations as $value) {
@@ -111,7 +112,7 @@ class SaveProgressForm extends Model
 				}
 			}
 		}
-		
+
 		if (!empty($this->pressedButtons)) {
 			$newPressedButtons = array_diff($this->pressedButtons, $progress->pressedButtons());
 			foreach ($newPressedButtons as $value) {
@@ -125,8 +126,8 @@ class SaveProgressForm extends Model
 				}
 			}
 		}
-		
-		
+
+
 		if (!empty($this->buttonsPayments)) {
 			foreach ($this->buttonsPayments as $value) {
 				$buttonPayment = UserButtonsPayments::find()->where(['userProgressId' => $progress->userProgressId, 'buttonId' => $value['buttonId']])->one();

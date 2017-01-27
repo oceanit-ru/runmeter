@@ -52,14 +52,12 @@ class GetProgressForm extends Model
 		if (!isset($user)) {
 			$this->addError('user', 'User not validate');
 			return false;
-		}
-
-				Yii::warning(['userId' => $user->userId,
-					'screenplayId' => $this->screenplayId]);
+		}  
+		
+		$updateAtSqlFormat = Yii::$app->formatter->asDatetime($this->updateAt);
 		$this->progress = UserProgress::find()->where(['userId' => $user->userId,
-					'screenplayId' => $this->screenplayId])->one();
-		if ($this->progress === NULL || 
-				Yii::$app->formatter->asTimestamp($this->progress->updateAt) < $this->updateAt) {
+		'screenplayId' => $this->screenplayId])->andWhere(['>=', 'updateAt', $updateAtSqlFormat])->one();
+		if ($this->progress === NULL) {
 			$this->progress = NULL;
 		}
 		return true;

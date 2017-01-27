@@ -12,7 +12,7 @@ return [
 		],
 		
 	],
-	'timeZone' => 'Europe/Moscow',
+	//'timeZone' => 'Europe/Moscow',
 	'language' => 'ru-RU',
 	'sourceLanguage' => 'ru-RU'
 	
