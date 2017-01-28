@@ -13,6 +13,7 @@ use Yii;
  * @property string $passwordHash
  * @property string $accessToken
  * @property integer $role
+ * @property string $vkUserId
  *
  * @property DepositHistory[] $depositHistories
  * @property UserProgress[] $userProgresses
@@ -35,7 +36,7 @@ class BaseUser extends \yii\db\ActiveRecord
     {
         return [
             [['role'], 'integer'],
-            [['fbUserId', 'email', 'passwordHash', 'accessToken'], 'string', 'max' => 255],
+            [['fbUserId', 'email', 'passwordHash', 'accessToken', 'vkUserId'], 'string', 'max' => 255],
             [['fbUserId'], 'unique'],
         ];
     }
@@ -52,6 +53,7 @@ class BaseUser extends \yii\db\ActiveRecord
             'passwordHash' => 'Password Hash',
             'accessToken' => 'Access Token',
             'role' => 'Role',
+            'vkUserId' => 'Vk User ID',
         ];
     }
 

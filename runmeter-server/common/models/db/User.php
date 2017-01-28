@@ -98,11 +98,23 @@ class User extends BaseUser implements IdentityInterface
 	{
 		return static::find()->where(['fbUserId' => $fbUserId])->one();
 	}
+	
+	/**
+	 * 
+	 * @param int $fbUserId
+	 * @return int
+	 */
+	public static function findIdentityByVKUserId($vkUserId)
+	{
+		return static::find()->where(['vkUserId' => $vkUserId])->one();
+	}
 
 	public function getAuthKey()
 	{
 		if ($this->role == static::ROLE_FB_USER) {
 			return $this->fbUserId;
+		} else if ($this->role == static::ROLE_VK_USER) {
+			return $this->vkUserId;
 		} else if ($this->role == static::ROLE_ADMIN) {
 			return $this->getAccessToken();
 		} else {

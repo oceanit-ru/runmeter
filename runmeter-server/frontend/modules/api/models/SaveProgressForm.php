@@ -149,23 +149,4 @@ class SaveProgressForm extends Model
 
 		return true;
 	}
-
-//	private function saveUserUsedBonuses($user)
-//	{
-//		if (empty($user->userUsedBonuses)) {
-//			$userUsedBonuses = new UserUsedBonuses();
-//			$userUsedBonuses->userId = $user->userId;
-//		} else {
-//			$userUsedBonuses = $user->userUsedBonuses[0];
-//		}
-//		$userUsedBonuses->bonuses = $this->usedBonuses;
-//		$userUsedBonuses->steps = $this->usedSteps;
-//		$userUsedBonuses->startTime = $this->startTime;
-//		$userUsedBonuses->endTime = $this->endTime;
-//
-//		if (!($userUsedBonuses->save())) {
-//			return false;
-//		}
-//		return true;
-//	}
 }

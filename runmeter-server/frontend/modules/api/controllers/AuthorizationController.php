@@ -8,7 +8,8 @@ use yii\filters\ContentNegotiator;
 use yii\web\Response;
 use ErrorException;
 use common\components\helpers\ModelHelper;
-use frontend\modules\api\models\LoginForm;
+use frontend\modules\api\models\FBLoginForm;
+use frontend\modules\api\models\VKLoginForm;
 
 class AuthorizationController extends \yii\web\Controller
 {
@@ -19,7 +20,8 @@ class AuthorizationController extends \yii\web\Controller
 		$behaviors['verbs'] = [
 		    'class' => VerbFilter::className(),
 		    'actions' => [
-				'login' => ['post']
+				'login-by-fb' => ['post'],
+				'login-by-vk' => ['post']
 		    ]
 		];
 		
@@ -35,7 +37,7 @@ class AuthorizationController extends \yii\web\Controller
     }
 	
 	/**
-	 * @api {post} /authorization/login Авторизация через Facebook
+	 * @api {post} /authorization/login-by-fb Авторизация через Facebook
 	 * @apiDescription Авторизация через Facebook.
 	 * @apiError ErrorException.
 	 * @apiGroup Authorization
@@ -46,9 +48,32 @@ class AuthorizationController extends \yii\web\Controller
 	 * @apiVersion 0.1.0
 	 */
 	
-    public function actionLogin()
+    public function actionLoginByFb()
     {
-		$modelForm = new LoginForm();
+		$modelForm = new FBLoginForm();
+		$modelForm->load(Yii::$app->request->post(), '');
+		if ($modelForm->login()) {
+		    return []; 
+		} else {
+		    throw new ErrorException(ModelHelper::getFirstError($modelForm));
+		}
+    }
+	
+	/**
+	 * @api {post} /authorization/login-by-vk Авторизация через Vkontakte
+	 * @apiDescription Авторизация через Vkontakte.
+	 * @apiError ErrorException.
+	 * @apiGroup Authorization
+	 *
+	 * @apiParam {String}		vkUserId		Vkontakte UserId.
+	 * @apiParam {String}		vkAccessToken	Vkontakte TokenString.
+	 *
+	 * @apiVersion 0.1.0
+	 */
+	
+    public function actionLoginByVk()
+    {
+		$modelForm = new VKLoginForm();
 		$modelForm->load(Yii::$app->request->post(), '');
 		if ($modelForm->login()) {
 		    return []; 

@@ -30,6 +30,23 @@ class SceneButton extends BaseSceneButton
 		ACTION_TYPE_SEGUE => 'Переход'
 	];
 
+	 /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['sceneId', 'number', 'action', 'answerTextButtonId', 'segueLocationId', 'segueSceneId', 'showTextButtonId', 'cost'], 'integer'],
+            [['createdAt', 'updateAt'], 'safe'],
+			[['action'], 'required'],
+            [['answerTextButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => BaseSceneButton::className(), 'targetAttribute' => ['answerTextButtonId' => 'sceneButtonId']],
+            [['sceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['sceneId' => 'sceneId']],
+            [['segueLocationId'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['segueLocationId' => 'locationId']],
+            [['segueSceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['segueSceneId' => 'sceneId']],
+            [['showTextButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => BaseSceneButton::className(), 'targetAttribute' => ['showTextButtonId' => 'sceneButtonId']],
+        ];
+    }
+	
 	/**
 	 * @inheritdoc
 	 */

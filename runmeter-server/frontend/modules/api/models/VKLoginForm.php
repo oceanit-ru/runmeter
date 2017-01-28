@@ -5,18 +5,18 @@ namespace frontend\modules\api\models;
 use yii\base\Model;
 use common\models\db\User;
 use Yii;
-use common\components\FacebookManagerComponent;
+use common\components\VkManagerComponent;
 
 /**
  * Description of LoginForm
  *
  * @author gorohovvalerij
  */
-class LoginForm extends Model
+class VKLoginForm extends Model
 {
 
-	public $fbUserId;
-	public $fbAccessToken;
+	public $vkUserId;
+	public $vkAccessToken;
 
 	/**
 	 * @inheritdoc
@@ -25,9 +25,9 @@ class LoginForm extends Model
 	{
 		return [
 			// phone are both required
-			[['fbUserId', 'fbAccessToken'], 'required'],
-			['fbAccessToken', 'string'],
-			['fbUserId', 'string']
+			[['vkUserId', 'vkAccessToken'], 'required'],
+			['vkAccessToken', 'string'],
+			['vkUserId', 'string']
 		];
 	}
 
@@ -37,10 +37,10 @@ class LoginForm extends Model
 			return false;
 		}
 		
-		if (!FacebookManagerComponent::validateAccessToken($this->fbUserId, $this->fbAccessToken)) {
-			$this->addError('facebook', "Access Denied");
+		if (!VkManagerComponent::validateAccessToken($this->vkUserId, $this->vkAccessToken)) {
+			$this->addError('vkontakte', "Access Denied");
 		}
-		$user = User::findIdentityByFBUserId($this->fbUserId);
+		$user = User::findIdentityByVKUserId($this->vkUserId);
 		if (!isset($user)) {
 			return $this->registration();
 		}
@@ -52,7 +52,8 @@ class LoginForm extends Model
 		$db = Yii::$app->db;
 		$transaction = $db->beginTransaction();
 		$user = new User();
-		$user->fbUserId = $this->fbUserId;
+		$user->vkUserId = $this->vkUserId;
+		$user->role = User::ROLE_VK_USER;
 		try {
 			if ($user->save()) {
 				$transaction->commit();
