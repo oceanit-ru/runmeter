@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ScreenplaySearch */
@@ -28,7 +28,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'createdAt',
             'updateAt',
-
+			[
+				'class' => 'kartik\grid\ActionColumn',
+				'dropdown' => false,
+				'vAlign'=>'middle',
+				'urlCreator' => function($action, $model, $key, $index) { 
+						return [$action];
+				},
+				'buttons' =>[
+					'update-at' => function ($url, $model, $key) {
+						return Html::a('<span class="glyphicon glyphicon-refresh"></span>', ['update-at', 'id' => $model->screenplayId]);
+					}
+				],
+				'template'=>'{update-at}'
+			],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

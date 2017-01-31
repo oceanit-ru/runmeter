@@ -8,6 +8,7 @@ use backend\models\ScreenplaySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Expression;
 
 /**
  * ScreenplaysController implements the CRUD actions for Screenplay model.
@@ -77,6 +78,22 @@ class ScreenplaysController extends PrivateController
                 'model' => $model,
             ]);
         }
+    }
+	
+	/**
+     * Updates an existing Screenplay model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdateAt($id)
+    {
+        $model = $this->findModel($id);
+
+        $model->updateAt = new Expression('NOW()');
+		$model->save();
+
+        return $this->redirect(['index']);
     }
 
     /**
