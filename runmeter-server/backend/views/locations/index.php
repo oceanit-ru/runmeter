@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'screenplayId',
             'name',
             'number',
-            'image',
             // 'createdAt',
             // 'updateAt',
 

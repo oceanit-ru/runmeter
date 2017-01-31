@@ -20,7 +20,7 @@ class LocationSearch extends Location
     {
         return [
             [['locationId', 'screenplayId', 'number'], 'integer'],
-            [['name', 'image', 'createdAt', 'updateAt'], 'safe'],
+            [['name', 'createdAt', 'updateAt'], 'safe'],
         ];
     }
 
@@ -61,8 +61,7 @@ class LocationSearch extends Location
             Location::tableName() . '.updateAt' => $this->updateAt,
         ]);
 
-        $query->andFilterWhere(['like', LocationTranslation::tableName() . '.name', $this->name])
-            ->andFilterWhere(['like', Location::tableName() . '.image', $this->image]);
+        $query->andFilterWhere(['like', LocationTranslation::tableName() . '.name', $this->name]);
 
         return $dataProvider;
     }

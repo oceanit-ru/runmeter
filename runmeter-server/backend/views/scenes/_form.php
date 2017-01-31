@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\widgets\FileInput;
 use common\widgets\translatableTextInput\TranslatableTextInput;
 
 /* @var $this yii\web\View */
@@ -24,6 +25,22 @@ use common\widgets\translatableTextInput\TranslatableTextInput;
 			'form' => $form
 		])
 	?>
+	
+	<?php
+		echo $form->field($model, 'image')->widget(FileInput::className(), [
+			'options' => ['accept' => 'image/*'],
+			'pluginOptions' => [
+				'initialPreview' => $model->getThumbUrl(),
+				'initialPreviewAsData' => true,
+				'showPreview' => true,
+				'showCaption' => true,
+				'showRemove' => true,
+				'showUpload' => false
+			]
+		]);
+	?>
+	
+	<!--<?= $form->field($model, 'image')->fileInput()->label('') ?>-->
 
     <?= $form->field($model, 'number')->textInput() ?>
 

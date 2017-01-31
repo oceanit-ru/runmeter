@@ -44,11 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
             'name',
             'number',
-			[
-                'attribute'=>'image',
-				'value'=>$model->getThumbUrl(),
-				'format' => ['image']
-            ],
             'createdAt',
             'updateAt',
         ],
@@ -73,7 +68,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'sceneId',
             'name',
             'number',
-            'displayedButtonCount',
+            'displayedButtonCount', 
+			[
+				'attribute' => 'image',
+				'format' => 'image',    
+				'value' => function ($model) {
+					return $model->getSmallThumbUrl();
+				},
+			],
             // 'createdAt',
             // 'updateAt',
 

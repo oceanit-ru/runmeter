@@ -9,6 +9,7 @@
 namespace common\models\db;
 
 use creocoder\translateable\TranslateableBehavior;
+use common\components\behaviors\ImageUploadBehavior;
 
 /**
  * Description of Scene
@@ -31,9 +32,34 @@ class Scene extends BaseScene
 				'translationAttributes' => ['name'],
 			// translationRelation => 'translations',
 			// translationLanguageAttribute => 'language',
-			]
+			],
+			'image-upload' => [
+				'class' => ImageUploadBehavior::class,
+				'attribute' => 'image',
+				'thumbs' => [
+					'thumb' => ['width' => 400, 'height' => 400],
+					'small_thumb' => ['width' => 200, 'height' => 200],
+				],
+				'filePath' => '@uploads/[[model]]_[[pk]]_[[attribute]].[[extension]]',
+				'fileUrl' => '[[model]]_[[pk]]_[[attribute]].[[extension]]',
+				'thumbPath' => '@uploads/[[profile]]_[[model]]_[[pk]]_[[attribute]].[[extension]]',
+				'thumbUrl' => '[[profile]]_[[model]]_[[pk]]_[[attribute]].[[extension]]',
+			],
 		];
 	}
+	
+	/**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['locationId', 'number', 'displayedButtonCount'], 'integer'],
+            [['createdAt', 'updateAt'], 'safe'],
+			[['image'], 'file', 'extensions' => 'jpeg, jpg, gif, png'],
+            [['locationId'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['locationId' => 'locationId']],
+        ];
+    }
 
 	public function transactions()
 	{
@@ -56,6 +82,7 @@ class Scene extends BaseScene
 			'sceneId' => 'ID',
 			'locationId' => 'Локация',
 			'name' => 'Название',
+            'image' => 'Изображение',
 			'number' => 'Порядковый номер',
 			'displayedButtonCount' => 'Количество видимых кнопок',
 			'createdAt' => 'Создан',
@@ -74,6 +101,7 @@ class Scene extends BaseScene
 			'locationId' => $this->locationId,
 			'name' => $this->translate(\Yii::$app->language)->name,
 			'number' => $this->number,
+			'image' => $this->getImageUrl(),
 			'displayedButtonCount' => $this->displayedButtonCount,
 			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
 			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
@@ -93,6 +121,33 @@ class Scene extends BaseScene
 			$serializedArray[] = $model->serializationToArray();
 		}
 		return $serializedArray;
+	}
+	
+	public function getImageUrl()
+	{
+		if (isset($this->image)) {
+					return \yii\helpers\Url::to('@webUploads/' . $this->getImageFileUrl('image'), true);
+		} else {
+			return '';
+		}
+	}
+	
+	public function getThumbUrl()
+	{
+		if (isset($this->image)) {
+					return \yii\helpers\Url::to('@webUploads/' . $this->getThumbFileUrl('image', $profile = 'thumb'), true);
+		} else {
+			return '';
+		}
+	}
+	
+	public function getSmallThumbUrl()
+	{
+		if (isset($this->image)) {
+					return \yii\helpers\Url::to('@webUploads/' . $this->getThumbFileUrl('image', $profile = 'small_thumb'), true);
+		} else {
+			return '';
+		}
 	}
 
 }

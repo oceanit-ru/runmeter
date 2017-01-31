@@ -13,6 +13,7 @@ use Yii;
  * @property integer $displayedButtonCount
  * @property string $createdAt
  * @property string $updateAt
+ * @property string $image
  *
  * @property ConditionLoadScene[] $conditionLoadScenes
  * @property Location $location
@@ -41,6 +42,7 @@ class BaseScene extends \common\models\db\TranslatableModel
         return [
             [['locationId', 'number', 'displayedButtonCount'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
+            [['image'], 'string', 'max' => 255],
             [['locationId'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['locationId' => 'locationId']],
         ];
     }
@@ -57,6 +59,7 @@ class BaseScene extends \common\models\db\TranslatableModel
             'displayedButtonCount' => 'Displayed Button Count',
             'createdAt' => 'Created At',
             'updateAt' => 'Update At',
+            'image' => 'Image',
         ];
     }
 

@@ -60,7 +60,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				'locationId',
 				'name',
 				'number',
-				'image',
 				// 'createdAt',
 				// 'updateAt',
 

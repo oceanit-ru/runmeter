@@ -28,19 +28,7 @@ class Location extends BaseLocation
 				'translationAttributes' => ['name'],
 			// translationRelation => 'translations',
 			// translationLanguageAttribute => 'language',
-			],
-			'image-upload' => [
-				'class' => ImageUploadBehavior::class,
-				'attribute' => 'image',
-				'thumbs' => [
-					'thumb' => ['width' => 400, 'height' => 400],
-					'small_thumb' => ['width' => 200, 'height' => 200],
-				],
-				'filePath' => '@uploads/[[model]]_[[pk]]_[[attribute]].[[extension]]',
-				'fileUrl' => '[[model]]_[[pk]]_[[attribute]].[[extension]]',
-				'thumbPath' => '@uploads/[[profile]]_[[model]]_[[pk]]_[[attribute]].[[extension]]',
-				'thumbUrl' => '[[profile]]_[[model]]_[[pk]]_[[attribute]].[[extension]]',
-			],
+			]
 		];
 	}
 	
@@ -64,7 +52,6 @@ class Location extends BaseLocation
         return [
             [['screenplayId', 'number'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
-			[['image'], 'file', 'extensions' => 'jpeg, jpg, gif, png'],
             [['screenplayId'], 'exist', 'skipOnError' => true, 'targetClass' => Screenplay::className(), 'targetAttribute' => ['screenplayId' => 'screenplayId']],
         ];
     }
@@ -79,7 +66,6 @@ class Location extends BaseLocation
             'screenplayId' => 'Сценарий',
             'name' => 'Название',
             'number' => 'Порядковый номер',
-            'image' => 'Изображение',
             'createdAt' => 'Создать',
             'updateAt' => 'Редактировать',
         ];
@@ -96,7 +82,6 @@ class Location extends BaseLocation
 			'screenplayId' => $this->screenplayId,
 			'name' => $this->translate(\Yii::$app->language)->name,
 			'number' => $this->number,
-			'image' => $this->getImageUrl(),
 			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
 			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
 			'scenes' => Scene::serializationOfArray($this->scenes),
@@ -115,32 +100,5 @@ class Location extends BaseLocation
 			$serializedArray[] = $model->serializationToArray();
 		}
 		return $serializedArray;
-	}
-	
-	public function getImageUrl()
-	{
-		if (isset($this->image)) {
-					return \yii\helpers\Url::to('@webUploads/' . $this->getImageFileUrl('image'), true);
-		} else {
-			return '';
-		}
-	}
-	
-	public function getThumbUrl()
-	{
-		if (isset($this->image)) {
-					return \yii\helpers\Url::to('@webUploads/' . $this->getThumbFileUrl('image', $profile = 'thumb'), true);
-		} else {
-			return '';
-		}
-	}
-	
-	public function getSmallThumbUrl()
-	{
-		if (isset($this->image)) {
-					return \yii\helpers\Url::to('@webUploads/' . $this->getThumbFileUrl('image', $profile = 'small_thumb'), true);
-		} else {
-			return '';
-		}
 	}
 }

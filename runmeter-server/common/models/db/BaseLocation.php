@@ -10,7 +10,6 @@ use Yii;
  * @property integer $locationId
  * @property integer $screenplayId
  * @property integer $number
- * @property string $image
  * @property string $createdAt
  * @property string $updateAt
  *
@@ -41,7 +40,6 @@ class BaseLocation extends \common\models\db\TranslatableModel
         return [
             [['screenplayId', 'number'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
-            [['image'], 'string', 'max' => 255],
             [['screenplayId'], 'exist', 'skipOnError' => true, 'targetClass' => Screenplay::className(), 'targetAttribute' => ['screenplayId' => 'screenplayId']],
         ];
     }
@@ -55,7 +53,6 @@ class BaseLocation extends \common\models\db\TranslatableModel
             'locationId' => 'Location ID',
             'screenplayId' => 'Screenplay ID',
             'number' => 'Number',
-            'image' => 'Image',
             'createdAt' => 'Created At',
             'updateAt' => 'Update At',
         ];

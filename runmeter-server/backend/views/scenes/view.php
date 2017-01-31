@@ -44,6 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
 				'value' => $model->location->name
 			],
             'name',
+			[
+                'attribute'=>'image',
+				'value'=>$model->getThumbUrl(),
+				'format' => ['image']
+            ],
             'number',
             'displayedButtonCount',
             'createdAt',
