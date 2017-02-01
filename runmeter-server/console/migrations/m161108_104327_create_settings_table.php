@@ -28,7 +28,7 @@ class m161108_104327_create_settings_table extends Migration
 			'initialReferencePeriod' => 24,
 			'maximumReferencePeriod' => 36,
 			'bonusDivider' => 100,
-			'bonusThreshold' => 300,
+			'bonusThreshold' => 3000,
 			'maximumBonusesInReferencePeriod' => 1500,
 			'useDataEnteredByUser' => 1,
 		]);
@@ -36,9 +36,9 @@ class m161108_104327_create_settings_table extends Migration
 			'isDebugSettings' => false,
 			'initialReferencePeriod' => 24,
 			'maximumReferencePeriod' => 36,
-			'bonusDivider' => 1000,
+			'bonusDivider' => 100,
 			'bonusThreshold' => 3000,
-			'maximumBonusesInReferencePeriod' => 25,
+			'maximumBonusesInReferencePeriod' => 100,
 			'useDataEnteredByUser' => 1,
 		]);
 	}
