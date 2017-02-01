@@ -47,6 +47,9 @@ return [
 		'api' => [
 			'class' => 'frontend\modules\api\Module',
 		],
+        'debug' => [
+            'class' => 'yii\debug\Module',
+        ];
 	],
     'params' => $params,
 ];
