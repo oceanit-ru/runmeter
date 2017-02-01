@@ -71,7 +71,7 @@ class Screenplay extends BaseScreenplay
 			'name' => $this->translate(\Yii::$app->language)->name,
 			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
 			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
-			'locations' => Scene::serializationOfArray($this->locations),
+			'locations' => Location::serializationOfArray($this->locations),
 		];
 	}
 

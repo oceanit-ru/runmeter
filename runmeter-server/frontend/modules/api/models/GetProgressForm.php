@@ -56,7 +56,7 @@ class GetProgressForm extends Model
 		
 		$updateAtSqlFormat = Yii::$app->formatter->asDatetime($this->updateAt);
 		$this->progress = UserProgress::find()->where(['userId' => $user->userId,
-		'screenplayId' => $this->screenplayId])->andWhere(['>=', 'updateAt', $updateAtSqlFormat])->one();
+			'screenplayId' => $this->screenplayId])->andWhere(['>=', 'updateAt', $updateAtSqlFormat])->one();
 		if ($this->progress === NULL) {
 			$this->progress = NULL;
 		}

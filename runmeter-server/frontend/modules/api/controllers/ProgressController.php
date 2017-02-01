@@ -39,27 +39,26 @@ class ProgressController extends PrivateController
 	}
 
 	/**
-	 * @api {post} /bonuses/deposit Начисление бонусов
-	 * @apiDescription Начисление бонусов.
+	 * @api {post} /progress/save Сохранение прогресса
+	 * @apiDescription Сохранение прогресса.
 	 * @apiError ErrorException.
-	 * @apiGroup Bonuses
+	 * @apiGroup Progress
 	 *
-	 * @apiParam {String}		fbUserId		Facebook UserId.
+	 * @apiParam {String}		[fbUserId]						Facebook UserId.
+	 * @apiParam {String}		[vkUserId]						Vkontakte UserId.
 	 * 
-	 * @apiParam {Integer}		bonuses			Количество начисляемых бонусов.
-	 * @apiParam {Integer}		steps			Количество начисляемых шагов.
-	 * @apiParam {Integer}		usedBonuses		Количество использованных бонусов.
-	 * @apiParam {Integer}		usedSteps		Количество использованных шагов.
-	 * @apiParam {SQL_DateTime}	startTime		Начало периода последнего использования шагов.
-	 * @apiParam {SQL_DateTime}	endTime			Конец периода последнего использования шагов.
-	 * 
-	 * @apiSuccess {Integer}		bonuses						Общее количество бонусов.
-	 * @apiSuccess {Integer}		steps						Общее количество шагов.
-	 * @apiSuccess {Object}			userUsedBonuses				Использованных пользователем бонусов за период.
-	 * @apiSuccess {Integer}		userUsedBonuses.bonuses		Количество использованных пользователем бонусов за период.
-	 * @apiSuccess {Integer}		userUsedBonuses.steps		Количество использованных пользователем шагов за период.
-	 * @apiSuccess {SQL_DateTime}	userUsedBonuses.startTime	Начало периода последнего использования шагов.
-	 * @apiSuccess {SQL_DateTime}	userUsedBonuses.endTime		Конец периода последнего использования шагов.
+	 * @apiParam {Integer}		screenplayId				ID сценария.
+	 * @apiParam {Integer}		currentLocationId			Текущая локация.
+	 * @apiParam {Integer}		currentSceneId				Текущая сцена.
+	 * @apiParam {Integer}		currentButtonId				Текущая текстовая кнопка.
+	 * @apiParam {Integer}		createdAt					Создан.
+	 * @apiParam {Integer}		updateAt					Обновлен.
+	 * @apiParam {Integer[]}	loadedScenes				Загруженные сцены.
+	 * @apiParam {Integer[]}	visitedLocations			Посещенные локации.
+	 * @apiParam {Integer[]}	pressedButtons				Нажатые кнопки.
+	 * @apiParam {Object[]}		buttonsPayments				Оплаченные кнопки.
+	 * @apiParam {Integer}		buttonsPayments.buttonId	ID кнопки.
+	 * @apiParam {Integer}		buttonsPayments.cost		Оплаченная стоимость.
 	 *
 	 * @apiVersion 0.1.0
 	 */
@@ -75,20 +74,28 @@ class ProgressController extends PrivateController
 	}
 
 	/**
-	 * @api {get} /bonuses/get Получение бонусов
-	 * @apiDescription Получение бонусов.
+	 * @api {get} /progress/load Загрузка прогресса
+	 * @apiDescription Загрузка прогресса.
 	 * @apiError ErrorException.
-	 * @apiGroup Bonuses
+	 * @apiGroup Progress
 	 *
-	 * @apiParam {String}		fbUserId		Facebook UserId.
+	 * @apiParam {String}		[fbUserId]						Facebook UserId.
+	 * @apiParam {String}		[vkUserId]						Vkontakte UserId.
 	 * 
-	 * @apiSuccess {Integer}		bonuses						Общее количество бонусов.
-	 * @apiSuccess {Integer}		steps						Общее количество шагов.
-	 * @apiSuccess {Object}			userUsedBonuses				Использованных пользователем бонусов за период.
-	 * @apiSuccess {Integer}		userUsedBonuses.bonuses		Количество использованных пользователем бонусов за период.
-	 * @apiSuccess {Integer}		userUsedBonuses.steps		Количество использованных пользователем шагов за период.
-	 * @apiSuccess {SQL_DateTime}	userUsedBonuses.startTime	Начало периода последнего использования шагов.
-	 * @apiSuccess {SQL_DateTime}	userUsedBonuses.endTime		Конец периода последнего использования шагов.
+	 * @apiParam {Integer}		[updateAt]						Дата обновления локальной версии.
+	 * @apiParam {Integer}		screenplayId					ID сценария.
+	 * 
+	 * @apiSuccess {Integer}		userProgressId				ID прогресса.
+	 * @apiSuccess {Integer}		screenplayId				ID сценария.
+	 * @apiSuccess {Integer}		currentLocationId			Текущая локация.
+	 * @apiSuccess {Integer}		currentSceneId				Текущая сцена.
+	 * @apiSuccess {Integer}		currentButtonId				Текущая текстовая кнопка.
+	 * @apiSuccess {Integer}		createdAt					Создан.
+	 * @apiSuccess {Integer}		updateAt					Обновлен.
+	 * @apiSuccess {Integer[]}		loadedScenes				Загруженные сцены.
+	 * @apiSuccess {Integer[]}		visitedLocations			Посещенные локации.
+	 * @apiSuccess {Integer[]}		pressedButtons				Нажатые кнопки.
+	 * @apiSuccess {String(JSON)}	buttonsPayments					Оплаченные кнопки.
 	 *
 	 * @apiVersion 0.1.0
 	 */

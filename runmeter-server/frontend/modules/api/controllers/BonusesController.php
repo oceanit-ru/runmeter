@@ -44,7 +44,8 @@ class BonusesController extends PrivateController
 	 * @apiError ErrorException.
 	 * @apiGroup Bonuses
 	 *
-	 * @apiParam {String}		fbUserId		Facebook UserId.
+	 * @apiParam {String}		[fbUserId]		Facebook UserId.
+	 * @apiParam {String}		[vkUserId]		Vkontakte UserId.
 	 * 
 	 * @apiParam {Integer}		bonuses			Количество начисляемых бонусов.
 	 * @apiParam {Integer}		steps			Количество начисляемых шагов.
@@ -81,7 +82,8 @@ class BonusesController extends PrivateController
 	 * @apiError ErrorException.
 	 * @apiGroup Bonuses
 	 *
-	 * @apiParam {String}		fbUserId		Facebook UserId.
+	 * @apiParam {String}		[fbUserId]		Facebook UserId.
+	 * @apiParam {String}		[vkUserId]		Vkontakte UserId.
 	 * 
      * @apiSuccess {Integer}		bonuses						Общее количество бонусов.
      * @apiSuccess {Integer}		steps						Общее количество шагов.
