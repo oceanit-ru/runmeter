@@ -11,6 +11,7 @@ use common\components\helpers\ModelHelper;
 use Yii;
 use frontend\modules\api\models\SaveProgressForm;
 use frontend\modules\api\models\GetProgressForm;
+use frontend\modules\api\models\ResetProgressForm;
 
 class ProgressController extends PrivateController
 {
@@ -23,7 +24,8 @@ class ProgressController extends PrivateController
 			'class' => VerbFilter::className(),
 			'actions' => [
 				'save' => ['post'],
-				'load' => ['get']
+				'load' => ['get'],
+				'reset' => ['post']
 			]
 		];
 
@@ -109,6 +111,30 @@ class ProgressController extends PrivateController
 			} else {
 				return $modelForm->progress->serializationToArray();
 			}
+		} else {
+			throw new ErrorException(ModelHelper::getFirstError($modelForm));
+		}
+	}
+
+	/**
+	 * @api {post} /progress/reset Сброс прогресса
+	 * @apiDescription Сброс прогресса.
+	 * @apiError ErrorException.
+	 * @apiGroup Progress
+	 *
+	 * @apiParam {String}		[fbUserId]						Facebook UserId.
+	 * @apiParam {String}		[vkUserId]						Vkontakte UserId.
+	 * 
+	 * @apiParam {Integer}		screenplayId					ID сценария.
+	 *
+	 * @apiVersion 0.1.0
+	 */
+	public function actionReset()
+	{
+		$modelForm = new ResetProgressForm();
+		$modelForm->load(Yii::$app->request->post(), '');
+		if ($modelForm->resetProgress()) {
+			return [];
 		} else {
 			throw new ErrorException(ModelHelper::getFirstError($modelForm));
 		}
