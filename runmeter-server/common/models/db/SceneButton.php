@@ -121,7 +121,7 @@ class SceneButton extends BaseSceneButton
 			'sceneButtonId' => $this->sceneButtonId,
 			'sceneId' => $this->sceneId,
 			'number' => $this->number,
-			'text' => $this->translate(\Yii::$app->language)->text,
+			'text' => ($this->translate(\Yii::$app->language)->text != null) ? $this->translate(\Yii::$app->language)->text : $this->translate(\Yii::$app->sourceLanguage)->text,
 			'action' => $this->action,
 			'answerTextButtonId' => $this->answerTextButtonId,
 			'segueLocationId' => $this->segueLocationId,

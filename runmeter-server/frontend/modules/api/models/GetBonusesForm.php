@@ -12,7 +12,7 @@ use Yii;
  *
  * @author gorohovvalerij
  */
-class GetBonusesForm extends Model
+class GetBonusesForm extends TranslatedForm
 {
 
 	private $user;

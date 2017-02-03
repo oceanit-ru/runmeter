@@ -11,7 +11,7 @@ use Yii;
  *
  * @author gorohovvalerij
  */
-class GetSettingsForm extends Model
+class GetSettingsForm extends TranslatedForm
 {
 
 	public function getSettings()

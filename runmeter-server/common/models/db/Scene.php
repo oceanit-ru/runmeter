@@ -99,7 +99,7 @@ class Scene extends BaseScene
 		return [
 			'sceneId' => $this->sceneId,
 			'locationId' => $this->locationId,
-			'name' => $this->translate(\Yii::$app->language)->name,
+			'name' => ($this->translate(\Yii::$app->language)->name != null) ? $this->translate(\Yii::$app->language)->name : $this->translate(\Yii::$app->sourceLanguage)->name,
 			'number' => $this->number,
 			'image' => $this->getImageUrl(),
 			'displayedButtonCount' => $this->displayedButtonCount,

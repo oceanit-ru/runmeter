@@ -68,7 +68,7 @@ class Screenplay extends BaseScreenplay
 	{
 		return [
 			'screenplayId' => $this->screenplayId,
-			'name' => $this->translate(\Yii::$app->language)->name,
+			'name' => ($this->translate(\Yii::$app->language)->name != null) ? $this->translate(\Yii::$app->language)->name : $this->translate(\Yii::$app->sourceLanguage)->name ,
 			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
 			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
 			'locations' => Location::serializationOfArray($this->locations),

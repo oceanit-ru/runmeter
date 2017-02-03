@@ -17,7 +17,7 @@ use Yii;
  *
  * @author gorohovvalerij
  */
-class SaveProgressForm extends Model
+class SaveProgressForm extends TranslatedForm
 {
 
 	public $screenplayId;

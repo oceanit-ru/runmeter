@@ -17,7 +17,7 @@ use Yii;
  *
  * @author gorohovvalerij
  */
-class LoadScreenplayForm  extends Model
+class LoadScreenplayForm  extends TranslatedForm
 {
 	public $screenplayId;
 	public $updateAt;

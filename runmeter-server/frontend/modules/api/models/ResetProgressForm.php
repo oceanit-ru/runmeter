@@ -23,7 +23,7 @@ use Yii;
  *
  * @author gorohovvalerij
  */
-class ResetProgressForm extends Model
+class ResetProgressForm extends TranslatedForm
 {
 
 	public $screenplayId;

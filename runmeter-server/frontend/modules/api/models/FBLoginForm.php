@@ -12,7 +12,7 @@ use common\components\FacebookManagerComponent;
  *
  * @author gorohovvalerij
  */
-class FBLoginForm extends Model
+class FBLoginForm extends TranslatedForm
 {
 
 	public $fbUserId;

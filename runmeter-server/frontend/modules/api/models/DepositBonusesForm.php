@@ -13,7 +13,7 @@ use Yii;
  *
  * @author gorohovvalerij
  */
-class DepositBonusesForm extends Model
+class DepositBonusesForm extends TranslatedForm
 {
 
 	public $bonuses;

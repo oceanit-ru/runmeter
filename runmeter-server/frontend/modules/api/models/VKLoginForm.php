@@ -12,7 +12,7 @@ use common\components\VkManagerComponent;
  *
  * @author gorohovvalerij
  */
-class VKLoginForm extends Model
+class VKLoginForm extends TranslatedForm
 {
 
 	public $vkUserId;
