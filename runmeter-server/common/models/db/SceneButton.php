@@ -13,6 +13,7 @@ use creocoder\translateable\TranslateableBehavior;
 define("ACTION_TYPE_TEXT", 0);
 define("ACTION_TYPE_QUESTION", 1);
 define("ACTION_TYPE_SEGUE", 2);
+define("ACTION_TYPE_END", 4);
 
 /**
  * Description of SceneButton
@@ -27,7 +28,8 @@ class SceneButton extends BaseSceneButton
 	const ACTION_TYPE = [
 		ACTION_TYPE_TEXT => 'Текст',
 		ACTION_TYPE_QUESTION => 'Вопрос',
-		ACTION_TYPE_SEGUE => 'Переход'
+		ACTION_TYPE_SEGUE => 'Переход',
+		ACTION_TYPE_END => 'Конец'
 	];
 
 	 /**
@@ -36,14 +38,27 @@ class SceneButton extends BaseSceneButton
     public function rules()
     {
         return [
-            [['sceneId', 'number', 'action', 'answerTextButtonId', 'segueLocationId', 'segueSceneId', 'showTextButtonId', 'cost'], 'integer'],
+            [['sceneId', 'number', 'action', 'segueLocationId', 'segueSceneId', 'showTextButtonId', 'cost'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
 			[['action'], 'required'],
-            [['answerTextButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => BaseSceneButton::className(), 'targetAttribute' => ['answerTextButtonId' => 'sceneButtonId']],
             [['sceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['sceneId' => 'sceneId']],
             [['segueLocationId'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['segueLocationId' => 'locationId']],
             [['segueSceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['segueSceneId' => 'sceneId']],
             [['showTextButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => BaseSceneButton::className(), 'targetAttribute' => ['showTextButtonId' => 'sceneButtonId']],
+			
+//			['segueLocationId', 'required', 'when' => function($model) {
+//			Yii
+//				return ($model->action == ACTION_TYPE_SEGUE);
+//			}],
+//			['segueSceneId', 'required', 'when' => function($model) {
+//				return ($model->action == ACTION_TYPE_SEGUE);
+//			}],
+//			['showTextButtonId', 'required', 'when' => function($model) {
+//				return ($model->action == ACTION_TYPE_SEGUE);
+//			}],
+//			['answer', 'required', 'when' => function($model) {
+//				return ($model->action == ACTION_TYPE_QUESTION);
+//			}]
         ];
     }
 	
@@ -55,9 +70,7 @@ class SceneButton extends BaseSceneButton
 		return [
 			'translateable' => [
 				'class' => TranslateableBehavior::className(),
-				'translationAttributes' => ['text'],
-			// translationRelation => 'translations',
-			// translationLanguageAttribute => 'language',
+				'translationAttributes' => ['text', 'answer'],
 			]
 		];
 	}
@@ -101,7 +114,7 @@ class SceneButton extends BaseSceneButton
 			'number' => 'Прядковый номер',
 			'text' => 'Текст',
 			'action' => 'Тип',
-			'answerTextButtonId' => 'Ответ',
+			'answer' => 'Ответ',
 			'segueLocationId' => 'Локация перехода',
 			'segueSceneId' => 'Сцена перехода',
 			'showTextButtonId' => 'Выбор текcта при переходе',
@@ -123,7 +136,7 @@ class SceneButton extends BaseSceneButton
 			'number' => $this->number,
 			'text' => ($this->translate(\Yii::$app->language)->text != null) ? $this->translate(\Yii::$app->language)->text : $this->translate(\Yii::$app->sourceLanguage)->text,
 			'action' => $this->action,
-			'answerTextButtonId' => $this->answerTextButtonId,
+			'answer' => ($this->translate(\Yii::$app->language)->answer != null) ? $this->translate(\Yii::$app->language)->answer : $this->translate(\Yii::$app->sourceLanguage)->answer,
 			'segueLocationId' => $this->segueLocationId,
 			'segueSceneId' => $this->segueSceneId,
 			'showTextButtonId' => $this->showTextButtonId,
@@ -168,14 +181,6 @@ class SceneButton extends BaseSceneButton
 		$actionTypes = static::ACTION_TYPE;
 		return $actionTypes[$this->action];
 	}
-	
-	/**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAnswerTextButton()
-    {
-        return $this->hasOne(SceneButton::className(), ['sceneButtonId' => 'answerTextButtonId']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery

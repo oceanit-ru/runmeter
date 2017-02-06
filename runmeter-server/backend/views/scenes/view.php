@@ -95,18 +95,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				'value' => function($model) {
 					return $model->getActionAsString();
 				}
-			],
-			[
-				'attribute' => 'answerTextButtonId',
-				'value' => function($model) {
-					if (isset($model->answerTextButton)) {
-						return Html::a($model->answerTextButton->shortText, Url::toRoute(['scene-buttons/view', 'id' => $model->answerTextButtonId]));
-					} else {
-						return $model->answerTextButton;
-					}
-				},
-				'format' => 'raw'
-			],
+			],	
+            'answer:ntext',
 			[
 				'attribute' => 'segueLocationId',
 				'value' => function($model) {
@@ -140,12 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				},
 				'format' => 'raw'
 			],
-            // 'segueLocationId',
-            // 'segueSceneId',
             'cost',
-            // 'createdAt',
-            // 'updateAt',
-
             [
 				'class' => 'yii\grid\ActionColumn',
 				'urlCreator' => function ($action, $model, $key, $index, $this) {

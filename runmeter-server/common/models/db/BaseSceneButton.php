@@ -11,7 +11,6 @@ use Yii;
  * @property integer $sceneId
  * @property integer $number
  * @property integer $action
- * @property integer $answerTextButtonId
  * @property integer $segueLocationId
  * @property integer $segueSceneId
  * @property integer $showTextButtonId
@@ -23,13 +22,11 @@ use Yii;
  * @property ConditionPressedButton[] $conditionPressedButtons
  * @property ConditionPressedButton[] $conditionPressedButtons0
  * @property ConditionVisitLocation[] $conditionVisitLocations
- * @property BaseSceneButton $answerTextButton
- * @property BaseSceneButton[] $baseSceneButtons
  * @property Scene $scene
  * @property Location $segueLocation
  * @property Scene $segueScene
  * @property BaseSceneButton $showTextButton
- * @property BaseSceneButton[] $baseSceneButtons0
+ * @property BaseSceneButton[] $baseSceneButtons
  * @property SceneButtonTranslation[] $sceneButtonTranslations
  * @property UserButtonsPayments[] $userButtonsPayments
  * @property UserProgress[] $userProgresses
@@ -53,9 +50,8 @@ class BaseSceneButton extends \common\models\db\TranslatableModel
     public function rules()
     {
         return [
-            [['sceneId', 'number', 'action', 'answerTextButtonId', 'segueLocationId', 'segueSceneId', 'showTextButtonId', 'cost'], 'integer'],
+            [['sceneId', 'number', 'action', 'segueLocationId', 'segueSceneId', 'showTextButtonId', 'cost'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
-            [['answerTextButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => BaseSceneButton::className(), 'targetAttribute' => ['answerTextButtonId' => 'sceneButtonId']],
             [['sceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['sceneId' => 'sceneId']],
             [['segueLocationId'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['segueLocationId' => 'locationId']],
             [['segueSceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['segueSceneId' => 'sceneId']],
@@ -73,7 +69,6 @@ class BaseSceneButton extends \common\models\db\TranslatableModel
             'sceneId' => 'Scene ID',
             'number' => 'Number',
             'action' => 'Action',
-            'answerTextButtonId' => 'Answer Text Button ID',
             'segueLocationId' => 'Segue Location ID',
             'segueSceneId' => 'Segue Scene ID',
             'showTextButtonId' => 'Show Text Button ID',
@@ -118,22 +113,6 @@ class BaseSceneButton extends \common\models\db\TranslatableModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAnswerTextButton()
-    {
-        return $this->hasOne(BaseSceneButton::className(), ['sceneButtonId' => 'answerTextButtonId']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBaseSceneButtons()
-    {
-        return $this->hasMany(BaseSceneButton::className(), ['answerTextButtonId' => 'sceneButtonId']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getScene()
     {
         return $this->hasOne(Scene::className(), ['sceneId' => 'sceneId']);
@@ -166,7 +145,7 @@ class BaseSceneButton extends \common\models\db\TranslatableModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBaseSceneButtons0()
+    public function getBaseSceneButtons()
     {
         return $this->hasMany(BaseSceneButton::className(), ['showTextButtonId' => 'sceneButtonId']);
     }

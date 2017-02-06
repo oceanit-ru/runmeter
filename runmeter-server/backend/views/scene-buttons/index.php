@@ -31,7 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
 				'width'=>'300px',
 				],
             'action',
-            'answer:ntext',
+            [
+				'attribute' => 'answer',
+				'width'=>'300px',
+				],
             // 'segueLocationId',
             // 'segueSceneId',
             // 'cost',

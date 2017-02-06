@@ -10,6 +10,7 @@ use Yii;
  * @property integer $sceneButtonId
  * @property string $language
  * @property string $text
+ * @property string $answer
  *
  * @property SceneButton $sceneButton
  */
@@ -31,7 +32,7 @@ class BaseSceneButtonTranslation extends \yii\db\ActiveRecord
         return [
             [['sceneButtonId', 'language'], 'required'],
             [['sceneButtonId'], 'integer'],
-            [['text'], 'string'],
+            [['text', 'answer'], 'string'],
             [['language'], 'string', 'max' => 16],
             [['sceneButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => SceneButton::className(), 'targetAttribute' => ['sceneButtonId' => 'sceneButtonId']],
         ];
@@ -46,6 +47,7 @@ class BaseSceneButtonTranslation extends \yii\db\ActiveRecord
             'sceneButtonId' => 'Scene Button ID',
             'language' => 'Language',
             'text' => 'Text',
+            'answer' => 'Answer',
         ];
     }
 

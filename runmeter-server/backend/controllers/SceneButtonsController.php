@@ -37,19 +37,25 @@ class SceneButtonsController extends PrivateController
 				'class' => VerbFilter::className(),
 				'actions' => [
 					'delete' => ['POST'],
+					
+					// Condition Visit Location
+					'add-conditions-visit-location' => ['POST'],
+					'delete-visit-vocation' => ['POST'],
 					'edit-condition-visit-location' => [   // identifier for your editable action
 						'class' => EditableColumnAction::className(), // action class name
 						'modelClass' => ConditionVisitLocation::className(), // the update model class
 						'method' => 'POST'
 					],
-					'add-conditions-visit-location' => ['POST'],
-					'delete-visit-vocation' => ['POST'],
+					
+					// Condition Load Scene
 					'edit-condition-load-scene' => [   // identifier for your editable action
 						'class' => EditableColumnAction::className(), // action class name
 						'modelClass' => ConditionLoadScene::className(), // the update model class
 						'method' => 'POST'
 					],
 					'add-conditions-load-scene' => ['POST'],
+					
+					// Condition Pressed Button
 					'edit-condition-pressed-button' => [   // identifier for your editable action
 						'class' => EditableColumnAction::className(), // action class name
 						'modelClass' => ConditionPressedButton::className(), // the update model class

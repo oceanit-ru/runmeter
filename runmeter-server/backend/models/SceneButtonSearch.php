@@ -20,8 +20,8 @@ class SceneButtonSearch extends SceneButton
 	public function rules()
 	{
 		return [
-			[['sceneButtonId', 'sceneId', 'action', 'answerTextButtonId', 'segueLocationId', 'segueSceneId', 'cost'], 'integer'],
-			[['text', 'createdAt', 'updateAt'], 'safe'],
+			[['sceneButtonId', 'sceneId', 'action', 'segueLocationId', 'segueSceneId', 'cost'], 'integer'],
+			[['text', 'answer', 'createdAt', 'updateAt'], 'safe'],
 		];
 	}
 
@@ -63,10 +63,10 @@ class SceneButtonSearch extends SceneButton
 			SceneButton::tableName() . '.cost' => $this->cost,
 			SceneButton::tableName() . '.createdAt' => $this->createdAt,
 			SceneButton::tableName() . '.updateAt' => $this->updateAt,
-			SceneButton::tableName() . '.answerTextButtonId' => $this->answerTextButtonId
 		]);
 
 		$query->andFilterWhere(['like', SceneButtonTranslation::tableName() . '.text', $this->text]);
+		$query->andFilterWhere(['like', SceneButtonTranslation::tableName() . '.answer', $this->answer]);
 
 		return $dataProvider;
 	}

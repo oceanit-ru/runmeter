@@ -40,13 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			'number',
             'text:ntext',
+            'answer:ntext',
 			[
 				'attribute' => 'action',
 				'value' => $model->getActionAsString()
-			],
-			[
-				'attribute' => 'answerTextButtonId',
-				'value' => isset($model->answerTextButton) ? $model->answerTextButton->shortText : null
 			],
 			[
 				'attribute' => 'segueLocationId',

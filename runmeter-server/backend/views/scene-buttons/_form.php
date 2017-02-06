@@ -50,16 +50,16 @@ use common\widgets\translatableTextArea\TranslatableTextArea;
 				])->label(Yii::t('app', 'Тип'))->hint('Hint');
 	?>
 
-	<?php
-		echo $form->field($model, 'answerTextButtonId')->widget(Select2::classname(), [
-			'data' => ArrayHelper::map(SceneButton::find()->where(['sceneId' => $model->sceneId])->andWhere(['action' => ACTION_TYPE_TEXT])->orderBy('number')->all(), 'sceneButtonId', 'shortText'),
-			'options' => [
-				'placeholder' => Yii::t('app', 'Выберите кнопку с ответом')
+	<?=
+		TranslatableTextArea::widget([
+			'model' => $model,
+			'attribute' => 'answer',
+			'languageList' => [
+				['language' => 'ru-RU', 'label' => 'Русский'],
+				['language' => 'en-US', 'label' => 'English'],
 			],
-			'pluginOptions' => [
-				'allowClear' => true,
-			],
-		])->label(Yii::t('app', 'Ответ'));
+			'form' => $form
+		])
 	?>
 
 	<?php
@@ -131,29 +131,47 @@ use common\widgets\translatableTextArea\TranslatableTextArea;
 		$actionTypeText = ACTION_TYPE_TEXT;
 		$actionTypeQuestion = ACTION_TYPE_QUESTION;
 		$actionTypeSegue = ACTION_TYPE_SEGUE;
+		$actionTypeEnd = ACTION_TYPE_END;
+		$language = Yii::$app->language;
+		$buttonAction = isset($model->action) ? $model->action : $actionTypeText;
 		$script = <<< JS
-			function onTypeSelect(event) {
-				var selectedId = event.params.data.id; 
+			function typeSelect(selectedId) {
 				if (selectedId == $actionTypeText) {
-					$("[name='SceneButton[answerTextButtonId]']").prop('disabled', false);
+					$("[name='SceneButtonTranslation[$language][answer]']").prop('disabled', true);
+					$("[data-modal='translateModalSceneButtonanswer']").css("pointer-events", "none");
 					$("[name='SceneButton[segueLocationId]']").prop('disabled', false);
 					$("[name='SceneButton[segueSceneId]']").prop('disabled', false);
 					$("[name='SceneButton[showTextButtonId]']").prop('disabled', false);
-					$(".field-scenebutton-action > .hint-block").text("Описание сцены или ответ. Если передана в качестве параметра при открытии сцены или как ответ, то игнориует все ограничения на видимость. На экране всегда отображаеться одна такая кнопка. В случае скрытия на ее месте отображаеться следующая удовлетворяющая условиям, если таких нет, то описание сцены (первая кнопка типа текст).");
+					$(".field-scenebutton-action > .hint-block").text("Описание сцены. Если передана в качестве параметра при открытии сцены или как ответ, то игнориует все ограничения на видимость. На экране всегда отображается одна такая кнопка. В случае скрытия на ее месте отображаеться следующая удовлетворяющая условиям, если таких нет, то описание сцены (первая кнопка типа текст).");
 				} else if (selectedId == $actionTypeQuestion) {
-					$("[name='SceneButton[answerTextButtonId]']").prop('disabled', false);
+					$("[name='SceneButtonTranslation[$language][answer]']").prop('disabled', false);
+					$("[data-modal='translateModalSceneButtonanswer']").css("pointer-events", "auto");
 					$("[name='SceneButton[segueLocationId]']").prop('disabled', true);
 					$("[name='SceneButton[segueSceneId]']").prop('disabled', true);
 					$("[name='SceneButton[showTextButtonId]']").prop('disabled', true);
 					$(".field-scenebutton-action > .hint-block").text("Вопрос требующий ответа. При нажатии текст на кнопке с ответом заменяет верхнюю кнопку с текстом игнорируя все ограничения.");
 				} else if (selectedId == $actionTypeSegue) {
-					$("[name='SceneButton[answerTextButtonId]']").prop('disabled', true);
+					$("[name='SceneButtonTranslation[$language][answer]']").prop('disabled', true);
+					$("[data-modal='translateModalSceneButtonanswer']").css("pointer-events", "none");
 					$("[name='SceneButton[segueLocationId]']").prop('disabled', false);
 					$("[name='SceneButton[segueSceneId]']").prop('disabled', false);
 					$("[name='SceneButton[showTextButtonId]']").prop('disabled', false);
 					$(".field-scenebutton-action > .hint-block").text("Переход на другую сцену, в том числе на сцену другой локации. По умолчанию при переходе отображается описание сцены кнопка с текстом, но кнопку можно выбрать.");
+				} else if (selectedId == $actionTypeEnd || selectedId == null) {
+					$("[name='SceneButtonTranslation[$language][answer]']").prop('disabled', true);
+					$("[data-modal='translateModalSceneButtonanswer']").css("pointer-events", "none");
+					$("[data-modal='translateModalSceneButtonanswer']").prop('disabled', true);
+					$("[name='SceneButton[segueLocationId]']").prop('disabled', true);
+					$("[name='SceneButton[segueSceneId]']").prop('disabled', true);
+					$("[name='SceneButton[showTextButtonId]']").prop('disabled', true);
+					$(".field-scenebutton-action > .hint-block").text("Конец сценария.");
 				}
 			}
+			function onTypeSelect(event) {
+				var selectedId = event.params.data.id; 
+				typeSelect(selectedId);
+			}
+			typeSelect($buttonAction);
 JS;
 		//маркер конца строки, обязательно сразу, без пробелов и табуляции
 		$this->registerJs($script, yii\web\View::POS_READY);
