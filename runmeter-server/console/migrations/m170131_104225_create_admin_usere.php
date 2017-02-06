@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m170118_083842_add_backend_fields_in_user_table extends Migration
+class m170131_104225_create_admin_usere extends Migration
 {
 
 	// Use safeUp/safeDown to run migration code within a transaction
