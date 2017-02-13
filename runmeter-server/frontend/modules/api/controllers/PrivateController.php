@@ -103,7 +103,7 @@ class PrivateController extends Controller
 		if (empty($vkUserId)) {
 			return NULL;
 		}
-		$vkUser = User::findIdentityByFBUserId($vkUserId);
+		$vkUser = User::findIdentityByVKUserId($vkUserId);
 		return $vkUser;
 	}
 
