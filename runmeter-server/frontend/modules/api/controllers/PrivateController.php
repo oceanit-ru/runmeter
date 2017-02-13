@@ -62,43 +62,49 @@ class PrivateController extends Controller
 	 */
 	protected function getUser()
 	{
-		$fbUserId = $this->getFBUserId();
-		$user = User::findIdentityByFBUserId($fbUserId);
-		if (empty($user)) {
-			$vkUserId = $this->getVKUserId();
-			$user = User::findIdentityByVKUserId($vkUserId);
-			if (empty($user)) {
+		$fbUser = $this->getFBUser();
+		if (empty($fbUser)) {
+			$vkUser = $this->getVKUser();
+			if (empty($vkUser)) {
 				$this->getResponseFormatForInvalidUserId();
 			}
-			return $user;
+			return $vkUser;
 		}
-		return $user;
+		return $fbUser;
 	}
 
 	/** Get user id
 	 * @return array|mixed
 	 */
-	private function getFBUserId()
+	private function getFBUser()
 	{
 		$fbUserId = Yii::$app->request->get("fbUserId");
 		//var_dump(Yii::$app->request->get("fbUserId")); die();
 		if (empty($fbUserId)) {
 			$fbUserId = Yii::$app->request->post("fbUserId");
 		}
-		return $fbUserId;
+		if (empty($fbUserId)) {
+			return NULL;
+		}
+		$fbUser = User::findIdentityByFBUserId($fbUserId);
+		return $fbUser;
 	}
 	
 	/** Get user id
 	 * @return array|mixed
 	 */
-	private function getVKUserId()
+	private function getVKUser()
 	{
 		$vkUserId = Yii::$app->request->get("vkUserId");
 		//var_dump(Yii::$app->request->get("fbUserId")); die();
 		if (empty($vkUserId)) {
 			$vkUserId = Yii::$app->request->post("vkUserId");
 		}
-		return $vkUserId;
+		if (empty($vkUserId)) {
+			return NULL;
+		}
+		$vkUser = User::findIdentityByFBUserId($vkUserId);
+		return $vkUser;
 	}
 
 	private function getResponseFormatForInvalidUserId()
