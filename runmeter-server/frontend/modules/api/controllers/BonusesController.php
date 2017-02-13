@@ -49,18 +49,13 @@ class BonusesController extends PrivateController
 	 * 
 	 * @apiParam {Integer}		bonuses			Количество начисляемых бонусов.
 	 * @apiParam {Integer}		steps			Количество начисляемых шагов.
-	 * @apiParam {Integer}		usedBonuses		Количество использованных бонусов.
-	 * @apiParam {Integer}		usedSteps		Количество использованных шагов.
-	 * @apiParam {SQL_DateTime}	startTime		Начало периода последнего использования шагов.
-	 * @apiParam {SQL_DateTime}	endTime			Конец периода последнего использования шагов.
+	 * @apiParam {Integer}		yesterdayBonuses		Количество начисляемых бонусов (за период -48 - -24 часа).
+	 * @apiParam {Integer}		yesterdaySteps		Количество использованных шагов  (за период -48 - -24 часа).
 	 * 
-     * @apiSuccess {Integer}		bonuses						Общее количество бонусов.
-     * @apiSuccess {Integer}		steps						Общее количество шагов.
-     * @apiSuccess {Object}			userUsedBonuses				Использованных пользователем бонусов за период.
-     * @apiSuccess {Integer}		userUsedBonuses.bonuses		Количество использованных пользователем бонусов за период.
-     * @apiSuccess {Integer}		userUsedBonuses.steps		Количество использованных пользователем шагов за период.
-     * @apiSuccess {SQL_DateTime}	userUsedBonuses.startTime	Начало периода последнего использования шагов.
-     * @apiSuccess {SQL_DateTime}	userUsedBonuses.endTime		Конец периода последнего использования шагов.
+     * @apiSuccess {Integer}		bonuses						Количество использованных пользователем бонусов (за период -24 - -0 часа).
+     * @apiSuccess {Integer}		steps						Количество использованных пользователем шагов (за период -24 - -0 часа).
+     * @apiSuccess {Integer}		yesterdayBonuses			Количество использованных пользователем бонусов (за период -48 - -24 часа).
+     * @apiSuccess {Integer}		yesterdaySteps				Количество использованных пользователем шагов (за период -48 - -24 часа).
 	 *
 	 * @apiVersion 0.1.0
 	 */
@@ -85,13 +80,10 @@ class BonusesController extends PrivateController
 	 * @apiParam {String}		[fbUserId]		Facebook UserId.
 	 * @apiParam {String}		[vkUserId]		Vkontakte UserId.
 	 * 
-     * @apiSuccess {Integer}		bonuses						Общее количество бонусов.
-     * @apiSuccess {Integer}		steps						Общее количество шагов.
-     * @apiSuccess {Object}			userUsedBonuses				Использованных пользователем бонусов за период.
-     * @apiSuccess {Integer}		userUsedBonuses.bonuses		Количество использованных пользователем бонусов за период.
-     * @apiSuccess {Integer}		userUsedBonuses.steps		Количество использованных пользователем шагов за период.
-     * @apiSuccess {SQL_DateTime}	userUsedBonuses.startTime	Начало периода последнего использования шагов.
-     * @apiSuccess {SQL_DateTime}	userUsedBonuses.endTime		Конец периода последнего использования шагов.
+     * @apiSuccess {Integer}		bonuses						Количество использованных пользователем бонусов (за период -24 - -0 часа).
+     * @apiSuccess {Integer}		steps						Количество использованных пользователем шагов (за период -24 - -0 часа).
+     * @apiSuccess {Integer}		yesterdayBonuses			Количество использованных пользователем бонусов (за период -48 - -24 часа).
+     * @apiSuccess {Integer}		yesterdaySteps				Количество использованных пользователем шагов (за период -48 - -24 часа).
 	 *
 	 * @apiVersion 0.1.0
 	 */

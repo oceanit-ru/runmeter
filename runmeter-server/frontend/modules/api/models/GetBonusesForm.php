@@ -23,11 +23,8 @@ class GetBonusesForm extends TranslatedForm
 		$serializedArray = array();
 		$serializedArray['bonuses'] = $this->user->bonuses();
 		$serializedArray['steps'] = $this->user->steps();
-		/* @var $userUsedBonuses UserUsedBonuses */
-		$userUsedBonuses = UserUsedBonuses::find()->where(['userId' => $this->user->userId])->one();
-		if (isset($userUsedBonuses)) {
-			$serializedArray['userUsedBonuses'] = $userUsedBonuses->serializationToArray();
-		}
+		$serializedArray['yesterdayBonuses'] = $this->user->yesterdayBonuses();
+		$serializedArray['yesterdaySteps'] = $this->user->yesterdaySteps();
 		return $serializedArray;
 	}
 

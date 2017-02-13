@@ -6,6 +6,7 @@ use yii\base\Model;
 use common\models\db\User;
 use common\models\db\UserUsedBonuses;
 use common\models\db\DepositHistory;
+use yii\db\Expression;
 use Yii;
 
 /**
@@ -15,13 +16,10 @@ use Yii;
  */
 class DepositBonusesForm extends TranslatedForm
 {
-
 	public $bonuses;
 	public $steps;
-	public $usedBonuses;
-	public $usedSteps;
-	public $startTime;
-	public $endTime;
+	public $yesterdayBonuses;
+	public $yesterdaySteps;
 
 	/**
 	 * @inheritdoc
@@ -29,14 +27,12 @@ class DepositBonusesForm extends TranslatedForm
 	public function rules()
 	{
 		return [
-			[['bonuses', 'steps', 'usedBonuses', 'usedSteps'], 'integer'],
-			[['startTime', 'endTime'], 'safe'],
+			[['bonuses', 'steps', 'yesterdayBonuses', 'yesterdaySteps'], 'integer']
 		];
 	}
 
 	public function deposit()
 	{
-		//var_dump($this->attributes); die();
 		if (!$this->validate()) {
 			return false;
 		}
@@ -49,56 +45,33 @@ class DepositBonusesForm extends TranslatedForm
 			$transaction->rollBack();
 			return false;
 		}
-
-		$depositBonuses = new DepositHistory();
-		$depositBonuses->userId = $user->userId;
-		$depositBonuses->bonuses = $this->bonuses;
-		$depositBonuses->steps = $this->steps;
-
-		if (!($depositBonuses->save())) {
-			$this->addError('user', 'Bonuses not save');
-			$transaction->rollBack();
-			return false;
+		
+		if ($this->bonuses > 0) {
+			$depositBonuses = new DepositHistory();
+			$depositBonuses->userId = $user->userId;
+			$depositBonuses->bonuses = $this->bonuses;
+			$depositBonuses->steps = $this->steps;
+			if (!($depositBonuses->save())) {
+				$this->addError('user', 'Bonuses not save');
+				$transaction->rollBack();
+				return false;
+			}
 		}
-
-		if (empty($user->userUsedBonuses)) {
-			$userUsedBonuses = new UserUsedBonuses();
-			$userUsedBonuses->userId = $user->userId;
-		} else {
-			$userUsedBonuses = $user->userUsedBonuses[0];
-		}
-		$userUsedBonuses->bonuses = $this->usedBonuses;
-		$userUsedBonuses->steps = $this->usedSteps;
-		$userUsedBonuses->startTime = $this->startTime;
-		$userUsedBonuses->endTime = $this->endTime;
-
-		if (!($userUsedBonuses->save())) {
-			$this->addError('user', 'Used bonuses not save');
-			$transaction->rollBack();
-			return false;
+		
+		if ($this->yesterdayBonuses > 0) {
+			$depositYesterdayBonuses = new DepositHistory();
+			$depositYesterdayBonuses->userId = $user->userId;
+			$depositYesterdayBonuses->bonuses = $this->yesterdayBonuses;
+			$depositYesterdayBonuses->steps = $this->yesterdaySteps;
+			$depositYesterdayBonuses->createdAt = new Expression('NOW() - INTERVAL 1 DAY');
+			if (!($depositYesterdayBonuses->save())) {
+				$this->addError('user', 'Bonuses not save');
+				$transaction->rollBack();
+				return false;
+			}
 		}
 
 		$transaction->commit();
-
-		return true;
-	}
-
-	private function saveUserUsedBonuses($user)
-	{
-		if (empty($user->userUsedBonuses)) {
-			$userUsedBonuses = new UserUsedBonuses();
-			$userUsedBonuses->userId = $user->userId;
-		} else {
-			$userUsedBonuses = $user->userUsedBonuses[0];
-		}
-		$userUsedBonuses->bonuses = $this->usedBonuses;
-		$userUsedBonuses->steps = $this->usedSteps;
-		$userUsedBonuses->startTime = $this->startTime;
-		$userUsedBonuses->endTime = $this->endTime;
-
-		if (!($userUsedBonuses->save())) {
-			return false;
-		}
 		return true;
 	}
 

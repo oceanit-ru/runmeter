@@ -228,7 +228,7 @@ class User extends BaseUser implements IdentityInterface
 	 */
 	public function bonuses()
 	{
-		return DepositHistory::sumBonusesForUser($this->userId);
+		return DepositHistory::sumTodayBonusesForUser($this->userId);
 	}
 
 	/**
@@ -237,7 +237,25 @@ class User extends BaseUser implements IdentityInterface
 	 */
 	public function steps()
 	{
-		return DepositHistory::sumStepsForUser($this->userId);
+		return DepositHistory::sumTodayStepsForUser($this->userId);
+	}
+	
+	/**
+	 * 
+	 * @return int
+	 */
+	public function yesterdayBonuses()
+	{
+		return DepositHistory::sumYesterdayBonusesForUser($this->userId);
+	}
+
+	/**
+	 * 
+	 * @return int
+	 */
+	public function yesterdaySteps()
+	{
+		return DepositHistory::sumYesterdayStepsForUser($this->userId);
 	}
 
 }
