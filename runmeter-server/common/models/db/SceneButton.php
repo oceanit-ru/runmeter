@@ -39,26 +39,12 @@ class SceneButton extends BaseSceneButton
     {
         return [
             [['sceneId', 'number', 'action', 'segueLocationId', 'segueSceneId', 'showTextButtonId', 'cost'], 'integer'],
-            [['createdAt', 'updateAt'], 'safe'],
+            [['createdAt', 'updateAt', 'product'], 'safe'],
 			[['action'], 'required'],
             [['sceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['sceneId' => 'sceneId']],
             [['segueLocationId'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['segueLocationId' => 'locationId']],
             [['segueSceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['segueSceneId' => 'sceneId']],
-            [['showTextButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => BaseSceneButton::className(), 'targetAttribute' => ['showTextButtonId' => 'sceneButtonId']],
-			
-//			['segueLocationId', 'required', 'when' => function($model) {
-//			Yii
-//				return ($model->action == ACTION_TYPE_SEGUE);
-//			}],
-//			['segueSceneId', 'required', 'when' => function($model) {
-//				return ($model->action == ACTION_TYPE_SEGUE);
-//			}],
-//			['showTextButtonId', 'required', 'when' => function($model) {
-//				return ($model->action == ACTION_TYPE_SEGUE);
-//			}],
-//			['answer', 'required', 'when' => function($model) {
-//				return ($model->action == ACTION_TYPE_QUESTION);
-//			}]
+            [['showTextButtonId'], 'exist', 'skipOnError' => true, 'targetClass' => BaseSceneButton::className(), 'targetAttribute' => ['showTextButtonId' => 'sceneButtonId']]
         ];
     }
 	
@@ -119,6 +105,7 @@ class SceneButton extends BaseSceneButton
 			'segueSceneId' => 'Сцена перехода',
 			'showTextButtonId' => 'Выбор текcта при переходе',
 			'cost' => 'Цена',
+			'product' => 'ID внутриигровой покупки',
 			'createdAt' => 'Создан',
 			'updateAt' => 'Обновлен',
 		];
@@ -141,6 +128,7 @@ class SceneButton extends BaseSceneButton
 			'segueSceneId' => $this->segueSceneId,
 			'showTextButtonId' => $this->showTextButtonId,
 			'cost' => $this->cost,
+			'product' => $this->product,
 			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
 			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
 			'conditionPressedButtons' => ConditionPressedButton::serializationOfArray($this->conditionPressedButtons),

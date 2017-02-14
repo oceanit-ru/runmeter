@@ -57,6 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'showTextButtonId',
 				'value' => isset($model->showTextButton) ? $model->showTextButton->shortText : null
 			],
+			'product',
             'cost',
             'createdAt',
             'updateAt',

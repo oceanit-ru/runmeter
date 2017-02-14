@@ -119,6 +119,7 @@ use common\widgets\translatableTextArea\TranslatableTextArea;
 		])->label(Yii::t('app', 'Сцена'));
 	?>
 
+    <?= $form->field($model, 'product')->textInput() ?>
     <?= $form->field($model, 'cost')->textInput() ?>
 
     <div class="form-group">
