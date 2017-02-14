@@ -63,9 +63,9 @@ class PrivateController extends Controller
 	protected function getUser()
 	{
 		$fbUser = $this->getFBUser();
-		if (empty($fbUser)) {
+		if (is_null($fbUser)) {
 			$vkUser = $this->getVKUser();
-			if (empty($vkUser)) {
+			if (is_null($vkUser)) {
 				$this->getResponseFormatForInvalidUserId();
 			}
 			return $vkUser;
@@ -87,6 +87,9 @@ class PrivateController extends Controller
 			return NULL;
 		}
 		$fbUser = User::findIdentityByFBUserId($fbUserId);
+		if (empty($fbUser)) {
+			return NULL;
+		}
 		return $fbUser;
 	}
 	
@@ -96,14 +99,19 @@ class PrivateController extends Controller
 	private function getVKUser()
 	{
 		$vkUserId = Yii::$app->request->get("vkUserId");
-		//var_dump(Yii::$app->request->get("fbUserId")); die();
+			Yii::warning($vkUserId);
 		if (empty($vkUserId)) {
 			$vkUserId = Yii::$app->request->post("vkUserId");
+			Yii::warning($vkUserId);
 		}
 		if (empty($vkUserId)) {
 			return NULL;
 		}
 		$vkUser = User::findIdentityByVKUserId($vkUserId);
+		Yii::warning($vkUser);
+		if (empty($vkUser)) {
+			return NULL;
+		}
 		return $vkUser;
 	}
 
