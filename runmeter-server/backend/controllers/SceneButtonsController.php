@@ -249,7 +249,7 @@ class SceneButtonsController extends PrivateController
 
 	public function actionDeletePressedButton($id)
 	{
-		$model = ConditionsPressedButton::findOne($id);
+		$model = ConditionPressedButton::findOne($id);
 		if ($model !== null) {
 			$model->delete();
 		}

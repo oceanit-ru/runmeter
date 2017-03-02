@@ -61,7 +61,7 @@ use yii\helpers\Url;
 <?php
 	$conditionVisitLocationGridColumns = [
 		[
-			'attribute'=>'conditionVisitLocationId',
+			'attribute'=>'locationId',
 			'width'=>'100px',
 		],
 		[
@@ -207,7 +207,7 @@ use yii\helpers\Url;
 <?php
 	$conditionLoadSceneGridColumns = [
 		[
-			'attribute'=>'conditionLoadSceneId',
+			'attribute'=>'sceneId',
 			'width'=>'100px',
 		],
 		[
@@ -376,7 +376,7 @@ use yii\helpers\Url;
 <?php
 	$conditionPressedButtonGridColumns = [
 		[
-			'attribute'=>'conditionPressedButtonId',
+			'attribute'=>'verifiableSceneButtonId',
 			'width'=>'100px',
 		],
 		[
@@ -431,7 +431,7 @@ use yii\helpers\Url;
 		],
 	];
 	$conditionPressedButtonDataProvider = new ActiveDataProvider([
-		'query' => ConditionPressedButton::find()->where(['sceneButtonId' => $model->sceneButtonId]),
+		'query' => ConditionPressedButton::find()->where(['sceneButtonId' => $model->sceneButtonId])->andWhere(['<>','verifiableSceneButtonId', $model->sceneButtonId]),
 	]);
 	echo GridView::widget([
 		'dataProvider'=> $conditionPressedButtonDataProvider,
