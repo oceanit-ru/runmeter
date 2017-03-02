@@ -54,7 +54,11 @@ class GetProgressForm extends TranslatedForm
 			return false;
 		}  
 		
-		$updateAtSqlFormat = Yii::$app->formatter->asDatetime($this->updateAt);
+		if (isset($this->updateAt)) {
+			$updateAtSqlFormat = Yii::$app->formatter->asDatetime($this->updateAt);
+		} else {
+			$updateAtSqlFormat = Yii::$app->formatter->asDatetime(0);
+		}
 		$this->progress = UserProgress::find()->where(['userId' => $user->userId,
 			'screenplayId' => $this->screenplayId])->andWhere(['>=', 'updateAt', $updateAtSqlFormat])->one();
 		if ($this->progress === NULL) {
