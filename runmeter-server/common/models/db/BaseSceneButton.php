@@ -22,6 +22,8 @@ use Yii;
  * @property ConditionLoadScene[] $conditionLoadScenes
  * @property ConditionPressedButton[] $conditionPressedButtons
  * @property ConditionPressedButton[] $conditionPressedButtons0
+ * @property ConditionShowButton[] $conditionShowButtons
+ * @property ConditionShowButton[] $conditionShowButtons0
  * @property ConditionVisitLocation[] $conditionVisitLocations
  * @property Scene $scene
  * @property Location $segueLocation
@@ -103,6 +105,22 @@ class BaseSceneButton extends \common\models\db\TranslatableModel
     public function getConditionPressedButtons0()
     {
         return $this->hasMany(ConditionPressedButton::className(), ['verifiableSceneButtonId' => 'sceneButtonId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getConditionShowButtons()
+    {
+        return $this->hasMany(ConditionShowButton::className(), ['sceneButtonId' => 'sceneButtonId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getConditionShowButtons0()
+    {
+        return $this->hasMany(ConditionShowButton::className(), ['verifiableSceneButtonId' => 'sceneButtonId']);
     }
 
     /**

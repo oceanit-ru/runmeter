@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use common\models\db\ConditionVisitLocation;
 use common\models\db\ConditionLoadScene;
 use common\models\db\ConditionPressedButton;
+use common\models\db\ConditionShowButton;
 use kartik\grid\EditableColumnAction;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
@@ -61,7 +62,15 @@ class SceneButtonsController extends PrivateController
 						'modelClass' => ConditionPressedButton::className(), // the update model class
 						'method' => 'POST'
 					],
-					'add-conditions-pressed-button' => ['POST']
+					'add-conditions-pressed-button' => ['POST'],
+					
+					// Condition Show Button
+					'edit-condition-show-button' => [   // identifier for your editable action
+						'class' => EditableColumnAction::className(), // action class name
+						'modelClass' => ConditionShowButton::className(), // the update model class
+						'method' => 'POST'
+					],
+					'add-conditions-show-button' => ['POST']
 				],
 			];
 		return $behaviors;
@@ -250,6 +259,42 @@ class SceneButtonsController extends PrivateController
 	public function actionDeletePressedButton($id)
 	{
 		$model = ConditionPressedButton::findOne($id);
+		if ($model !== null) {
+			$model->delete();
+		}
+		return;
+	}
+	
+	public function actionEditConditionShowButton()
+	{
+		if (Yii::$app->request->post('hasEditable')) {
+			$conditionId = Yii::$app->request->post('editableKey');
+			$model = ConditionShowButton::findOne($conditionId);
+			$out = Json::encode(['output' => '', 'message' => '']);
+			$posted = current($_POST['ConditionShowButton']);
+			$post = ['ConditionShowButton' => $posted];
+			if ($model->load($post)) {
+				$model->save();
+				$output = '';
+				$out = Json::encode(['output' => $output, 'message' => '']);
+			}
+			// return ajax json encoded response and exit
+			echo $out;
+			return;
+		}
+	}
+
+	public function actionAddConditionsShowButton()
+	{
+		$model = new ConditionShowButton();
+		$model->load(Yii::$app->request->post());
+		$model->save();
+		return;
+	}
+
+	public function actionDeleteShowButton($id)
+	{
+		$model = ConditionShowButton::findOne($id);
 		if ($model !== null) {
 			$model->delete();
 		}

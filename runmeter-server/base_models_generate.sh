@@ -11,6 +11,7 @@ php yii gii/model --tableName=sceneButton --modelClass=BaseSceneButton --baseCla
 php yii gii/model --tableName=conditionVisitLocation --modelClass=BaseConditionVisitLocation --ns="common\models\db" --overwrite=1 --interactive=0
 php yii gii/model --tableName=conditionLoadScene --modelClass=BaseConditionLoadScene --ns="common\models\db" --overwrite=1 --interactive=0
 php yii gii/model --tableName=conditionPressedButton --modelClass=BaseConditionPressedButton --ns="common\models\db" --overwrite=1 --interactive=0
+php yii gii/model --tableName=conditionShowButton --modelClass=BaseConditionShowButton --ns="common\models\db" --overwrite=1 --interactive=0
 
 # Translate
 php yii gii/model --tableName=screenplayTranslation --modelClass=BaseScreenplayTranslation --ns="common\models\db" --overwrite=1 --interactive=0
