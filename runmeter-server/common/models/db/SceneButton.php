@@ -134,7 +134,7 @@ class SceneButton extends BaseSceneButton
 			'conditionPressedButtons' => ConditionPressedButton::serializationOfArray($this->conditionPressedButtons),
 			'conditionLoadScenes' => ConditionLoadScene::serializationOfArray($this->conditionLoadScenes),
 			'conditionVisitLocations' => ConditionVisitLocation::serializationOfArray($this->conditionVisitLocations),
-			'conditionShowLocations' => ConditionShowButton::serializationOfArray($this->conditionShowButtons)
+			'conditionShowButtons' => ConditionShowButton::serializationOfArray($this->conditionShowButtons)
 		];
 	}
 

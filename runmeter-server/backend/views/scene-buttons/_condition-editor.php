@@ -209,7 +209,7 @@ use yii\helpers\Url;
 		])->label(Yii::t('app', 'Кнопка'));
 
 		echo $form->field($modelConditionsShowButton, 'condition')->widget(Select2::classname(), [
-			'data' => ['Видна', 'Не видна'],
+			'data' => ['Не видна', 'Видна'],
 			'options' => [
 				'placeholder' => Yii::t('app', 'Выберите условие ...')
 			]

@@ -112,6 +112,7 @@ class SceneButtonsController extends PrivateController
 	{
 		$model = new SceneButton();
 		$model->sceneId = $sceneId;
+		$model->number = SceneButton::find()->where(['sceneId' => $sceneId])->count() + 1;
 
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(['scenes/view', 'id' => $model->sceneId]);

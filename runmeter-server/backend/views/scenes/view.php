@@ -119,17 +119,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				},
 				'format' => 'raw'
 			],
-			[
-				'attribute' => 'showTextButtonId',
-				'value' => function($model) {
-					if (isset($model->showTextButton)) {
-						return Html::a($model->showTextButton->shortText, Url::toRoute(['scene-buttons/view?id=' . $model->showTextButtonId]));
-					} else {
-						return $model->showTextButton;
-					}
-				},
-				'format' => 'raw'
-			],
             'cost',
             [
 				'class' => 'yii\grid\ActionColumn',
