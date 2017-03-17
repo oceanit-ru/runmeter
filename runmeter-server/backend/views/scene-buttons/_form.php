@@ -97,6 +97,25 @@ use common\widgets\translatableTextArea\TranslatableTextArea;
 				'params'=>['input-segueSceneId', 'input-segueLocationId']
 			]
 		])->label(Yii::t('app', 'Сцена'));
+		
+				// Child # 2
+		echo $form->field($model, 'showTextButtonId')->widget(DepDrop::classname(), [
+			'options' => [
+				'placeholder' => Yii::t('app', 'Выберите кнопку')
+				],
+			'type' => DepDrop::TYPE_SELECT2,
+			'select2Options'=>[
+				'pluginOptions'=>['allowClear'=>true]
+			],
+			'pluginOptions'=>[
+                'initialize'=>true,
+				'depends'=>['scene-id'],
+				'url'=>Url::to(['/scene-buttons/scene-buttons']),
+				'loadingText' => Yii::t('app', 'Загружаем список кнопок ...'),
+				'params'=>['input-showTextButtonId', 'input-segueSceneId']
+			]
+		])->label(Yii::t('app', 'Кнопка'));
+
 	?>
 
     <?= $form->field($model, 'product')->textInput() ?>
@@ -122,18 +141,21 @@ use common\widgets\translatableTextArea\TranslatableTextArea;
 					$("[data-modal='translateModalSceneButtonanswer']").css("pointer-events", "none");
 					$("[name='SceneButton[segueLocationId]']").prop('disabled', true);
 					$("[name='SceneButton[segueSceneId]']").prop('disabled', true);
+					$("[name='SceneButton[showTextButtonId]']").prop('disabled', true);
 					$(".field-scenebutton-action > .hint-block").text("Описание сцены. Если передана в качестве параметра при открытии сцены или как ответ, то игнориует все ограничения на видимость. На экране всегда отображается одна такая кнопка. В случае скрытия на ее месте отображаеться следующая удовлетворяющая условиям, если таких нет, то описание сцены (первая кнопка типа текст).");
 				} else if (selectedId == $actionTypeQuestion) {
 					$("[name='SceneButtonTranslation[$language][answer]']").prop('disabled', false);
 					$("[data-modal='translateModalSceneButtonanswer']").css("pointer-events", "auto");
 					$("[name='SceneButton[segueLocationId]']").prop('disabled', true);
 					$("[name='SceneButton[segueSceneId]']").prop('disabled', true);
+					$("[name='SceneButton[showTextButtonId]']").prop('disabled', true);
 					$(".field-scenebutton-action > .hint-block").text("Вопрос требующий ответа. При нажатии текст на кнопке с ответом заменяет верхнюю кнопку с текстом игнорируя все ограничения.");
 				} else if (selectedId == $actionTypeSegue) {
 					$("[name='SceneButtonTranslation[$language][answer]']").prop('disabled', true);
 					$("[data-modal='translateModalSceneButtonanswer']").css("pointer-events", "none");
 					$("[name='SceneButton[segueLocationId]']").prop('disabled', false);
 					$("[name='SceneButton[segueSceneId]']").prop('disabled', false);
+					$("[name='SceneButton[showTextButtonId]']").prop('disabled', false);
 					$(".field-scenebutton-action > .hint-block").text("Переход на другую сцену, в том числе на сцену другой локации. По умолчанию при переходе отображается описание сцены кнопка с текстом, но кнопку можно выбрать.");
 				} else if (selectedId == $actionTypeEnd || selectedId == null) {
 					$("[name='SceneButtonTranslation[$language][answer]']").prop('disabled', true);
@@ -141,6 +163,7 @@ use common\widgets\translatableTextArea\TranslatableTextArea;
 					$("[data-modal='translateModalSceneButtonanswer']").prop('disabled', true);
 					$("[name='SceneButton[segueLocationId]']").prop('disabled', true);
 					$("[name='SceneButton[segueSceneId]']").prop('disabled', true);
+					$("[name='SceneButton[showTextButtonId]']").prop('disabled', true);
 					$(".field-scenebutton-action > .hint-block").text("Конец сценария.");
 				}
 			}

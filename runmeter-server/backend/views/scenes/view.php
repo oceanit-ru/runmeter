@@ -8,6 +8,7 @@ use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use kartik\grid\EditableColumn;
 use common\components\StringHelper;
+use common\models\db\SceneButton;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Scene */
@@ -89,35 +90,43 @@ $this->params['breadcrumbs'][] = $this->title;
 				'refreshGrid' => true,
 			],
             'sceneButtonId',
-            'text:ntext',
+            [
+				'attribute' => 'text',
+				'headerOptions' => ['style' => 'width:30%'],
+				'format' => 'ntext'
+			],
             [
 				'attribute' => 'action',
 				'value' => function($model) {
 					return $model->getActionAsString();
 				}
 			],	
-            'answer:ntext',
 			[
-				'attribute' => 'segueLocationId',
-				'value' => function($model) {
-					if (isset($model->segueLocation)) {
-						return Html::a($model->segueLocation->name, Url::toRoute(['locations/view?id=' . $model->segueLocationId]));
-					} else {
-						return $model->segueLocation;
-					}
-				},
-				'format' => 'raw'
+				'attribute' => 'answer',
+				'headerOptions' => ['style' => 'width:20%'],
+				'format' => 'ntext'
 			],
 			[
-				'attribute' => 'segueSceneId',
+				'attribute' => 'segueLocationId',
+				'headerOptions' => ['style' => 'width:20%'],
 				'value' => function($model) {
-					if (isset($model->segueScene)) {
-						return Html::a($model->segueScene->name, Url::toRoute(['scenes/view?id=' . $model->segueSceneId]));
-					} else {
-						return $model->segueScene;
+					/* @var $model SceneButton */
+					$value = '';
+					if (isset($model->showTextButton)) {
+						$value = ' => ' . Html::a($model->showTextButton->getShortText(), Url::toRoute(['scene-buttons/view?id=' . $model->showTextButtonId])) ;
+					} 
+					if (isset($model->segueSceneId)) {
+						$value = ' => ' . Html::a($model->segueScene->name, Url::toRoute(['scenes/view?id=' . $model->segueSceneId])) . $value;
 					}
+					if (isset($model->segueLocation)) {
+						$value = Html::a($model->segueLocation->name, Url::toRoute(['locations/view?id=' . $model->segueLocationId])) . $value;
+					} else {
+						$value = 'Нет перехода';
+					}
+					return $value;
 				},
-				'format' => 'raw'
+				'format' => 'raw',
+				'label' => 'Переход'
 			],
             'cost',
             [

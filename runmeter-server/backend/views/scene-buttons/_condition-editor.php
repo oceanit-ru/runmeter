@@ -165,7 +165,7 @@ use yii\helpers\Url;
 		],
 	];
 	$conditionPressedButtonDataProvider = new ActiveDataProvider([
-		'query' => ConditionPressedButton::find()->where(['sceneButtonId' => $model->sceneButtonId])->andWhere(['<>','verifiableSceneButtonId', $model->sceneButtonId]),
+		'query' => ConditionPressedButton::find()->where(['sceneButtonId' => $model->sceneButtonId]),
 	]);
 	echo GridView::widget([
 		'dataProvider'=> $conditionPressedButtonDataProvider,

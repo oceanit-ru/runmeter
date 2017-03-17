@@ -72,8 +72,18 @@ class SceneButton extends BaseSceneButton
 	{
 		return $this->hasMany(SceneButtonTranslation::className(), ['sceneButtonId' => 'sceneButtonId']);
 	}
+	
+	public function save($runValidation = true, $attributeNames = null)
+	{
+		if ($this->action != ACTION_TYPE_SEGUE) {
+			$this->segueLocationId = NULL;
+			$this->segueSceneId = NULL;
+			$this->showTextButtonId = NULL;
+		}
+		return parent::save($runValidation, $attributeNames);
+	}
 
-	/**
+		/**
 	 * @inheritdoc
 	 */
 	public function insert($runValidation = true, $attributes = null)
@@ -158,7 +168,7 @@ class SceneButton extends BaseSceneButton
 	 */
 	public function getShortText()
 	{
-		return \common\components\StringHelper::truncate($this->sceneButtonId . '. ' . $this->text, 20);
+		return \common\components\StringHelper::truncate($this->sceneButtonId . '. #'. $this->number . ' ' . $this->text, 20);
 	}
 
 	/**

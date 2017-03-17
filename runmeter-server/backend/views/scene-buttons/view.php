@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\components\StringHelper;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\SceneButton */
@@ -29,7 +30,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
+	<?php
+		$segue = '';
+		if (isset($model->showTextButton)) {
+			$segue = ' => ' . Html::a($model->showTextButton->getShortText(), Url::toRoute(['scene-buttons/view?id=' . $model->showTextButtonId])) ;
+		} 
+		if (isset($model->segueSceneId)) {
+			$segue = ' => ' . Html::a($model->segueScene->name, Url::toRoute(['scenes/view?id=' . $model->segueSceneId])) . $segue;
+		}
+		if (isset($model->segueLocation)) {
+			$segue = Html::a($model->segueLocation->name, Url::toRoute(['locations/view?id=' . $model->segueLocationId])) . $segue;
+		} else {
+			$segue = 'Нет перехода';
+		}
+	?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -47,15 +61,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			[
 				'attribute' => 'segueLocationId',
-				'value' => isset($model->segueLocation) ? $model->segueLocation->name : null
-			],
-			[
-				'attribute' => 'segueSceneId',
-				'value' => isset($model->segueScene) ? $model->segueScene->name : null
-			],
-			[
-				'attribute' => 'showTextButtonId',
-				'value' => isset($model->showTextButton) ? $model->showTextButton->shortText : null
+				'value' => $segue,
+				'format' => 'raw',
+				'label' => 'Переход'
 			],
 			'product',
             'cost',
