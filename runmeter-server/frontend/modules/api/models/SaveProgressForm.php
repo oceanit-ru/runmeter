@@ -114,6 +114,9 @@ class SaveProgressForm extends TranslatedForm
 		}
 
 		if (!empty($this->pressedButtons)) {
+			foreach ($this->pressedButtons as $value) {
+				UserButtonsPayments::deleteAll(['buttonId' => $value]);
+			}
 			$newPressedButtons = array_diff($this->pressedButtons, $progress->pressedButtons());
 			foreach ($newPressedButtons as $value) {
 				$pressedButton = new UserPressedButtons();
