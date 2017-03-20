@@ -72,8 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'heading'=>'<h3 class="panel-title">Кнопки</h3>',
 			'type'=>'info',
 			'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Создать кнопку', ['scene-buttons/create', 'sceneId' => $model->sceneId], ['class' => 'btn btn-success']),
-			'after'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> Обновить', ['index'], ['class' => 'btn btn-info']),
-			'footer'=>false
+			'after'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> Обновить', ['index'], ['class' => 'btn btn-info'])
 		],
 		'toolbar' => [
             'content' => "Убедитесь что порядковые номера не совпадают и раставленны в нужном порядке. Поменять их можно прямо в таблице."
