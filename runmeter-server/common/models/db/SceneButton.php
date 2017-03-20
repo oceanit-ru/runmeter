@@ -116,7 +116,7 @@ class SceneButton extends BaseSceneButton
 			'showTextButtonId' => 'Выбор текcта при переходе',
 			'cost' => 'Цена',
 			'product' => 'ID внутриигровой покупки',
-			'showAds' => 'Переход после просмотра рекламы,
+			'showAds' => 'Переход после просмотра рекламы',
 			'createdAt' => 'Создан',
 			'updateAt' => 'Обновлен',
 		];
