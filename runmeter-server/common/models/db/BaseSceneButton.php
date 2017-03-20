@@ -18,6 +18,7 @@ use Yii;
  * @property string $createdAt
  * @property string $updateAt
  * @property string $product
+ * @property integer $showAds
  *
  * @property ConditionLoadScene[] $conditionLoadScenes
  * @property ConditionPressedButton[] $conditionPressedButtons
@@ -53,7 +54,7 @@ class BaseSceneButton extends \common\models\db\TranslatableModel
     public function rules()
     {
         return [
-            [['sceneId', 'number', 'action', 'segueLocationId', 'segueSceneId', 'showTextButtonId', 'cost'], 'integer'],
+            [['sceneId', 'number', 'action', 'segueLocationId', 'segueSceneId', 'showTextButtonId', 'cost', 'showAds'], 'integer'],
             [['createdAt', 'updateAt'], 'safe'],
             [['product'], 'string', 'max' => 255],
             [['sceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['sceneId' => 'sceneId']],
@@ -80,6 +81,7 @@ class BaseSceneButton extends \common\models\db\TranslatableModel
             'createdAt' => 'Created At',
             'updateAt' => 'Update At',
             'product' => 'Product',
+            'showAds' => 'Show Ads',
         ];
     }
 

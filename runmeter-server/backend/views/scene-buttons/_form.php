@@ -120,6 +120,7 @@ use common\widgets\translatableTextArea\TranslatableTextArea;
 
     <?= $form->field($model, 'product')->textInput() ?>
     <?= $form->field($model, 'cost')->textInput() ?>
+    <?= $form->field($model, 'showAds')->checkbox() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Создать') : Yii::t('app', 'Сохранить'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -38,7 +38,7 @@ class SceneButton extends BaseSceneButton
     public function rules()
     {
         return [
-            [['sceneId', 'number', 'action', 'segueLocationId', 'segueSceneId', 'showTextButtonId', 'cost'], 'integer'],
+            [['sceneId', 'number', 'action', 'segueLocationId', 'segueSceneId', 'showTextButtonId', 'cost', 'showAds'], 'integer'],
             [['createdAt', 'updateAt', 'product'], 'safe'],
 			[['action'], 'required'],
             [['sceneId'], 'exist', 'skipOnError' => true, 'targetClass' => Scene::className(), 'targetAttribute' => ['sceneId' => 'sceneId']],
@@ -116,6 +116,7 @@ class SceneButton extends BaseSceneButton
 			'showTextButtonId' => 'Выбор текcта при переходе',
 			'cost' => 'Цена',
 			'product' => 'ID внутриигровой покупки',
+			'showAds' => 'Переход после просмотра рекламы,
 			'createdAt' => 'Создан',
 			'updateAt' => 'Обновлен',
 		];
@@ -139,6 +140,7 @@ class SceneButton extends BaseSceneButton
 			'showTextButtonId' => $this->showTextButtonId,
 			'cost' => $this->cost,
 			'product' => $this->product,
+			'showAds' => isset($this->showAds) ? $this->showAds : false,
 			'createdAt' => \Yii::$app->formatter->asTimestamp($this->createdAt),
 			'updateAt' => \Yii::$app->formatter->asTimestamp($this->updateAt),
 			'conditionPressedButtons' => ConditionPressedButton::serializationOfArray($this->conditionPressedButtons),

@@ -67,6 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			'product',
             'cost',
+			'showAds:boolean',
             'createdAt',
             'updateAt',
         ],
