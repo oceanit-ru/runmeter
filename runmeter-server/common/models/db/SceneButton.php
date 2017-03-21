@@ -89,13 +89,13 @@ class SceneButton extends BaseSceneButton
 	public function insert($runValidation = true, $attributes = null)
 	{
 		$result = parent::insert($runValidation, $attributes);
-//		if ($result) {
-//			$defaultCondition = new ConditionPressedButton();
-//			$defaultCondition->sceneButtonId = $this->sceneButtonId;
-//			$defaultCondition->verifiableSceneButtonId = $this->sceneButtonId;
-//			$defaultCondition->condition = 0;
-//			$defaultCondition->save();
-//		}
+		if ($result) {
+			$defaultCondition = new ConditionPressedButton();
+			$defaultCondition->sceneButtonId = $this->sceneButtonId;
+			$defaultCondition->verifiableSceneButtonId = $this->sceneButtonId;
+			$defaultCondition->condition = 0;
+			$defaultCondition->save();
+		}
 		return $result;
 	}
 
