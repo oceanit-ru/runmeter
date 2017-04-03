@@ -37,7 +37,7 @@ use common\widgets\translatableTextArea\TranslatableTextArea;
 
 	<?php
 		echo $form->field($model, 'action')->widget(Select2::classname(), [
-				'data' => SceneButton::ACTION_TYPE,
+				'data' => SceneButton::getActionTypes(),
 				'options' => [
 					'placeholder' => Yii::t('app', 'Выберите тип')
 				],
@@ -129,10 +129,10 @@ use common\widgets\translatableTextArea\TranslatableTextArea;
     <?php ActiveForm::end(); ?>
 	
 	<?php
-		$actionTypeText = ACTION_TYPE_TEXT;
-		$actionTypeQuestion = ACTION_TYPE_QUESTION;
-		$actionTypeSegue = ACTION_TYPE_SEGUE;
-		$actionTypeEnd = ACTION_TYPE_END;
+		$actionTypeText = SceneButton::ACTION_TYPE_TEXT;
+		$actionTypeQuestion = SceneButton::ACTION_TYPE_QUESTION;
+		$actionTypeSegue = SceneButton::ACTION_TYPE_SEGUE;
+		$actionTypeEnd = SceneButton::ACTION_TYPE_END;
 		$language = Yii::$app->language;
 		$buttonAction = isset($model->action) ? $model->action : $actionTypeText;
 		$script = <<< JS

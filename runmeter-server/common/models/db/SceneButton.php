@@ -10,11 +10,6 @@ namespace common\models\db;
 
 use creocoder\translateable\TranslateableBehavior;
 
-define("ACTION_TYPE_TEXT", 0);
-define("ACTION_TYPE_QUESTION", 1);
-define("ACTION_TYPE_SEGUE", 2);
-define("ACTION_TYPE_END", 4);
-
 /**
  * Description of SceneButton
  *
@@ -25,14 +20,22 @@ class SceneButton extends BaseSceneButton
 
 	protected $translateModelName = 'SceneButtonTranslation';
 
-	const ACTION_TYPE = [
-		ACTION_TYPE_TEXT => 'Текст',
-		ACTION_TYPE_QUESTION => 'Вопрос',
-		ACTION_TYPE_SEGUE => 'Переход',
-		ACTION_TYPE_END => 'Конец'
-	];
+	const ACTION_TYPE_TEXT = 0;
+	const ACTION_TYPE_QUESTION = 1;
+	const ACTION_TYPE_SEGUE = 2;
+	const ACTION_TYPE_END = 4;
+	
+	public static function getActionTypes()
+	{
+		return [
+			static::ACTION_TYPE_TEXT => 'Текст',
+			static::ACTION_TYPE_QUESTION => 'Вопрос',
+			static::ACTION_TYPE_SEGUE => 'Переход',
+			static::ACTION_TYPE_END => 'Конец'
+		];
+	}
 
-	 /**
+	/**
      * @inheritdoc
      */
     public function rules()
@@ -75,7 +78,7 @@ class SceneButton extends BaseSceneButton
 	
 	public function save($runValidation = true, $attributeNames = null)
 	{
-		if ($this->action != ACTION_TYPE_SEGUE) {
+		if ($this->action != SceneButton::ACTION_TYPE_SEGUE) {
 			$this->segueLocationId = NULL;
 			$this->segueSceneId = NULL;
 			$this->showTextButtonId = NULL;
@@ -179,7 +182,7 @@ class SceneButton extends BaseSceneButton
 	 */
 	public function getActionAsString()
 	{
-		$actionTypes = static::ACTION_TYPE;
+		$actionTypes = static::getActionTypes();
 		return $actionTypes[$this->action];
 	}
 
